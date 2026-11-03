@@ -8,16 +8,12 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts for Bengali & Arabic -->
-    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- Google Fonts for Bengali -->
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Hind Siliguri', sans-serif;
             background-color: #f8fafc;
-        }
-        .arabic-text {
-            font-family: 'Amiri', serif;
-            direction: rtl;
         }
         @media print {
             .no-print { display: none !important; }
@@ -46,20 +42,20 @@
                 <button onclick="switchTab('cv')" id="tab-cv" class="tab-btn bg-emerald-600 text-white px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 hover:bg-emerald-500 transition">
                     <i class="fa-solid fa-file-pdf"></i> ১. অটো সিভি
                 </button>
-                <button onclick="switchTab('place')" id="tab-place" class="tab-btn bg-emerald-900/60 text-emerald-100 px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 hover:bg-emerald-500 hover:text-white transition">
-                    <i class="fa-solid fa-map-location-dot"></i> ২. স্থান ও থানা অনুসন্ধান
-                </button>
                 <button onclick="switchTab('pad')" id="tab-pad" class="tab-btn bg-emerald-900/60 text-emerald-100 px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 hover:bg-emerald-500 hover:text-white transition">
-                    <i class="fa-solid fa-file-signature"></i> ৩. সাংগঠনিক প্যাড
+                    <i class="fa-solid fa-file-signature"></i> ২. সাংগঠনিক প্যাড
+                </button>
+                <button onclick="switchTab('qr')" id="tab-qr" class="tab-btn bg-emerald-900/60 text-emerald-100 px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 hover:bg-emerald-500 hover:text-white transition">
+                    <i class="fa-solid fa-qrcode"></i> ৩. কিউআর কোড জেনারেটর
+                </button>
+                <button onclick="switchTab('notes')" id="tab-notes" class="tab-btn bg-emerald-900/60 text-emerald-100 px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 hover:bg-emerald-500 hover:text-white transition">
+                    <i class="fa-solid fa-note-sticky"></i> ৪. নোটপ্যাড ও টু-ডু লিস্ট
                 </button>
                 <button onclick="switchTab('dictionary')" id="tab-dictionary" class="tab-btn bg-emerald-900/60 text-emerald-100 px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 hover:bg-emerald-500 hover:text-white transition">
-                    <i class="fa-solid fa-spell-check"></i> ৪. শব্দার্থ ও ব্যাখ্যা
+                    <i class="fa-solid fa-spell-check"></i> ৫. শব্দার্থ ও ব্যাখ্যা
                 </button>
                 <button onclick="switchTab('news')" id="tab-news" class="tab-btn bg-emerald-900/60 text-emerald-100 px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 hover:bg-emerald-500 hover:text-white transition">
-                    <i class="fa-solid fa-newspaper"></i> ৫. নিউজ কনভার্টার
-                </button>
-                <button onclick="switchTab('fatwa')" id="tab-fatwa" class="tab-btn bg-emerald-900/60 text-emerald-100 px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 hover:bg-emerald-500 hover:text-white transition">
-                    <i class="fa-solid fa-book-quran"></i> ৬. মাসআলা তালাশ
+                    <i class="fa-solid fa-newspaper"></i> ৬. নিউজ কনভার্টার
                 </button>
             </div>
         </nav>
@@ -156,31 +152,7 @@
             </div>
         </section>
 
-        <!-- ================= SECTION 2: PLACE & THANA SEARCH ================= -->
-        <section id="sec-place" class="tab-content hidden space-y-4">
-            <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200">
-                <h2 class="text-xl font-bold text-emerald-700 mb-3 flex items-center gap-2">
-                    <i class="fa-solid fa-map-marked-alt"></i> স্থান ও থানা অনুযায়ী গুরুত্বপূর্ণ স্থান অনুসন্ধান
-                </h2>
-                <div class="flex gap-2 mb-4">
-                    <input type="text" id="place-input" placeholder="যেকোনো থানা বা জেলার নাম লিখুন (যেমন: সাভার, কতোয়ালী, ধানমন্ডি, লালবাগ, কক্সবাজার, সদর...)" class="w-full p-3 border rounded-lg outline-none focus:ring-2 focus:ring-emerald-500">
-                    <button onclick="searchPlace()" class="bg-emerald-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-emerald-700 transition flex items-center gap-2">
-                        <i class="fa-solid fa-magnifying-glass"></i> খুঁজুন
-                    </button>
-                </div>
-                <div class="flex flex-wrap gap-2 text-xs">
-                    <span class="text-slate-500 font-bold self-center">দ্রুত দেখুন:</span>
-                    <button onclick="quickSearch('শাহবাগ')" class="bg-slate-200 hover:bg-emerald-100 px-3 py-1 rounded-full">শাহবাগ থানা</button>
-                    <button onclick="quickSearch('লালবাগ')" class="bg-slate-200 hover:bg-emerald-100 px-3 py-1 rounded-full">লালবাগ থানা</button>
-                    <button onclick="quickSearch('সাভার')" class="bg-slate-200 hover:bg-emerald-100 px-3 py-1 rounded-full">সাভার থানা</button>
-                    <button onclick="quickSearch('সদর (কক্সবাজার)')" class="bg-slate-200 hover:bg-emerald-100 px-3 py-1 rounded-full">কক্সবাজার সদর</button>
-                    <button onclick="quickSearch('শ্রীমঙ্গল')" class="bg-slate-200 hover:bg-emerald-100 px-3 py-1 rounded-full">শ্রীমঙ্গল থানা</button>
-                </div>
-            </div>
-            <div id="place-output" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
-        </section>
-
-        <!-- ================= SECTION 3: ORGANIZATIONAL PAD (EXACT match to user photo) ================= -->
+        <!-- ================= SECTION 2: ORGANIZATIONAL PAD (Matching User Photo) ================= -->
         <section id="sec-pad" class="tab-content hidden">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <!-- Pad Controls -->
@@ -254,11 +226,10 @@
                     </button>
                 </div>
 
-                <!-- Pad Preview (Exact Layout matching User Photo) -->
+                <!-- Pad Preview -->
                 <div class="print-container">
                     <div id="pad-preview" class="bg-white p-8 rounded-xl shadow-lg border border-slate-300 min-h-[750px] flex flex-col justify-between relative font-sans">
                         <div>
-                            <!-- Top Header: Logo Left, Title Middle, Logo Right -->
                             <div class="flex justify-between items-center border-b border-slate-300 pb-3 mb-2">
                                 <div class="w-14 h-14 flex items-center justify-center">
                                     <img id="pad-logo-left" src="https://via.placeholder.com/60?text=Logo1" alt="Logo" class="max-h-full max-w-full object-contain">
@@ -272,28 +243,22 @@
                                 </div>
                             </div>
 
-                            <!-- Email & Phone Line -->
                             <div class="flex justify-between text-xs font-bold text-slate-700 border-b-2 border-slate-800 pb-1 mb-4">
                                 <span>ইমেইল: <span id="prev-pad-email">iscadubd@gmail.com</span></span>
                                 <span>ফোন: <span id="prev-pad-phone">০১৮১৫৪৭২৫২২</span></span>
                             </div>
 
-                            <!-- Press Release Badge -->
                             <div class="text-center mb-4">
                                 <span class="text-xs font-bold text-slate-800 tracking-wider">প্রেস বিজ্ঞপ্তি:</span>
                             </div>
 
-                            <!-- Headline -->
                             <h3 id="prev-pad-headline" class="text-lg md:text-xl font-bold text-slate-900 text-center mb-3 leading-snug"></h3>
                             
-                            <!-- Sub Tagline / Org Name line under title -->
                             <p class="text-xs text-center font-bold text-slate-700 mb-6" id="prev-pad-subtag"></p>
 
-                            <!-- Body Text -->
                             <div id="prev-pad-body" class="text-xs md:text-sm text-slate-800 leading-relaxed whitespace-pre-line text-justify px-2"></div>
                         </div>
 
-                        <!-- Footer Sender Information (Left aligned as per photo) -->
                         <div class="mt-12 pt-4 text-xs text-slate-800 space-y-0.5">
                             <p class="font-bold">প্রেরক-</p>
                             <p id="prev-sender-name" class="font-bold text-sm text-slate-900">আবু বকর সিদ্দিক</p>
@@ -306,7 +271,75 @@
             </div>
         </section>
 
-        <!-- ================= SECTION 4: SMART DICTIONARY ================= -->
+        <!-- ================= SECTION 3: TEXT TO QR CODE GENERATOR ================= -->
+        <section id="sec-qr" class="tab-content hidden space-y-4">
+            <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 max-w-2xl mx-auto text-center">
+                <h2 class="text-xl font-bold text-emerald-700 mb-2 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-qrcode"></i> টেক্সট বা লিংক টু কিউআর কোড জেনারেটর
+                </h2>
+                <p class="text-xs text-slate-500 mb-4">যেকোনো ওয়েবসাইট লিংক, ফোন নম্বর বা লেখা নিচে লিখলেই তাৎক্ষণিকভাবে কিউআর কোড তৈরি হয়ে যাবে।</p>
+                
+                <div class="space-y-3">
+                    <textarea id="qr-input" oninput="generateQRCode()" rows="3" placeholder="এখানে যেকোনো লিংক বা লেখা লিখুন..." class="w-full p-3 border rounded-lg outline-none focus:ring-2 focus:ring-emerald-500 text-sm">https://smartshebabox.com</textarea>
+                </div>
+
+                <div class="mt-6 flex flex-col items-center justify-center p-4 bg-slate-50 rounded-xl border border-slate-200">
+                    <div id="qrcode-container" class="bg-white p-3 rounded-lg shadow-sm border mb-3 flex items-center justify-center min-h-[180px] min-w-[180px]">
+                        <!-- Dynamic QR generated via API -->
+                        <img id="qr-img" src="" alt="QR Code" class="max-w-[180px] max-h-[180px]">
+                    </div>
+                    <p class="text-xs text-slate-500 mb-3">মোবাইল ক্যামেরা দিয়ে স্ক্যান করলেই তথ্য পেয়ে যাবেন।</p>
+                    <a id="qr-download-btn" href="" download="qrcode.png" target="_blank" class="bg-emerald-600 text-white text-xs font-bold px-4 py-2 rounded-lg hover:bg-emerald-700 transition hidden inline-flex items-center gap-2">
+                        <i class="fa-solid fa-download"></i> কিউআর কোড ডাউনলোড করুন
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SECTION 4: ONLINE NOTEPAD & TO-DO LIST ================= -->
+        <section id="sec-notes" class="tab-content hidden">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Notepad Box -->
+                <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center border-b pb-2 mb-3">
+                            <h3 class="text-lg font-bold text-emerald-700 flex items-center gap-2">
+                                <i class="fa-solid fa-note-sticky"></i> দ্রুত অনলাইন নোটপ্যাড
+                            </h3>
+                            <button onclick="clearNote()" class="text-xs bg-rose-100 text-rose-700 px-2 py-1 rounded hover:bg-rose-200 transition">মুছে ফেলুন</button>
+                        </div>
+                        <p class="text-xs text-slate-500 mb-2">আপনার জরুরি লেখা এখানে লিখে রাখতে পারেন (ব্রাউজারে স্বয়ংক্রিয়ভাবে সেভ থাকে)।</p>
+                        <textarea id="quick-note" oninput="saveNote()" rows="8" placeholder="এখানে আপনার নোট লিখুন..." class="w-full p-3 border rounded-lg outline-none focus:ring-2 focus:ring-emerald-500 text-sm leading-relaxed"></textarea>
+                    </div>
+                    <div class="text-xs text-emerald-600 font-semibold mt-2 flex items-center gap-1">
+                        <i class="fa-solid fa-circle-check"></i> ব্রাউজারে সুরক্ষিতভাবে সংরক্ষিত
+                    </div>
+                </div>
+
+                <!-- To-Do List Box -->
+                <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center border-b pb-2 mb-3">
+                            <h3 class="text-lg font-bold text-emerald-700 flex items-center gap-2">
+                                <i class="fa-solid fa-list-check"></i> আজকের টু-ডু লিস্ট (কাজের তালিকা)
+                            </h3>
+                        </div>
+                        <div class="flex gap-2 mb-3">
+                            <input type="text" id="task-input" placeholder="নতুন কাজের নাম লিখুন..." class="w-full p-2 border rounded text-sm outline-none focus:ring-2 focus:ring-emerald-500">
+                            <button onclick="addTask()" class="bg-emerald-600 text-white px-4 py-2 rounded text-sm font-bold hover:bg-emerald-700 transition">যোগ করুন</button>
+                        </div>
+                        <ul id="task-list" class="space-y-2 max-h-[220px] overflow-y-auto pr-1">
+                            <!-- Tasks will appear here -->
+                        </ul>
+                    </div>
+                    <div class="text-xs text-slate-400 mt-2">
+                        কাজে টিক মার্ক দিয়ে সম্পন্ন করুন অথবা মুছে ফেলুন।
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SECTION 5: SMART DICTIONARY ================= -->
         <section id="sec-dictionary" class="tab-content hidden space-y-4">
             <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200">
                 <h2 class="text-xl font-bold text-emerald-700 mb-3 flex items-center gap-2">
@@ -322,7 +355,7 @@
             <div id="dict-output"></div>
         </section>
 
-        <!-- ================= SECTION 5: NEWS PORTAL ARTICLE CREATOR ================= -->
+        <!-- ================= SECTION 6: NEWS PORTAL ARTICLE CREATOR ================= -->
         <section id="sec-news" class="tab-content hidden">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div class="bg-white p-6 rounded-xl shadow-md space-y-4 border border-slate-200">
@@ -360,29 +393,6 @@
             </div>
         </section>
 
-        <!-- ================= SECTION 6: MASALA & FATWA LOOKUP ================= -->
-        <section id="sec-fatwa" class="tab-content hidden space-y-4">
-            <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200">
-                <h2 class="text-xl font-bold text-emerald-700 mb-3 flex items-center gap-2">
-                    <i class="fa-solid fa-magnifying-glass-location"></i> মাসআলা ও ফতোয়া তালাশ (আরবি দলিলসহ)
-                </h2>
-                <div class="flex gap-2">
-                    <input type="text" id="fatwa-input" placeholder="মাসআলা সার্চ করুন (যেমন: নামায, ওজু, যাকাত, রোজা, ব্যবসা...)" class="w-full p-3 border rounded-lg outline-none focus:ring-2 focus:ring-emerald-500">
-                    <button onclick="searchFatwa()" class="bg-emerald-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-emerald-700 transition flex items-center gap-2">
-                        <i class="fa-solid fa-search"></i> তালাশ
-                    </button>
-                </div>
-                <div class="flex flex-wrap gap-2 text-xs mt-3">
-                    <span class="text-slate-500 font-bold self-center">বিষয়ভিত্তিক:</span>
-                    <button onclick="quickFatwa('ওজু')" class="bg-slate-200 hover:bg-emerald-100 px-3 py-1 rounded-full">পবিত্রতা ও ওজু</button>
-                    <button onclick="quickFatwa('নামাজ')" class="bg-slate-200 hover:bg-emerald-100 px-3 py-1 rounded-full">সালাত / নামাজ</button>
-                    <button onclick="quickFatwa('যাকাত')" class="bg-slate-200 hover:bg-emerald-100 px-3 py-1 rounded-full">যাকাত ও সদকা</button>
-                    <button onclick="quickFatwa('রোজা')" class="bg-slate-200 hover:bg-emerald-100 px-3 py-1 rounded-full">রোজা ও সেহরি</button>
-                </div>
-            </div>
-            <div id="fatwa-output" class="space-y-4"></div>
-        </section>
-
     </main>
 
     <!-- Footer -->
@@ -404,6 +414,10 @@
             const activeBtn = document.getElementById('tab-' + tabName);
             activeBtn.classList.add('bg-emerald-600', 'text-white');
             activeBtn.classList.remove('bg-emerald-900/60', 'text-emerald-100');
+
+            if(tabName === 'qr') {
+                generateQRCode();
+            }
         }
 
         // ================= 1. CV GENERATOR LOGIC =================
@@ -426,67 +440,7 @@
         }
         updateCV();
 
-        // ================= 2. PLACE & THANA SEARCH DATA & LOGIC =================
-        const placeData = {
-            "শাহবাগ": [
-                { name: "ঢাকা বিশ্ববিদ্যালয় ও সোহরাওয়ার্দী উদ্যান", desc: "ঐতিহাসিক স্থান, চারুকলা ও কেন্দ্রীয় লাইব্রেরি।", spot: "শাহবাগ থানা, ঢাকা" },
-                { name: "জাতীয় জাদুঘর", desc: "বাংলাদেশের প্রাচীন ইতিহাস ও ঐতিহ্যের সংগ্রহশালা।", spot: "শাহবাগ মোড়" }
-            ],
-            "লালবাগ": [
-                { name: "লালবাগ কেল্লা", desc: "১৭ শতকের মুঘল দুর্গ ও ঐতিহাসিক স্থাপত্য।", spot: "লালবাগ থানা, পুরান ঢাকা" }
-            ],
-            "সাভার": [
-                { name: "জাতীয় স্মৃতিসৌধ", desc: "মহান স্বাধীনতা যুদ্ধের অকুতোভয় শহীদদের স্মারক।", spot: "সাভার থানা, ঢাকা" },
-                { name: "জাহাঙ্গীরনগর বিশ্ববিদ্যালয়", desc: "সবুজ ক্যাম্পাস ও অতিথি পাখির অভয়ারণ্য।", spot: "সাভার, ঢাকা" }
-            ],
-            "সদর (কক্সবাজার)": [
-                { name: "কক্সবাজার সমুদ্র সৈকত", desc: "বিশ্বের দীর্ঘতম প্রাকৃতিক বালুকাময় সমুদ্র সৈকত।", spot: "লাবণী ও সুগন্ধা পয়েন্ট, কক্সবাজার সদর থানা" }
-            ],
-            "শ্রীমঙ্গল": [
-                { name: "লাউয়াছড়া জাতীয় উদ্যান ও চা বাগান", desc: "বিশাল চা বাগান ও সংরক্ষিত প্রাকৃতির বনভূমি।", spot: "শ্রীমঙ্গল থানা, মৌলভীবাজার" }
-            ]
-        };
-
-        function searchPlace() {
-            const query = document.getElementById('place-input').value.trim();
-            const container = document.getElementById('place-output');
-            container.innerHTML = '';
-
-            let found = false;
-            for (let key in placeData) {
-                if (key.includes(query) || query.includes(key)) {
-                    found = true;
-                    placeData[key].forEach(spot => {
-                        container.innerHTML += `
-                            <div class="bg-white p-5 rounded-xl shadow-md border-l-4 border-emerald-600">
-                                <span class="text-xs bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold">${key}</span>
-                                <h3 class="text-lg font-bold text-slate-800 mt-1">${spot.name}</h3>
-                                <p class="text-xs text-slate-600 mt-2 leading-relaxed">${spot.desc}</p>
-                                <div class="mt-3 text-xs font-bold text-emerald-700">
-                                    <i class="fa-solid fa-location-arrow"></i> অবস্থান: ${spot.spot}
-                                </div>
-                            </div>
-                        `;
-                    });
-                }
-            }
-
-            if (!found) {
-                container.innerHTML = `
-                    <div class="col-span-full bg-amber-50 border border-amber-200 text-amber-800 p-4 rounded-xl text-center text-sm">
-                        <i class="fa-solid fa-circle-info text-lg mb-1"></i><br>
-                        "<strong>${query}</strong>" সংক্রান্ত সুনির্দিষ্ট থানার তথ্য ডাটাবেজে যুক্ত করা হচ্ছে। অন্য কোনো থানা লিখে চেষ্টা করুন।
-                    </div>
-                `;
-            }
-        }
-
-        function quickSearch(val) {
-            document.getElementById('place-input').value = val;
-            searchPlace();
-        }
-
-        // ================= 3. ORGANIZATIONAL PAD LOGIC (Matching Photo) =================
+        // ================= 2. ORGANIZATIONAL PAD LOGIC =================
         function loadPadLogo(event, position) {
             const reader = new FileReader();
             reader.onload = function(){
@@ -511,15 +465,92 @@
             document.getElementById('prev-pad-subtag').innerText = `${org}, ${branch}।`;
             document.getElementById('prev-pad-body').innerText = document.getElementById('pad-body').value || '';
 
-            // Sender info
             document.getElementById('prev-sender-name').innerText = document.getElementById('pad-sender-name').value || '';
             document.getElementById('prev-sender-title').innerText = document.getElementById('pad-sender-title').value || '';
             document.getElementById('prev-sender-org').innerText = org + ',';
-            document.getElementById('prev-sender-branch').innerText = branch + '।';
+            document.getElementById('prev-sender-branch').innerText = branch + '。';
         }
         updatePad();
 
-        // ================= 4. SMART DICTIONARY LOGIC =================
+        // ================= 3. TEXT TO QR CODE GENERATOR LOGIC =================
+        function generateQRCode() {
+            const val = document.getElementById('qr-input').value.trim() || 'https://smartshebabox.com';
+            const encodedVal = encodeURIComponent(val);
+            const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodedVal}`;
+            
+            document.getElementById('qr-img').src = qrApiUrl;
+            const downloadBtn = document.getElementById('qr-download-btn');
+            downloadBtn.href = qrApiUrl;
+            downloadBtn.classList.remove('hidden');
+        }
+        generateQRCode();
+
+        // ================= 4. NOTEPAD & TO-DO LIST LOGIC =================
+        function saveNote() {
+            const noteText = document.getElementById('quick-note').value;
+            localStorage.setItem('user_quick_note', noteText);
+        }
+
+        function clearNote() {
+            document.getElementById('quick-note').value = '';
+            localStorage.removeItem('user_quick_note');
+        }
+
+        // Load saved note on start
+        window.addEventListener('DOMContentLoaded', () => {
+            if(localStorage.getItem('user_quick_note')) {
+                document.getElementById('quick-note').value = localStorage.getItem('user_quick_note');
+            }
+            loadTasks();
+        });
+
+        // To-Do List Functions
+        let tasks = JSON.parse(localStorage.getItem('user_tasks')) || [
+            { text: "ওয়েবসাইটের ডিজাইন চেক করা", done: true },
+            { text: "প্রেস বিজ্ঞপ্তি তৈরি করা", done: false }
+        ];
+
+        function renderTasks() {
+            const list = document.getElementById('task-list');
+            list.innerHTML = '';
+            tasks.forEach((task, index) => {
+                list.innerHTML += `
+                    <li class="flex items-center justify-between p-2 bg-slate-50 rounded border text-sm">
+                        <div class="flex items-center gap-2">
+                            <input type="checkbox" ${task.done ? 'checked' : ''} onchange="toggleTask(${index})" class="w-4 h-4 text-emerald-600 rounded">
+                            <span class="${task.done ? 'line-through text-slate-400' : 'text-slate-700'}">${task.text}</span>
+                        </div>
+                        <button onclick="deleteTask(${index})" class="text-rose-500 hover:text-rose-700 text-xs px-2 py-1"><i class="fa-solid fa-trash"></i></button>
+                    </li>
+                `;
+            });
+            localStorage.setItem('user_tasks', JSON.stringify(tasks));
+        }
+
+        function addTask() {
+            const input = document.getElementById('task-input');
+            if(input.value.trim()) {
+                tasks.push({ text: input.value.trim(), done: false });
+                input.value = '';
+                renderTasks();
+            }
+        }
+
+        function toggleTask(index) {
+            tasks[index].done = !tasks[index].done;
+            renderTasks();
+        }
+
+        function deleteTask(index) {
+            tasks.splice(index, 1);
+            renderTasks();
+        }
+
+        function loadTasks() {
+            renderTasks();
+        }
+
+        // ================= 5. SMART DICTIONARY LOGIC =================
         const dictData = {
             "সততা": { word: "সততা (Honesty)", pos: "বিশেষ্য", meaning: "সাধুতা, ন্যায়পরায়ণতা, সত্যবাদিতা।", exp: "মানুষের অন্যতম শ্রেষ্ঠ নৈতিক গুণ হলো সততা, যা সমাজে বিশ্বাস বজায় রাখে।" },
             "প্রজ্ঞা": { word: "প্রজ্ঞা (Wisdom)", pos: "বিশেষ্য", meaning: "গভীর জ্ঞান, সুবুদ্ধি, বিচারক্ষমতা।", exp: "অভিজ্ঞতা এবং সঠিক চিন্তাধারার মেলবন্ধনে মানুষের প্রজ্ঞা বিকাশ লাভ করে।" }
@@ -534,7 +565,7 @@
             if (matchedKey) {
                 const res = dictData[matchedKey];
                 out.innerHTML = `
-                    <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200">
+                    <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 mt-3">
                         <div class="flex justify-between items-center border-b pb-2 mb-3">
                             <h3 class="text-2xl font-bold text-emerald-800">${res.word}</h3>
                             <span class="bg-emerald-100 text-emerald-800 text-xs px-3 py-1 rounded-full font-bold">${res.pos}</span>
@@ -547,7 +578,7 @@
                 `;
             } else {
                 out.innerHTML = `
-                    <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200">
+                    <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 mt-3">
                         <h3 class="text-xl font-bold text-slate-800 mb-2">${word}</h3>
                         <p class="text-sm text-slate-700">শব্দটির সহজ অর্থ ও ব্যাখ্যা তুলে ধরা হলো।</p>
                     </div>
@@ -555,7 +586,7 @@
             }
         }
 
-        // ================= 5. NEWS ARTICLE GENERATOR LOGIC =================
+        // ================= 6. NEWS ARTICLE GENERATOR LOGIC =================
         function generateNews() {
             const raw = document.getElementById('news-raw').value;
             const place = document.getElementById('news-place').value || 'বিশেষ প্রতিনিধি';
@@ -574,73 +605,6 @@
             navigator.clipboard.writeText(title + "\n\n" + body);
             alert("সংবাদটি ক্লিপবোর্ডে কপি করা হয়েছে!");
         }
-
-        // ================= 6. FATWA & MASALA DATA & LOGIC =================
-        const fatwaData = [
-            {
-                topic: "ওজু",
-                question: "ওজুর সময় কোন অঙ্গ ধোয়া মিস হলে বিধান কি?",
-                answer: "ওজুর অঙ্গগুলোর কোনোটি যদি শুকনো থেকে যায় তবে ওজু পূর্ণ হবে না। মনে পড়ার সাথে সাথেই ওই অঙ্গ ধুয়ে নিতে হবে, পুরো ওজু পুনরায় করার প্রয়োজন নেই।",
-                arabic: "يا أيها الذين آمنوا إذا قمتم إلى الصلاة فاغسلوا وجوهكم وأيديكم إلى المرافق وامسحوا برؤوسكم وأرجلكم إلى الكعبين",
-                ref: "সূরা আল-মায়িদাহ: আয়াত ৬ | ফতোয়ায়ে শামী: খণ্ড ১, পৃষ্ঠা ২১২"
-            },
-            {
-                topic: "নামাজ",
-                question: "ভুলবশত নামাজে রাকাত সংখ্যা ভুলে গেলে করণীয় কি?",
-                answer: "নামাজে রাকাত সংখ্যা নিয়ে সন্দেহ হলে কম সংখ্যাটি ধরে নিয়ে বাকি নামাজ শেষ করতে হবে এবং শেষ রাকাতে 'সাহু সেজদা' প্রদান করতে হবে।",
-                arabic: "إذا شك أحدكم في صلاته فلم يدر كم صلى أثلاثا أم أربعا فليطرح الشك وليبن على ما استيقن ثم يسجد سجدتين قبل أن يسلم",
-                ref: "সহীহ মুসলিম: হাদিস নম্বর ১২১০ | আল-ফাতাওয়া আল-হিন্দিয়া: খণ্ড ১, পৃষ্ঠা ১২৯"
-            }
-        ];
-
-        function searchFatwa() {
-            const query = document.getElementById('fatwa-input').value.trim().toLowerCase();
-            const out = document.getElementById('fatwa-output');
-            out.innerHTML = '';
-
-            let results = fatwaData.filter(item => 
-                item.topic.toLowerCase().includes(query) || 
-                item.question.toLowerCase().includes(query) ||
-                item.answer.toLowerCase().includes(query)
-            );
-
-            if(results.length > 0) {
-                results.forEach(res => {
-                    out.innerHTML += `
-                        <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200">
-                            <div class="flex justify-between items-center mb-2">
-                                <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full">বিষয়: ${res.topic}</span>
-                            </div>
-                            <h3 class="text-base font-bold text-slate-900 mb-2"><i class="fa-solid fa-circle-question text-emerald-600"></i> ${res.question}</h3>
-                            <p class="text-sm text-slate-700 mb-4 bg-slate-50 p-3 rounded border border-slate-200"><strong>উত্তর:</strong> ${res.answer}</p>
-                            
-                            <div class="bg-amber-50/60 p-4 rounded-lg border border-amber-200 mb-3">
-                                <p class="text-xs font-bold text-amber-800 mb-1"><i class="fa-solid fa-scroll"></i> النص العربي (মূল আরবি দলীল):</p>
-                                <p class="arabic-text text-right text-lg font-semibold text-slate-800 leading-loose">${res.arabic}</p>
-                            </div>
-
-                            <div class="text-xs font-bold text-slate-600 border-t pt-2 flex items-center gap-1">
-                                <i class="fa-solid fa-book-bookmark text-emerald-600"></i> রেফারেন্স ও কিতাব: <span class="text-emerald-700">${res.ref}</span>
-                            </div>
-                        </div>
-                    `;
-                });
-            } else {
-                out.innerHTML = `
-                    <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 text-center py-8">
-                        <i class="fa-solid fa-book-open-reader text-3xl text-emerald-600 mb-2"></i>
-                        <p class="text-sm font-bold text-slate-700">"<strong>${query}</strong>" সংক্রান্ত মাসআলা সরাসরি পাওয়া যায়নি।</p>
-                    </div>
-                `;
-            }
-        }
-
-        function quickFatwa(val) {
-            document.getElementById('fatwa-input').value = val;
-            searchFatwa();
-        }
-
-        searchFatwa();
     </script>
 </body>
-</html>
+    </html>
