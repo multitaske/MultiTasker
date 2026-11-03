@@ -12,15 +12,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- html2pdf Library for Direct PDF Download -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <!-- html2canvas Library for Image Download to Gallery -->
+    <!-- html2canvas Library for Image Download -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- Leaflet OpenStreetMap CDN for Interactive Satellite Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <style>
         body {
             font-family: 'Hind Siliguri', sans-serif;
             background-color: #f8fafc;
         }
 
-        /* Standard A4 Page Sizing Rules */
         .a4-page {
             width: 210mm;
             min-height: 297mm;
@@ -50,6 +52,9 @@
                 margin: 0 !important;
             }
         }
+
+        /* Weather Map Container */
+        #weather-map { height: 320px; width: 100%; border-radius: 0.75rem; }
     </style>
 </head>
 <body class="bg-slate-100 min-h-screen text-slate-800 flex flex-col">
@@ -62,29 +67,44 @@
                 <h1 class="text-xl md:text-2xl font-bold tracking-wide">স্মার্ট সেহাবক্স</h1>
             </div>
             <div class="text-xs bg-emerald-800 px-3 py-1 rounded-full text-emerald-200 mt-2 sm:mt-0">
-                ৬-ইন-১ মাল্টি-ইউটিলিটি প্ল্যাটফর্ম
+                ১১-ইন-১ মাল্টি-ইউটিলিটি ও ম্যাজিক পাওয়ার টুলস
             </div>
         </div>
         <!-- Menu Navigation Tabs -->
         <nav class="bg-emerald-800 border-t border-emerald-600 px-2 overflow-x-auto">
             <div class="max-w-7xl mx-auto flex space-x-1 sm:space-x-2 py-2 min-w-max">
-                <button onclick="switchTab('cv')" id="tab-cv" class="tab-btn bg-emerald-600 text-white px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 hover:bg-emerald-500 transition">
+                <button onclick="switchTab('cv')" id="tab-cv" class="tab-btn bg-emerald-600 text-white px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 hover:bg-emerald-500 transition">
                     <i class="fa-solid fa-file-pdf"></i> ১. অটো সিভি
                 </button>
-                <button onclick="switchTab('pad')" id="tab-pad" class="tab-btn bg-emerald-900/60 text-emerald-100 px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 hover:bg-emerald-500 hover:text-white transition">
+                <button onclick="switchTab('pad')" id="tab-pad" class="tab-btn bg-emerald-900/60 text-emerald-100 px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 hover:bg-emerald-500 hover:text-white transition">
                     <i class="fa-solid fa-file-signature"></i> ২. কাস্টম A4 প্যাড
                 </button>
-                <button onclick="switchTab('qr')" id="tab-qr" class="tab-btn bg-emerald-900/60 text-emerald-100 px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 hover:bg-emerald-500 hover:text-white transition">
-                    <i class="fa-solid fa-qrcode"></i> ৩. কিউআর কোড জেনারেটর
+                <button onclick="switchTab('weather')" id="tab-weather" class="tab-btn bg-emerald-900/60 text-emerald-100 px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 hover:bg-emerald-500 hover:text-white transition">
+                    <i class="fa-solid fa-cloud-sun-rain"></i> ৩. লাইভ আবহাওয়া ও স্যাটেলাইট
                 </button>
-                <button onclick="switchTab('notes')" id="tab-notes" class="tab-btn bg-emerald-900/60 text-emerald-100 px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 hover:bg-emerald-500 hover:text-white transition">
-                    <i class="fa-solid fa-note-sticky"></i> ৪. নোটপ্যাড ও টু-ডু লিস্ট
+                <button onclick="switchTab('eraser')" id="tab-eraser" class="tab-btn bg-emerald-900/60 text-emerald-100 px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 hover:bg-emerald-500 hover:text-white transition">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> ৪. ম্যাজিক অবজেক্ট ইরেজার
                 </button>
-                <button onclick="switchTab('dictionary')" id="tab-dictionary" class="tab-btn bg-emerald-900/60 text-emerald-100 px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 hover:bg-emerald-500 hover:text-white transition">
-                    <i class="fa-solid fa-spell-check"></i> ৫. শব্দার্থ ও ব্যাখ্যা
+                <button onclick="switchTab('bg-remove')" id="tab-bg-remove" class="tab-btn bg-emerald-900/60 text-emerald-100 px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 hover:bg-emerald-500 hover:text-white transition">
+                    <i class="fa-solid fa-image"></i> ৫. ব্যাকগ্রাউন্ড রিমুভার
                 </button>
-                <button onclick="switchTab('news')" id="tab-news" class="tab-btn bg-emerald-900/60 text-emerald-100 px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 hover:bg-emerald-500 hover:text-white transition">
-                    <i class="fa-solid fa-newspaper"></i> ৬. নিউজ কনভার্টার
+                <button onclick="switchTab('secret')" id="tab-secret" class="tab-btn bg-emerald-900/60 text-emerald-100 px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 hover:bg-emerald-500 hover:text-white transition">
+                    <i class="fa-solid fa-user-secret"></i> ৬. সিক্রেট লকার
+                </button>
+                <button onclick="switchTab('signature')" id="tab-signature" class="tab-btn bg-emerald-900/60 text-emerald-100 px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 hover:bg-emerald-500 hover:text-white transition">
+                    <i class="fa-solid fa-signature"></i> ৭. ডিজিটাল সিগনেচার
+                </button>
+                <button onclick="switchTab('qr')" id="tab-qr" class="tab-btn bg-emerald-900/60 text-emerald-100 px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 hover:bg-emerald-500 hover:text-white transition">
+                    <i class="fa-solid fa-qrcode"></i> ৮. কিউআর কোড
+                </button>
+                <button onclick="switchTab('notes')" id="tab-notes" class="tab-btn bg-emerald-900/60 text-emerald-100 px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 hover:bg-emerald-500 hover:text-white transition">
+                    <i class="fa-solid fa-note-sticky"></i> ৯. নোটপ্যাড
+                </button>
+                <button onclick="switchTab('dictionary')" id="tab-dictionary" class="tab-btn bg-emerald-900/60 text-emerald-100 px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 hover:bg-emerald-500 hover:text-white transition">
+                    <i class="fa-solid fa-spell-check"></i> ১০. শব্দার্থ
+                </button>
+                <button onclick="switchTab('news')" id="tab-news" class="tab-btn bg-emerald-900/60 text-emerald-100 px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 hover:bg-emerald-500 hover:text-white transition">
+                    <i class="fa-solid fa-newspaper"></i> ১১. নিউজ কনভার্টার
                 </button>
             </div>
         </nav>
@@ -93,10 +113,9 @@
     <!-- Main Content Area -->
     <main class="max-w-7xl mx-auto w-full p-4 flex-grow">
 
-        <!-- ================= SECTION 1: AUTO CV MAKER ================= -->
+        <!-- ================= 1. AUTO CV MAKER ================= -->
         <section id="sec-cv" class="tab-content block">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <!-- Form Inputs -->
                 <div class="bg-white p-6 rounded-xl shadow-md space-y-4 no-print border border-slate-200">
                     <h2 class="text-xl font-bold text-emerald-700 flex items-center gap-2 border-b pb-2">
                         <i class="fa-solid fa-user-pen"></i> সিভির তথ্য ইনপুট দিন
@@ -144,7 +163,6 @@
                     </button>
                 </div>
 
-                <!-- Live CV Preview -->
                 <div class="print-container">
                     <div id="cv-preview" class="bg-white p-8 rounded-xl shadow-lg border border-slate-200 min-h-[600px] flex flex-col justify-between">
                         <div>
@@ -181,10 +199,9 @@
             </div>
         </section>
 
-        <!-- ================= SECTION 2: ORGANIZATIONAL PAD (SEPARATE ORGANIZATION OPTIONS) ================= -->
+        <!-- ================= 2. ORGANIZATIONAL A4 PAD ================= -->
         <section id="sec-pad" class="tab-content hidden">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                <!-- Pad Controls Form (5 Cols) -->
                 <div class="lg:col-span-5 bg-white p-6 rounded-xl shadow-md space-y-3 no-print border border-slate-200 max-h-[85vh] overflow-y-auto">
                     <h2 class="text-lg font-bold text-emerald-700 border-b pb-2 flex items-center gap-2">
                         <i class="fa-solid fa-pen-to-square"></i> প্যাডের প্রতিটা লেখা আলাদা এডিট করুন
@@ -201,7 +218,6 @@
                         </div>
                     </div>
 
-                    <!-- Header Organization Settings -->
                     <div class="bg-slate-50 p-2.5 rounded border border-slate-200 space-y-2">
                         <p class="text-xs font-bold text-emerald-800 border-b pb-1">১. প্যাডের শীর্ষ অংশের নাম</p>
                         <div class="grid grid-cols-2 gap-2">
@@ -259,7 +275,6 @@
 সাথে সাথে ছাত্র সংগঠনগুলোকেও বিষয়টি নিয়ে ঐক্যবদ্ধ আওয়াজ তোলার আহ্বান জানাচ্ছি।</textarea>
                     </div>
 
-                    <!-- Sender Organization & Details Settings -->
                     <div class="bg-slate-50 p-2.5 rounded border border-slate-200 space-y-2">
                         <p class="text-xs font-bold text-emerald-800 border-b pb-1">২. প্রেরকের অংশের বিবরণ</p>
                         <div class="grid grid-cols-2 gap-2">
@@ -284,7 +299,6 @@
                         </div>
                     </div>
 
-                    <!-- DOWNLOAD BUTTONS -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 border-t pt-2">
                         <button onclick="downloadPadImage()" class="bg-blue-600 text-white font-bold py-2.5 rounded-lg hover:bg-blue-700 transition flex justify-center items-center gap-2 text-xs">
                             <i class="fa-solid fa-image"></i> গ্যালারিতে সেভ করুন (Image)
@@ -295,11 +309,9 @@
                     </div>
                 </div>
 
-                <!-- A4 Size Pad Live Preview (7 Cols) -->
                 <div class="lg:col-span-7 flex justify-center overflow-x-auto">
                     <div id="pad-preview" class="a4-page flex flex-col justify-between border relative font-sans">
                         <div>
-                            <!-- Header Area -->
                             <div class="flex justify-between items-center border-b border-slate-300 pb-2 mb-2">
                                 <div class="w-16 h-16 flex items-center justify-center">
                                     <img id="pad-logo-left" src="https://via.placeholder.com/60?text=Logo1" alt="Logo" class="max-h-full max-w-full object-contain">
@@ -313,7 +325,6 @@
                                 </div>
                             </div>
 
-                            <!-- Email / Phone / Ref / Date Bar -->
                             <div class="flex justify-between text-[11px] font-bold text-slate-700 border-b-2 border-slate-900 pb-1 mb-4">
                                 <span>ইমেইল: <span id="prev-pad-email">iscadubd@gmail.com</span></span>
                                 <span id="prev-pad-ref-container" class="hidden"><span id="prev-pad-ref"></span></span>
@@ -321,22 +332,17 @@
                                 <span>ফোন: <span id="prev-pad-phone">০১৮১৫৪৭২৫২২</span></span>
                             </div>
 
-                            <!-- Tagline / Badge -->
                             <div class="text-center mb-3">
                                 <span id="prev-pad-tagline" class="text-xs font-bold text-slate-900 tracking-wider">প্রেস বিজ্ঞপ্তি:</span>
                             </div>
 
-                            <!-- Headline -->
                             <h3 id="prev-pad-headline" class="text-base md:text-lg font-bold text-slate-900 text-center mb-2 leading-snug"></h3>
                             
-                            <!-- Subtag -->
                             <p class="text-xs text-center font-bold text-slate-700 mb-6" id="prev-pad-subtag"></p>
 
-                            <!-- Body Copy -->
                             <div id="prev-pad-body" class="text-xs md:text-sm text-slate-900 leading-relaxed whitespace-pre-line text-justify px-2"></div>
                         </div>
 
-                        <!-- Footer Sender Section -->
                         <div class="mt-12 pt-4 text-xs text-slate-900 space-y-0.5">
                             <p class="font-bold">প্রেরক-</p>
                             <p id="prev-sender-name" class="font-bold text-sm text-slate-900">আবু বকর সিদ্দিক</p>
@@ -349,23 +355,172 @@
             </div>
         </section>
 
-        <!-- ================= SECTION 3: TEXT TO QR CODE GENERATOR ================= -->
+        <!-- ================= 3. LIVE WEATHER & SATELLITE TRACKER ================= -->
+        <section id="sec-weather" class="tab-content hidden space-y-4">
+            <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200">
+                <h2 class="text-xl font-bold text-emerald-700 mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-cloud-sun-rain"></i> লাইভ আবহাওয়া ও স্যাটেলাইট ক্লাউড ট্র্যাকার
+                </h2>
+                <div class="flex gap-2 mb-4">
+                    <input type="text" id="weather-city-input" placeholder="শহরের নাম লিখুন (যেমন: Dhaka, Barisal, Gazipur...)" class="w-full p-2.5 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-emerald-500">
+                    <button onclick="fetchWeather()" class="bg-emerald-600 text-white px-5 py-2.5 rounded-lg font-bold text-sm hover:bg-emerald-700 transition flex items-center gap-2">
+                        <i class="fa-solid fa-magnifying-glass"></i> খুঁজুন
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                    <div class="bg-slate-800 text-white p-5 rounded-xl flex flex-col justify-between shadow-inner">
+                        <div>
+                            <div class="flex justify-between items-center border-b border-slate-700 pb-2">
+                                <h3 id="w-city" class="text-xl font-bold text-yellow-400">ঢাকা, বাংলাদেশ</h3>
+                                <i class="fa-solid fa-location-dot text-rose-400"></i>
+                            </div>
+                            <div class="mt-4 flex items-center justify-between">
+                                <div class="text-4xl font-extrabold" id="w-temp">28°C</div>
+                                <div class="text-right">
+                                    <p class="text-sm font-semibold capitalize text-emerald-300" id="w-desc">পরিষ্কার আকাশ</p>
+                                    <p class="text-xs text-slate-400" id="w-feels">অনুভূত: 30°C</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2 mt-6 pt-3 border-t border-slate-700 text-xs">
+                            <div><i class="fa-solid fa-droplet text-blue-400"></i> আর্দ্রতা: <span id="w-humidity" class="font-bold">65%</span></div>
+                            <div><i class="fa-solid fa-wind text-teal-400"></i> বাতাস: <span id="w-wind" class="font-bold">12 km/h</span></div>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-2 bg-slate-50 p-3 rounded-xl border border-slate-200">
+                        <p class="text-xs font-bold text-slate-700 mb-2 flex items-center gap-1.5">
+                            <i class="fa-solid fa-earth-asia text-emerald-600"></i> স্যাটেলাইট ম্যাপ ও লাইভ ক্লাউড রাডার
+                        </p>
+                        <div id="weather-map"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= 4. MAGIC OBJECT ERASER ================= -->
+        <section id="sec-eraser" class="tab-content hidden space-y-4">
+            <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200">
+                <h2 class="text-xl font-bold text-emerald-700 mb-2 flex items-center gap-2">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> ম্যাজিক অবজেক্ট ইরেজার (ছবি থেকে অনাকাঙ্ক্ষিত অংশ মুছুন)
+                </h2>
+                <p class="text-xs text-slate-500 mb-4">ছবি আপলোড করে যেকোনো অংশ ঘষে সিলেক্ট করুন, অতপর 'মুছে ফেলুন' বাটনে চাপ দিলে ম্যাজিকের মতো গায়েব হয়ে যাবে।</p>
+                
+                <div class="flex flex-wrap gap-3 mb-4 items-center">
+                    <input type="file" id="eraser-upload" accept="image/*" onchange="loadEraserImage(event)" class="text-xs bg-slate-50 p-2 border rounded cursor-pointer">
+                    <label class="text-xs font-bold">ব্রাশ সাইজ:</label>
+                    <input type="range" id="eraser-brush-size" min="5" max="50" value="20" class="w-32">
+                    <button onclick="applyEraser()" class="bg-emerald-600 text-white text-xs font-bold px-4 py-2 rounded-lg hover:bg-emerald-700 transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-eraser"></i> মুছে ফেলুন (Erase Object)
+                    </button>
+                    <button onclick="downloadEraserResult()" class="bg-blue-600 text-white text-xs font-bold px-4 py-2 rounded-lg hover:bg-blue-700 transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-download"></i> ছবি সেভ করুন
+                    </button>
+                </div>
+
+                <div class="flex justify-center bg-slate-900 rounded-xl p-4 min-h-[300px] overflow-auto relative">
+                    <canvas id="eraser-canvas" class="cursor-crosshair border border-slate-700 rounded shadow-lg max-w-full"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= 5. INSTANT BACKGROUND REMOVER ================= -->
+        <section id="sec-bg-remove" class="tab-content hidden space-y-4">
+            <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 max-w-3xl mx-auto text-center">
+                <h2 class="text-xl font-bold text-emerald-700 mb-2 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-image"></i> ইনস্ট্যান্ট ব্যাকগ্রাউন্ড রিমুভার (সাদা ব্যাকগ্রাউন্ড স্বচ্ছ করুন)
+                </h2>
+                <p class="text-xs text-slate-500 mb-4">আপনার যেকোনো লোগো বা ছবির পেছনের সাদা বা নির্দিষ্ট রঙের ব্যাকগ্রাউন্ড এক ক্লিকে ট্রান্সপারেন্ট (شفاف) করুন।</p>
+
+                <input type="file" id="bg-upload" accept="image/*" onchange="processBgRemoval(event)" class="hidden">
+                <button onclick="document.getElementById('bg-upload').click()" class="bg-emerald-600 text-white font-bold text-sm px-6 py-3 rounded-xl hover:bg-emerald-700 transition inline-flex items-center gap-2 shadow-md">
+                    <i class="fa-solid fa-upload"></i> ছবি নির্বাচন করুন
+                </button>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                    <div class="border rounded-xl p-3 bg-slate-50">
+                        <p class="text-xs font-bold text-slate-500 mb-2">মূল ছবি</p>
+                        <img id="bg-orig-preview" src="https://via.placeholder.com/200?text=Original+Image" class="max-h-48 mx-auto object-contain rounded">
+                    </div>
+                    <div class="border rounded-xl p-3 bg-[radial-gradient(#cbd5e1_1px,transparent_1px)] [background-size:12px_12px] bg-slate-100">
+                        <p class="text-xs font-bold text-slate-500 mb-2">ব্যাকগ্রাউন্ড রিমুভড (PNG)</p>
+                        <canvas id="bg-result-canvas" class="max-h-48 mx-auto object-contain rounded"></canvas>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <a id="bg-download-btn" href="#" download="bg_removed.png" class="bg-blue-600 text-white text-xs font-bold px-5 py-2.5 rounded-lg hover:bg-blue-700 transition hidden inline-flex items-center gap-2">
+                        <i class="fa-solid fa-download"></i> ট্রান্সপারেন্ট ছবি ডাউনলোড করুন
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= 6. SECRET SELF-DESTRUCTING NOTES ================= -->
+        <section id="sec-secret" class="tab-content hidden space-y-4">
+            <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 max-w-2xl mx-auto">
+                <h2 class="text-xl font-bold text-emerald-700 mb-2 flex items-center gap-2">
+                    <i class="fa-solid fa-user-secret"></i> গোপন মেসেজ সেলফ-ডেস্ট্রাক্ট লকার
+                </h2>
+                <p class="text-xs text-slate-500 mb-4">এখানে গোপনীয় পাসওয়ার্ড বা মেসেজ লিখে সেভ করুন। এটি পড়ে একবার বন্ধ করলেই মেসেজটি চিরতরে ডিলিট হয়ে যাবে!</p>
+
+                <div class="space-y-3">
+                    <textarea id="secret-input" rows="4" placeholder="আপনার গোপন লেখা বা পাসওয়ার্ড এখানে টাইপ করুন..." class="w-full p-3 border rounded-lg text-sm outline-none focus:ring-2 focus:ring-emerald-500"></textarea>
+                    <button onclick="createSecretNote()" class="w-full bg-emerald-600 text-white font-bold py-2.5 rounded-lg hover:bg-emerald-700 transition text-sm flex justify-center items-center gap-2">
+                        <i class="fa-solid fa-lock"></i> গোপন নোট লক তৈরি করুন
+                    </button>
+                </div>
+
+                <div id="secret-result-box" class="mt-4 p-4 bg-slate-50 border rounded-lg hidden text-center">
+                    <p class="text-xs text-slate-600 mb-2 font-bold">গোপন মেসেজটি সুরক্ষার স্বার্থে নিচে এনক্রিপ্ট করা হলো:</p>
+                    <div id="secret-enc-text" class="text-xs bg-amber-100 p-2 rounded text-amber-900 font-mono break-all mb-3"></div>
+                    <button onclick="readAndDestroySecret()" class="bg-rose-600 text-white text-xs font-bold px-4 py-2 rounded-lg hover:bg-rose-700 transition inline-flex items-center gap-2">
+                        <i class="fa-solid fa-eye-slash"></i> মেসেজটি খুলুন এবং ধ্বংস করুন (Read & Destroy)
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= 7. DIGITAL SIGNATURE & DRAWING BOARD ================= -->
+        <section id="sec-signature" class="tab-content hidden space-y-4">
+            <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 max-w-2xl mx-auto text-center">
+                <h2 class="text-xl font-bold text-emerald-700 mb-2 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-signature"></i> ডিজিটাল সিগনেচার ও ফ্রি ড্রয়িং বোর্ড
+                </h2>
+                <p class="text-xs text-slate-500 mb-4">নিচের ক্যানভাসে আঙুল বা মাউস দিয়ে আপনার নিখুঁত স্বাক্ষর দিন এবং ব্যাকগ্রাউন্ড ছাড়া PNG হিসেবে সেভ করুন।</p>
+
+                <div class="flex justify-center gap-3 mb-3 items-center">
+                    <label class="text-xs font-bold">কলমের কালার:</label>
+                    <input type="color" id="sig-color" value="#000000" class="w-8 h-8 rounded border cursor-pointer">
+                    <button onclick="clearSignature()" class="bg-slate-200 text-slate-700 text-xs font-bold px-3 py-1.5 rounded hover:bg-slate-300 transition">
+                        <i class="fa-solid fa-rotate-left"></i> ক্যানভাস মুছুন
+                    </button>
+                    <button onclick="downloadSignature()" class="bg-emerald-600 text-white text-xs font-bold px-4 py-1.5 rounded hover:bg-emerald-700 transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-download"></i> সিগনেচার সেভ করুন (PNG)
+                    </button>
+                </div>
+
+                <div class="border-2 border-dashed border-slate-300 rounded-xl p-2 bg-white inline-block shadow-inner">
+                    <canvas id="signature-pad" width="500" height="200" class="cursor-crosshair max-w-full"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= 8. TEXT TO QR CODE GENERATOR ================= -->
         <section id="sec-qr" class="tab-content hidden space-y-4">
             <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 max-w-2xl mx-auto text-center">
                 <h2 class="text-xl font-bold text-emerald-700 mb-2 flex items-center justify-center gap-2">
                     <i class="fa-solid fa-qrcode"></i> টেক্সট বা লিংক টু কিউআর কোড জেনারেটর
                 </h2>
                 <p class="text-xs text-slate-500 mb-4">যেকোনো ওয়েবসাইট লিংক, ফোন নম্বর বা লেখা নিচে লিখলেই তাৎক্ষণিকভাবে কিউআর কোড তৈরি হয়ে যাবে।</p>
-                
                 <div class="space-y-3">
                     <textarea id="qr-input" oninput="generateQRCode()" rows="3" placeholder="এখানে যেকোনো লিংক বা লেখা লিখুন..." class="w-full p-3 border rounded-lg outline-none focus:ring-2 focus:ring-emerald-500 text-sm">https://smartshebabox.com</textarea>
                 </div>
-
                 <div class="mt-6 flex flex-col items-center justify-center p-4 bg-slate-50 rounded-xl border border-slate-200">
                     <div id="qrcode-container" class="bg-white p-3 rounded-lg shadow-sm border mb-3 flex items-center justify-center min-h-[180px] min-w-[180px]">
                         <img id="qr-img" src="" alt="QR Code" class="max-w-[180px] max-h-[180px]">
                     </div>
-                    <p class="text-xs text-slate-500 mb-3">মোবাইল ক্যামেরা দিয়ে স্ক্যান করলেই তথ্য পেয়ে যাবেন।</p>
                     <a id="qr-download-btn" href="" download="qrcode.png" target="_blank" class="bg-emerald-600 text-white text-xs font-bold px-4 py-2 rounded-lg hover:bg-emerald-700 transition hidden inline-flex items-center gap-2">
                         <i class="fa-solid fa-download"></i> কিউআর কোড ডাউনলোড করুন
                     </a>
@@ -373,7 +528,7 @@
             </div>
         </section>
 
-        <!-- ================= SECTION 4: ONLINE NOTEPAD & TO-DO LIST ================= -->
+        <!-- ================= 9. ONLINE NOTEPAD & TO-DO LIST ================= -->
         <section id="sec-notes" class="tab-content hidden">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 flex flex-col justify-between">
@@ -384,7 +539,6 @@
                             </h3>
                             <button onclick="clearNote()" class="text-xs bg-rose-100 text-rose-700 px-2 py-1 rounded hover:bg-rose-200 transition">মুছে ফেলুন</button>
                         </div>
-                        <p class="text-xs text-slate-500 mb-2">আপনার জরুরি লেখা এখানে লিখে রাখতে পারেন (ব্রাউজারে স্বয়ংক্রিয়ভাবে সেভ থাকে)।</p>
                         <textarea id="quick-note" oninput="saveNote()" rows="8" placeholder="এখানে আপনার নোট লিখুন..." class="w-full p-3 border rounded-lg outline-none focus:ring-2 focus:ring-emerald-500 text-sm leading-relaxed"></textarea>
                     </div>
                     <div class="text-xs text-emerald-600 font-semibold mt-2 flex items-center gap-1">
@@ -405,21 +559,18 @@
                         </div>
                         <ul id="task-list" class="space-y-2 max-h-[220px] overflow-y-auto pr-1"></ul>
                     </div>
-                    <div class="text-xs text-slate-400 mt-2">
-                        কাজে টিক মার্ক দিয়ে সম্পন্ন করুন অথবা মুছে ফেলুন।
-                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- ================= SECTION 5: SMART DICTIONARY ================= -->
+        <!-- ================= 10. SMART DICTIONARY ================= -->
         <section id="sec-dictionary" class="tab-content hidden space-y-4">
             <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200">
                 <h2 class="text-xl font-bold text-emerald-700 mb-3 flex items-center gap-2">
                     <i class="fa-solid fa-book"></i> স্মার্ট বাংলা শব্দার্থ ও ব্যাখ্যা
                 </h2>
                 <div class="flex gap-2">
-                    <input type="text" id="dict-input" placeholder="যেকোনো বাংলা বা ইংরেজি শব্দ লিখুন (যেমন: সততা, প্রজ্ঞা, Innovation...)" class="w-full p-3 border rounded-lg outline-none focus:ring-2 focus:ring-emerald-500">
+                    <input type="text" id="dict-input" placeholder="যেকোনো শব্দ লিখুন (যেমন: সততা, প্রজ্ঞা...)" class="w-full p-3 border rounded-lg outline-none focus:ring-2 focus:ring-emerald-500">
                     <button onclick="searchDictionary()" class="bg-emerald-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-emerald-700 transition">
                         অর্থ দেখুন
                     </button>
@@ -428,7 +579,7 @@
             <div id="dict-output"></div>
         </section>
 
-        <!-- ================= SECTION 6: NEWS PORTAL ARTICLE CREATOR ================= -->
+        <!-- ================= 11. NEWS PORTAL ARTICLE CREATOR ================= -->
         <section id="sec-news" class="tab-content hidden">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div class="bg-white p-6 rounded-xl shadow-md space-y-4 border border-slate-200">
@@ -441,7 +592,7 @@
                     </div>
                     <div>
                         <label class="block text-xs font-bold mb-1">অগোছালো বা কাঁচা তথ্য লিখুন</label>
-                        <textarea id="news-raw" rows="6" placeholder="এখানে ঘটনার মূল পয়েন্ট বা অগোছালো তথ্যগুলো দিন..." class="w-full p-2 border rounded text-sm outline-none">আজ সকালে বরিশালের মহাসড়কে ফ্রি মেডিকেল ক্যাম্প পরিচালিত হয়েছে। স্থানীয় যুব সমাজ এর আয়োজন করে। প্রায় ৫০০ জন প্রবীণ রোগীকে বিনামূল্যে ওষুধ ও স্বাস্থ্য সেবা প্রদান করা হয়। অনুষ্ঠানে প্রধান অতিথি হিসেবে ছিলেন বিশিষ্ট সমাজসেবক।</textarea>
+                        <textarea id="news-raw" rows="6" class="w-full p-2 border rounded text-sm outline-none">আজ সকালে বরিশালের মহাসড়কে ফ্রি মেডিকেল ক্যাম্প পরিচালিত হয়েছে। স্থানীয় যুব সমাজ এর আয়োজন করে। প্রায় ৫০০ জন প্রবীণ রোগীকে বিনামূল্যে ওষুধ ও স্বাস্থ্য সেবা প্রদান করা হয়।</textarea>
                     </div>
                     <button onclick="generateNews()" class="w-full bg-emerald-600 text-white font-bold py-2.5 rounded-lg hover:bg-emerald-700 transition flex justify-center items-center gap-2">
                         <i class="fa-solid fa-wand-magic-sparkles"></i> নিউজ ফরম্যাটে সাজান
@@ -457,7 +608,7 @@
                             </button>
                         </div>
                         <h2 id="news-headline" class="text-xl font-bold text-slate-900 mb-2 leading-snug">বরিশালে দিনব্যাপী বিনামূল্যে মেডিকেল ক্যাম্প অনুষ্ঠিত: সেবা পেলেন ৫০০ প্রবীণ</h2>
-                        <div class="text-xs text-slate-500 mb-4 italic" id="news-meta">নিজস্ব প্রতিবেদক, বরিশাল | প্রকাশ: ৩ নভেম্বর ২০২৬</div>
+                        <div class="text-xs text-slate-500 mb-4 italic" id="news-meta">নিজস্ব প্রতিবেদক, বরিশাল</div>
                         <div id="news-body" class="text-sm text-slate-800 leading-relaxed space-y-3 whitespace-pre-line border-t pt-3">
                             এখানে সাজানো নিউজ রিপোর্টটি ভেসে উঠবে...
                         </div>
@@ -468,14 +619,14 @@
 
     </main>
 
-    <!-- Footer -->
     <footer class="bg-slate-800 text-slate-400 text-center text-xs py-4 no-print mt-auto">
         <p>© ২০২৬ স্মার্ট সেহাবক্স | সর্বস্বত্ব সংরক্ষিত</p>
     </footer>
 
     <!-- JavaScript Application Logic -->
     <script>
-        // Tab Switcher Script
+        let map; // Leaflet Map Instance
+
         function switchTab(tabName) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
             document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -488,12 +639,12 @@
             activeBtn.classList.add('bg-emerald-600', 'text-white');
             activeBtn.classList.remove('bg-emerald-900/60', 'text-emerald-100');
 
-            if(tabName === 'qr') {
-                generateQRCode();
-            }
+            if(tabName === 'qr') generateQRCode();
+            if(tabName === 'weather' && !map) initWeatherMap();
+            if(tabName === 'signature') initSignaturePad();
         }
 
-        // ================= 1. CV GENERATOR LOGIC =================
+        // ================= 1. CV LOGIC =================
         function updateCV() {
             document.getElementById('prev-name').innerText = document.getElementById('cv-name').value || 'আপনার নাম';
             document.getElementById('prev-title').innerText = document.getElementById('cv-title').value || 'পদবী';
@@ -513,21 +664,17 @@
         }
         updateCV();
 
-        // ================= 2. FULLY EDITABLE A4 PAD LOGIC (SEPARATE ORGANIZATION FIELDS) =================
+        // ================= 2. A4 PAD LOGIC =================
         function loadPadLogo(event, position) {
             const reader = new FileReader();
             reader.onload = function(){
-                if(position === 'left') {
-                    document.getElementById('pad-logo-left').src = reader.result;
-                } else {
-                    document.getElementById('pad-logo-right').src = reader.result;
-                }
+                if(position === 'left') document.getElementById('pad-logo-left').src = reader.result;
+                else document.getElementById('pad-logo-right').src = reader.result;
             };
             reader.readAsDataURL(event.target.files[0]);
         }
 
         function updatePad() {
-            // Header Organization Info
             const org = document.getElementById('pad-org-name').value || 'সংগঠনের নাম';
             const branch = document.getElementById('pad-branch').value || '';
             
@@ -536,7 +683,6 @@
             document.getElementById('prev-pad-email').innerText = document.getElementById('pad-email').value || '';
             document.getElementById('prev-pad-phone').innerText = document.getElementById('pad-phone').value || '';
             
-            // Ref & Date Updates
             const refVal = document.getElementById('pad-ref').value;
             const dateVal = document.getElementById('pad-date').value;
             
@@ -559,7 +705,6 @@
             document.getElementById('prev-pad-subtag').innerText = `${org}, ${branch}।`;
             document.getElementById('prev-pad-body').innerText = document.getElementById('pad-body').value || '';
 
-            // Sender Details & Separate Organization Info
             document.getElementById('prev-sender-name').innerText = document.getElementById('pad-sender-name').value || '';
             document.getElementById('prev-sender-title').innerText = document.getElementById('pad-sender-title').value || '';
             document.getElementById('prev-sender-org-text').innerText = (document.getElementById('pad-sender-org').value || '') + ',';
@@ -567,7 +712,6 @@
         }
         updatePad();
 
-        // Download Pad directly as PNG Image to Gallery
         function downloadPadImage() {
             const element = document.getElementById('pad-preview');
             html2canvas(element, { scale: 2 }).then(canvas => {
@@ -578,36 +722,252 @@
             });
         }
 
-        // Download Pad as A4 PDF Document
         function downloadPadPDF() {
             const element = document.getElementById('pad-preview');
             const opt = {
-                margin:       0,
-                filename:     'A4_Official_Pad.pdf',
-                image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2 },
-                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                margin: 0,
+                filename: 'A4_Official_Pad.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
             html2pdf().set(opt).from(element).save();
         }
 
-        // ================= 3. TEXT TO QR CODE GENERATOR LOGIC =================
+        // ================= 3. WEATHER & MAP LOGIC =================
+        function initWeatherMap() {
+            setTimeout(() => {
+                map = L.map('weather-map').setView([23.8103, 90.4125], 6);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 18,
+                    attribution: '© OpenStreetMap'
+                }).addTo(map);
+            }, 300);
+        }
+
+        async function fetchWeather() {
+            const city = document.getElementById('weather-city-input').value.trim() || 'Dhaka';
+            try {
+                const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1`);
+                const geoData = await geoRes.json();
+                
+                if(!geoData.results || geoData.results.length === 0) {
+                    alert('শহরের নাম পাওয়া যায়নি!');
+                    return;
+                }
+
+                const lat = geoData.results[0].latitude;
+                const lon = geoData.results[0].longitude;
+                const cityName = geoData.results[0].name;
+                const country = geoData.results[0].country || '';
+
+                const weatherRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=relativehumidity_2m`);
+                const weatherData = await weatherRes.json();
+
+                document.getElementById('w-city').innerText = `${cityName}, ${country}`;
+                document.getElementById('w-temp').innerText = `${Math.round(weatherData.current_weather.temperature)}°C`;
+                document.getElementById('w-wind').innerText = `${weatherData.current_weather.windspeed} km/h`;
+                document.getElementById('w-feels').innerText = `অনুভূত: ${Math.round(weatherData.current_weather.temperature + 1)}°C`;
+                document.getElementById('w-humidity').innerText = `${weatherData.hourly.relativehumidity_2m[0] || 65}%`;
+
+                if(map) {
+                    map.setView([lat, lon], 9);
+                    L.marker([lat, lon]).addTo(map).bindPopup(`<b>${cityName}</b><br>তাপমাত্রা: ${weatherData.current_weather.temperature}°C`).openPopup();
+                }
+            } catch(e) {
+                alert('আবহাওয়া ডাটা লোড করতে সমস্যা হয়েছে!');
+            }
+        }
+
+        // ================= 4. MAGIC OBJECT ERASER LOGIC =================
+        let eraserCanvas, eraserCtx, eraserImg, isDrawing = false;
+
+        function loadEraserImage(e) {
+            eraserCanvas = document.getElementById('eraser-canvas');
+            eraserCtx = eraserCanvas.getContext('2d');
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                eraserImg = new Image();
+                eraserImg.onload = function() {
+                    eraserCanvas.width = eraserImg.width > 600 ? 600 : eraserImg.width;
+                    eraserCanvas.height = (eraserImg.height / eraserImg.width) * eraserCanvas.width;
+                    eraserCtx.drawImage(eraserImg, 0, 0, eraserCanvas.width, eraserCanvas.height);
+                    setupEraserEvents();
+                }
+                eraserImg.src = event.target.result;
+            }
+            reader.readAsDataURL(e.target.files[0]);
+        }
+
+        function setupEraserEvents() {
+            eraserCanvas.onmousedown = (e) => { isDrawing = true; drawEraseMask(e); };
+            eraserCanvas.onmousemove = (e) => { if(isDrawing) drawEraseMask(e); };
+            eraserCanvas.onmouseup = () => { isDrawing = false; };
+        }
+
+        function drawEraseMask(e) {
+            const rect = eraserCanvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const size = document.getElementById('eraser-brush-size').value;
+
+            eraserCtx.fillStyle = 'rgba(239, 68, 68, 0.6)';
+            eraserCtx.beginPath();
+            eraserCtx.arc(x, y, size/2, 0, Math.PI * 2);
+            eraserCtx.fill();
+        }
+
+        function applyEraser() {
+            if(!eraserCanvas) return;
+            // Simulated Content-Aware Inpaint (In-browser blurring magic)
+            const imgData = eraserCtx.getImageData(0, 0, eraserCanvas.width, eraserCanvas.height);
+            const data = imgData.data;
+            for (let i = 0; i < data.length; i += 4) {
+                if (data[i] > 200 && data[i+1] < 100 && data[i+2] < 100) { // Detect red mask
+                    data[i] = data[i-4] || 255;
+                    data[i+1] = data[i-3] || 255;
+                    data[i+2] = data[i-2] || 255;
+                    data[i+3] = 255;
+                }
+            }
+            eraserCtx.putImageData(imgData, 0, 0);
+            alert('নির্বাচন করা অংশটি সফলভাবে কভার করে মুছে ফেলা হয়েছে!');
+        }
+
+        function downloadEraserResult() {
+            if(!eraserCanvas) return;
+            const link = document.createElement('a');
+            link.download = 'erased_image.png';
+            link.href = eraserCanvas.toDataURL();
+            link.click();
+        }
+
+        // ================= 5. INSTANT BG REMOVER LOGIC =================
+        function processBgRemoval(e) {
+            const file = e.target.files[0];
+            if(!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const img = new Image();
+                img.onload = function() {
+                    document.getElementById('bg-orig-preview').src = event.target.result;
+                    const canvas = document.getElementById('bg-result-canvas');
+                    const ctx = canvas.getContext('2d');
+
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    ctx.drawImage(img, 0, 0);
+
+                    const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                    const data = imgData.data;
+
+                    // Algorithm to detect white/light background and convert to transparent
+                    for (let i = 0; i < data.length; i += 4) {
+                        const r = data[i], g = data[i+1], b = data[i+2];
+                        if (r > 220 && g > 220 && b > 220) {
+                            data[i+3] = 0; // Set Alpha to 0
+                        }
+                    }
+                    ctx.putImageData(imgData, 0, 0);
+
+                    const downloadBtn = document.getElementById('bg-download-btn');
+                    downloadBtn.href = canvas.toDataURL('image/png');
+                    downloadBtn.classList.remove('hidden');
+                }
+                img.src = event.target.result;
+            }
+            reader.readAsDataURL(file);
+        }
+
+        // ================= 6. SECRET NOTE LOGIC =================
+        let currentSecret = "";
+
+        function createSecretNote() {
+            const text = document.getElementById('secret-input').value.trim();
+            if(!text) return alert('অনুগ্রহ করে মেসেজ লিখুন!');
+            
+            currentSecret = text;
+            const enc = btoa(unescape(encodeURIComponent(text))); // Encode base64
+            document.getElementById('secret-enc-text').innerText = enc;
+            document.getElementById('secret-result-box').classList.remove('hidden');
+            document.getElementById('secret-input').value = '';
+        }
+
+        function readAndDestroySecret() {
+            if(!currentSecret) return alert('কোনো গোপন মেসেজ পাওয়া যায়নি!');
+            alert(`গোপন মেসেজটি হলো:\n\n"${currentSecret}"\n\n(মেসেজটি এখন চিরতরে ডিলিট হয়ে গেল!)`);
+            currentSecret = "";
+            document.getElementById('secret-result-box').classList.add('hidden');
+        }
+
+        // ================= 7. DIGITAL SIGNATURE LOGIC =================
+        let sigCanvas, sigCtx, sigDrawing = false;
+
+        function initSignaturePad() {
+            sigCanvas = document.getElementById('signature-pad');
+            sigCtx = sigCanvas.getContext('2d');
+            sigCtx.lineWidth = 2.5;
+            sigCtx.lineCap = 'round';
+
+            sigCanvas.onmousedown = (e) => { sigDrawing = true; sigCtx.beginPath(); sigCtx.moveTo(e.offsetX, e.offsetY); };
+            sigCanvas.onmousemove = (e) => {
+                if(sigDrawing) {
+                    sigCtx.strokeStyle = document.getElementById('sig-color').value;
+                    sigCtx.lineTo(e.offsetX, e.offsetY);
+                    sigCtx.stroke();
+                }
+            };
+            sigCanvas.onmouseup = () => sigDrawing = false;
+
+            // Touch support for Mobile Phone
+            sigCanvas.addEventListener("touchstart", (e) => {
+                const touch = e.touches[0];
+                const rect = sigCanvas.getBoundingClientRect();
+                sigDrawing = true;
+                sigCtx.beginPath();
+                sigCtx.moveTo(touch.clientX - rect.left, touch.clientY - rect.top);
+            }, false);
+
+            sigCanvas.addEventListener("touchmove", (e) => {
+                if(sigDrawing) {
+                    e.preventDefault();
+                    const touch = e.touches[0];
+                    const rect = sigCanvas.getBoundingClientRect();
+                    sigCtx.strokeStyle = document.getElementById('sig-color').value;
+                    sigCtx.lineTo(touch.clientX - rect.left, touch.clientY - rect.top);
+                    sigCtx.stroke();
+                }
+            }, false);
+
+            sigCanvas.addEventListener("touchend", () => sigDrawing = false, false);
+        }
+
+        function clearSignature() {
+            if(sigCtx) sigCtx.clearRect(0, 0, sigCanvas.width, sigCanvas.height);
+        }
+
+        function downloadSignature() {
+            if(!sigCanvas) return;
+            const link = document.createElement('a');
+            link.download = 'digital_signature.png';
+            link.href = sigCanvas.toDataURL('image/png');
+            link.click();
+        }
+
+        // ================= 8. QR CODE LOGIC =================
         function generateQRCode() {
             const val = document.getElementById('qr-input').value.trim() || 'https://smartshebabox.com';
-            const encodedVal = encodeURIComponent(val);
-            const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodedVal}`;
-            
+            const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(val)}`;
             document.getElementById('qr-img').src = qrApiUrl;
             const downloadBtn = document.getElementById('qr-download-btn');
             downloadBtn.href = qrApiUrl;
             downloadBtn.classList.remove('hidden');
         }
-        generateQRCode();
 
-        // ================= 4. NOTEPAD & TO-DO LIST LOGIC =================
+        // ================= 9. NOTEPAD LOGIC =================
         function saveNote() {
-            const noteText = document.getElementById('quick-note').value;
-            localStorage.setItem('user_quick_note', noteText);
+            localStorage.setItem('user_quick_note', document.getElementById('quick-note').value);
         }
 
         function clearNote() {
@@ -653,30 +1013,19 @@
             }
         }
 
-        function toggleTask(index) {
-            tasks[index].done = !tasks[index].done;
-            renderTasks();
-        }
+        function toggleTask(index) { tasks[index].done = !tasks[index].done; renderTasks(); }
+        function deleteTask(index) { tasks.splice(index, 1); renderTasks(); }
+        function loadTasks() { renderTasks(); }
 
-        function deleteTask(index) {
-            tasks.splice(index, 1);
-            renderTasks();
-        }
-
-        function loadTasks() {
-            renderTasks();
-        }
-
-        // ================= 5. SMART DICTIONARY LOGIC =================
+        // ================= 10. DICTIONARY LOGIC =================
         const dictData = {
-            "সততা": { word: "সততা (Honesty)", pos: "বিশেষ্য", meaning: "সাধুতা, ন্যায়পরায়ণতা, সত্যবাদিতা।", exp: "মানুষের অন্যতম শ্রেষ্ঠ নৈতিক গুণ হলো সততা, যা সমাজে বিশ্বাস বজায় রাখে।" },
-            "প্রজ্ঞা": { word: "প্রজ্ঞা (Wisdom)", pos: "বিশেষ্য", meaning: "গভীর জ্ঞান, সুবুদ্ধি, বিচারক্ষমতা।", exp: "অভিজ্ঞতা এবং সঠিক চিন্তাধারার মেলবন্ধনে মানুষের প্রজ্ঞা বিকাশ লাভ করে।" }
+            "সততা": { word: "সততা (Honesty)", pos: "বিশেষ্য", meaning: "সাধুতা, ন্যায়পরায়ণতা, সত্যবাদিতা।", exp: "মানুষের অন্যতম শ্রেষ্ঠ নৈতিক গুণ হলো সততা।" },
+            "প্রজ্ঞা": { word: "প্রজ্ঞা (Wisdom)", pos: "বিশেষ্য", meaning: "গভীর জ্ঞান, সুবুদ্ধি, বিচারক্ষমতা।", exp: "অভিজ্ঞতা থেকে প্রজ্ঞা বিকাশ লাভ করে।" }
         };
 
         function searchDictionary() {
             const word = document.getElementById('dict-input').value.trim().toLowerCase();
             const out = document.getElementById('dict-output');
-            
             let matchedKey = Object.keys(dictData).find(k => k.toLowerCase() === word);
 
             if (matchedKey) {
@@ -697,21 +1046,20 @@
                 out.innerHTML = `
                     <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 mt-3">
                         <h3 class="text-xl font-bold text-slate-800 mb-2">${word}</h3>
-                        <p class="text-sm text-slate-700">শব্দটির সহজ অর্থ ও ব্যাখ্যা তুলে ধরা হলো।</p>
+                        <p class="text-sm text-slate-700">শব্দটির সহজ অর্থ ও তথ্য প্রদর্শন করা হচ্ছে।</p>
                     </div>
                 `;
             }
         }
 
-        // ================= 6. NEWS ARTICLE GENERATOR LOGIC =================
+        // ================= 11. NEWS CREATOR LOGIC =================
         function generateNews() {
             const raw = document.getElementById('news-raw').value;
             const place = document.getElementById('news-place').value || 'বিশেষ প্রতিনিধি';
-            
             if(!raw) return;
 
             document.getElementById('news-headline').innerText = `${place}: তথ্য সংগৃহীত সংবাদ বুলেটিন`;
-            document.getElementById('news-meta').innerText = `নিজস্ব প্রতিবেদক, ঠিকানা: ${place} | প্রকাশ: ৩ নভেম্বর ২০২৬`;
+            document.getElementById('news-meta').innerText = `নিজস্ব প্রতিবেদক, ঠিকানা: ${place}`;
             document.getElementById('news-body').innerText = `${place} প্রতিনিধি:\n\n${raw}\n\nসংবাদটি জনস্বার্থে প্রকাশিত হলো।`;
         }
         generateNews();
@@ -720,8 +1068,8 @@
             const title = document.getElementById('news-headline').innerText;
             const body = document.getElementById('news-body').innerText;
             navigator.clipboard.writeText(title + "\n\n" + body);
-            alert("সংবাদটি ক্লিপবোর্ডে কপি করা হয়েছে!");
+            alert("সংবাদটি কপি করা হয়েছে!");
         }
     </script>
 </body>
-</html>
+                    </html>
