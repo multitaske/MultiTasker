@@ -10,6 +10,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts for Bengali -->
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- html2pdf Library for Direct PDF Download -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <!-- html2canvas Library for Image Download to Gallery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         body {
             font-family: 'Hind Siliguri', sans-serif;
@@ -152,7 +156,7 @@
             </div>
         </section>
 
-        <!-- ================= SECTION 2: ORGANIZATIONAL PAD (Matching User Photo) ================= -->
+        <!-- ================= SECTION 2: ORGANIZATIONAL PAD (GALLERY IMAGE + PDF DOWNLOAD) ================= -->
         <section id="sec-pad" class="tab-content hidden">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <!-- Pad Controls -->
@@ -201,7 +205,7 @@
 
                     <div>
                         <label class="block text-xs font-bold mb-1">বিজ্ঞপ্তির বিস্তারিত বক্তব্য</label>
-                        <textarea id="pad-body" oninput="updatePad()" rows="8" class="w-full p-2 border rounded text-sm outline-none">দীর্ঘদিন থেকেই ঢাকা বিশ্ববিদ্যালয়ের বিভিন্ন হলের ক্যান্টিনে খাবারের মান নিয়ে প্রশ্ন উঠছে। স্বল্প মূল্যে খাবার সরবরাহের নামে মানহীন খাবার পরিবেশন করা হচ্ছে ক্যান্টিনগুলোতে। শিক্ষার্থীরা বিভিন্ন সময়ে প্রতিবাদ জানালেও এগুলোর কোন সমাধান হয় না।
+                        <textarea id="pad-body" oninput="updatePad()" rows="7" class="w-full p-2 border rounded text-sm outline-none">দীর্ঘদিন থেকেই ঢাকা বিশ্ববিদ্যালয়ের বিভিন্ন হলের ক্যান্টিনে খাবারের মান নিয়ে প্রশ্ন উঠছে। স্বল্প মূল্যে খাবার সরবরাহের নামে মানহীন খাবার পরিবেশন করা হচ্ছে ক্যান্টিনগুলোতে। শিক্ষার্থীরা বিভিন্ন সময়ে প্রতিবাদ জানালেও এগুলোর কোন সমাধান হয় না।
 
 কিন্তু এই রমজানে পরিস্থিতি পূর্বের থেকেও ভয়াবহ আকার ধারণ করেছে। রমজান উপলক্ষে খাবারের মান যেখানে ভাল করার কথা, উল্টো দ্রব্যমূল্যের ঊর্ধ্বগতির দোহাই দিয়ে মূল্য বৃদ্ধি করা হয়েছে প্রায় হল ক্যান্টিনে। 
 
@@ -221,9 +225,15 @@
                         </div>
                     </div>
 
-                    <button onclick="window.print()" class="w-full bg-emerald-600 text-white font-bold py-2.5 rounded-lg hover:bg-emerald-700 transition flex justify-center items-center gap-2">
-                        <i class="fa-solid fa-download"></i> প্রেস বিজ্ঞপ্তি প্যাড ডাউনলোড / প্রিন্ট করুন
-                    </button>
+                    <!-- DOWNLOAD BUTTONS (GALLERY IMAGE + PDF) -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 border-t pt-3">
+                        <button onclick="downloadPadImage()" class="bg-blue-600 text-white font-bold py-2.5 rounded-lg hover:bg-blue-700 transition flex justify-center items-center gap-2 text-sm">
+                            <i class="fa-solid fa-image"></i> ১. ইমেজ ডাউনলোড (গ্যালারিতে সেভ)
+                        </button>
+                        <button onclick="downloadPadPDF()" class="bg-emerald-600 text-white font-bold py-2.5 rounded-lg hover:bg-emerald-700 transition flex justify-center items-center gap-2 text-sm">
+                            <i class="fa-solid fa-file-pdf"></i> ২. পিডিএফ ডাউনলোড
+                        </button>
+                    </div>
                 </div>
 
                 <!-- Pad Preview -->
@@ -285,7 +295,6 @@
 
                 <div class="mt-6 flex flex-col items-center justify-center p-4 bg-slate-50 rounded-xl border border-slate-200">
                     <div id="qrcode-container" class="bg-white p-3 rounded-lg shadow-sm border mb-3 flex items-center justify-center min-h-[180px] min-w-[180px]">
-                        <!-- Dynamic QR generated via API -->
                         <img id="qr-img" src="" alt="QR Code" class="max-w-[180px] max-h-[180px]">
                     </div>
                     <p class="text-xs text-slate-500 mb-3">মোবাইল ক্যামেরা দিয়ে স্ক্যান করলেই তথ্য পেয়ে যাবেন।</p>
@@ -299,7 +308,6 @@
         <!-- ================= SECTION 4: ONLINE NOTEPAD & TO-DO LIST ================= -->
         <section id="sec-notes" class="tab-content hidden">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Notepad Box -->
                 <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 flex flex-col justify-between">
                     <div>
                         <div class="flex justify-between items-center border-b pb-2 mb-3">
@@ -316,7 +324,6 @@
                     </div>
                 </div>
 
-                <!-- To-Do List Box -->
                 <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 flex flex-col justify-between">
                     <div>
                         <div class="flex justify-between items-center border-b pb-2 mb-3">
@@ -328,9 +335,7 @@
                             <input type="text" id="task-input" placeholder="নতুন কাজের নাম লিখুন..." class="w-full p-2 border rounded text-sm outline-none focus:ring-2 focus:ring-emerald-500">
                             <button onclick="addTask()" class="bg-emerald-600 text-white px-4 py-2 rounded text-sm font-bold hover:bg-emerald-700 transition">যোগ করুন</button>
                         </div>
-                        <ul id="task-list" class="space-y-2 max-h-[220px] overflow-y-auto pr-1">
-                            <!-- Tasks will appear here -->
-                        </ul>
+                        <ul id="task-list" class="space-y-2 max-h-[220px] overflow-y-auto pr-1"></ul>
                     </div>
                     <div class="text-xs text-slate-400 mt-2">
                         কাজে টিক মার্ক দিয়ে সম্পন্ন করুন অথবা মুছে ফেলুন।
@@ -440,7 +445,7 @@
         }
         updateCV();
 
-        // ================= 2. ORGANIZATIONAL PAD LOGIC =================
+        // ================= 2. ORGANIZATIONAL PAD LOGIC (IMAGE & PDF DOWNLOAD) =================
         function loadPadLogo(event, position) {
             const reader = new FileReader();
             reader.onload = function(){
@@ -468,9 +473,33 @@
             document.getElementById('prev-sender-name').innerText = document.getElementById('pad-sender-name').value || '';
             document.getElementById('prev-sender-title').innerText = document.getElementById('pad-sender-title').value || '';
             document.getElementById('prev-sender-org').innerText = org + ',';
-            document.getElementById('prev-sender-branch').innerText = branch + '。';
+            document.getElementById('prev-sender-branch').innerText = branch + '।';
         }
         updatePad();
+
+        // Download Pad directly as PNG Image to Mobile/PC Gallery
+        function downloadPadImage() {
+            const element = document.getElementById('pad-preview');
+            html2canvas(element, { scale: 2 }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'Notice_Pad_Image.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        }
+
+        // Download Pad as PDF Document
+        function downloadPadPDF() {
+            const element = document.getElementById('pad-preview');
+            const opt = {
+                margin:       10,
+                filename:     'Press_Release_Notice.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2 },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+            html2pdf().set(opt).from(element).save();
+        }
 
         // ================= 3. TEXT TO QR CODE GENERATOR LOGIC =================
         function generateQRCode() {
@@ -496,7 +525,6 @@
             localStorage.removeItem('user_quick_note');
         }
 
-        // Load saved note on start
         window.addEventListener('DOMContentLoaded', () => {
             if(localStorage.getItem('user_quick_note')) {
                 document.getElementById('quick-note').value = localStorage.getItem('user_quick_note');
@@ -504,7 +532,6 @@
             loadTasks();
         });
 
-        // To-Do List Functions
         let tasks = JSON.parse(localStorage.getItem('user_tasks')) || [
             { text: "ওয়েবসাইটের ডিজাইন চেক করা", done: true },
             { text: "প্রেস বিজ্ঞপ্তি তৈরি করা", done: false }
