@@ -19,11 +19,36 @@
             font-family: 'Hind Siliguri', sans-serif;
             background-color: #f8fafc;
         }
+
+        /* Standard A4 Page Sizing Rules */
+        .a4-page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 15mm;
+            margin: auto;
+            background: white;
+            box-sizing: border-box;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        @media screen and (max-width: 768px) {
+            .a4-page {
+                width: 100%;
+                min-height: auto;
+                padding: 15px;
+            }
+        }
+
         @media print {
             .no-print { display: none !important; }
-            .print-only { display: block !important; }
-            body { background: white; font-size: 12pt; }
-            .print-container { width: 100% !important; margin: 0 !important; padding: 0 !important; box-shadow: none !important; }
+            body { background: white; margin: 0; padding: 0; }
+            .a4-page {
+                width: 210mm !important;
+                height: 297mm !important;
+                padding: 15mm !important;
+                box-shadow: none !important;
+                margin: 0 !important;
+            }
         }
     </style>
 </head>
@@ -47,7 +72,7 @@
                     <i class="fa-solid fa-file-pdf"></i> ১. অটো সিভি
                 </button>
                 <button onclick="switchTab('pad')" id="tab-pad" class="tab-btn bg-emerald-900/60 text-emerald-100 px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 hover:bg-emerald-500 hover:text-white transition">
-                    <i class="fa-solid fa-file-signature"></i> ২. সাংগঠনিক প্যাড
+                    <i class="fa-solid fa-file-signature"></i> ২. কাস্টম A4 প্যাড
                 </button>
                 <button onclick="switchTab('qr')" id="tab-qr" class="tab-btn bg-emerald-900/60 text-emerald-100 px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 hover:bg-emerald-500 hover:text-white transition">
                     <i class="fa-solid fa-qrcode"></i> ৩. কিউআর কোড জেনারেটর
@@ -156,56 +181,76 @@
             </div>
         </section>
 
-        <!-- ================= SECTION 2: ORGANIZATIONAL PAD (GALLERY IMAGE + PDF DOWNLOAD) ================= -->
+        <!-- ================= SECTION 2: ORGANIZATIONAL PAD (SEPARATE ORGANIZATION OPTIONS) ================= -->
         <section id="sec-pad" class="tab-content hidden">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <!-- Pad Controls -->
-                <div class="bg-white p-6 rounded-xl shadow-md space-y-4 no-print border border-slate-200">
-                    <h2 class="text-xl font-bold text-emerald-700 border-b pb-2 flex items-center gap-2">
-                        <i class="fa-solid fa-sliders"></i> প্রেস বিজ্ঞপ্তি ও প্যাড ফরম পূরণ
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <!-- Pad Controls Form (5 Cols) -->
+                <div class="lg:col-span-5 bg-white p-6 rounded-xl shadow-md space-y-3 no-print border border-slate-200 max-h-[85vh] overflow-y-auto">
+                    <h2 class="text-lg font-bold text-emerald-700 border-b pb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-pen-to-square"></i> প্যাডের প্রতিটা লেখা আলাদা এডিট করুন
                     </h2>
                     
-                    <div class="grid grid-cols-2 gap-3">
+                    <div class="grid grid-cols-2 gap-2">
                         <div>
-                            <label class="block text-xs font-bold mb-1">বামপাশের লোগো আপলোড</label>
-                            <input type="file" accept="image/*" onchange="loadPadLogo(event, 'left')" class="w-full p-2 border rounded text-xs bg-slate-50">
+                            <label class="block text-[11px] font-bold mb-1">বামপাশের লোগো</label>
+                            <input type="file" accept="image/*" onchange="loadPadLogo(event, 'left')" class="w-full p-1 border rounded text-xs bg-slate-50">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold mb-1">ডানপাশের লোগো (ঐচ্ছিক)</label>
+                            <label class="block text-[11px] font-bold mb-1">ডানপাশের লোগো (ঐচ্ছিক)</label>
                             <input type="file" accept="image/*" onchange="loadPadLogo(event, 'right')" class="w-full p-2 border rounded text-xs bg-slate-50">
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-3">
-                        <div>
-                            <label class="block text-xs font-bold mb-1">সংগঠনের নাম (বাংলা)</label>
-                            <input type="text" id="pad-org-name" oninput="updatePad()" value="ইসলামী ছাত্র আন্দোলন বাংলাদেশ" class="w-full p-2 border rounded text-sm font-bold outline-none">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold mb-1">শাখা / বিশ্ববিদ্যালয় / এলাকা</label>
-                            <input type="text" id="pad-branch" oninput="updatePad()" value="ঢাকা বিশ্ববিদ্যালয়" class="w-full p-2 border rounded text-sm outline-none">
+                    <!-- Header Organization Settings -->
+                    <div class="bg-slate-50 p-2.5 rounded border border-slate-200 space-y-2">
+                        <p class="text-xs font-bold text-emerald-800 border-b pb-1">১. প্যাডের শীর্ষ অংশের নাম</p>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="block text-[11px] font-bold mb-1">মূল সংগঠনের নাম</label>
+                                <input type="text" id="pad-org-name" oninput="updatePad()" value="ইসলামী ছাত্র আন্দোলন বাংলাদেশ" class="w-full p-1.5 border rounded text-xs font-bold outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold mb-1">শাখা / বিশ্ববিদ্যালয়</label>
+                                <input type="text" id="pad-branch" oninput="updatePad()" value="ঢাকা বিশ্ববিদ্যালয়" class="w-full p-1.5 border rounded text-xs outline-none">
+                            </div>
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-3">
+                    <div class="grid grid-cols-2 gap-2">
                         <div>
-                            <label class="block text-xs font-bold mb-1">ইমেইল ঠিকানা</label>
-                            <input type="text" id="pad-email" oninput="updatePad()" value="iscadubd@gmail.com" class="w-full p-2 border rounded text-sm outline-none">
+                            <label class="block text-[11px] font-bold mb-1">ইমেইল ঠিকানা</label>
+                            <input type="text" id="pad-email" oninput="updatePad()" value="iscadubd@gmail.com" class="w-full p-1.5 border rounded text-xs outline-none">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold mb-1">ফোন নম্বর</label>
-                            <input type="text" id="pad-phone" oninput="updatePad()" value="০১৮১৫৪৭২৫২২" class="w-full p-2 border rounded text-sm outline-none">
+                            <label class="block text-[11px] font-bold mb-1">ফোন নম্বর</label>
+                            <input type="text" id="pad-phone" oninput="updatePad()" value="০১৮১৫৪৭২৫২২" class="w-full p-1.5 border rounded text-xs outline-none">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="block text-[11px] font-bold mb-1">স্মারক নং / রেফারেন্স</label>
+                            <input type="text" id="pad-ref" oninput="updatePad()" value="" placeholder="স্মারক নং..." class="w-full p-1.5 border rounded text-xs outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold mb-1">তারিখ</label>
+                            <input type="text" id="pad-date" oninput="updatePad()" value="" placeholder="তারিখ..." class="w-full p-1.5 border rounded text-xs outline-none">
                         </div>
                     </div>
 
                     <div>
-                        <label class="block text-xs font-bold mb-1">বিজ্ঞপ্তির প্রধান শিরোনাম (বোল্ড টেক্সট)</label>
-                        <input type="text" id="pad-headline" oninput="updatePad()" value="হল ক্যান্টিনে খাবারের মান ও মূল্য নিয়ন্ত্রণে প্রশাসনিক বিশেষ মোবাইল টিম গঠন করতে হবে -" class="w-full p-2 border rounded text-sm font-bold outline-none">
+                        <label class="block text-[11px] font-bold mb-1">টপ ট্যাগলাইন / নোটিশ টাইটেল</label>
+                        <input type="text" id="pad-tagline" oninput="updatePad()" value="প্রেস বিজ্ঞপ্তি:" class="w-full p-1.5 border rounded text-xs font-bold outline-none">
                     </div>
 
                     <div>
-                        <label class="block text-xs font-bold mb-1">বিজ্ঞপ্তির বিস্তারিত বক্তব্য</label>
-                        <textarea id="pad-body" oninput="updatePad()" rows="7" class="w-full p-2 border rounded text-sm outline-none">দীর্ঘদিন থেকেই ঢাকা বিশ্ববিদ্যালয়ের বিভিন্ন হলের ক্যান্টিনে খাবারের মান নিয়ে প্রশ্ন উঠছে। স্বল্প মূল্যে খাবার সরবরাহের নামে মানহীন খাবার পরিবেশন করা হচ্ছে ক্যান্টিনগুলোতে। শিক্ষার্থীরা বিভিন্ন সময়ে প্রতিবাদ জানালেও এগুলোর কোন সমাধান হয় না।
+                        <label class="block text-[11px] font-bold mb-1">বিজ্ঞপ্তির মূল বিষয় / শিরোনাম</label>
+                        <input type="text" id="pad-headline" oninput="updatePad()" value="হল ক্যান্টিনে খাবারের মান ও মূল্য নিয়ন্ত্রণে প্রশাসনিক বিশেষ মোবাইল টিম গঠন করতে হবে -" class="w-full p-1.5 border rounded text-xs font-bold outline-none">
+                    </div>
+
+                    <div>
+                        <label class="block text-[11px] font-bold mb-1">বিজ্ঞপ্তির বিস্তারিত মূল বক্তব্য</label>
+                        <textarea id="pad-body" oninput="updatePad()" rows="7" class="w-full p-2 border rounded text-xs outline-none">দীর্ঘদিন থেকেই ঢাকা বিশ্ববিদ্যালয়ের বিভিন্ন হলের ক্যান্টিনে খাবারের মান নিয়ে প্রশ্ন উঠছে। স্বল্প মূল্যে খাবার সরবরাহের নামে মানহীন খাবার পরিবেশন করা হচ্ছে ক্যান্টিনগুলোতে। শিক্ষার্থীরা বিভিন্ন সময়ে প্রতিবাদ জানালেও এগুলোর কোন সমাধান হয় না।
 
 কিন্তু এই রমজানে পরিস্থিতি পূর্বের থেকেও ভয়াবহ আকার ধারণ করেছে। রমজান উপলক্ষে খাবারের মান যেখানে ভাল করার কথা, উল্টো দ্রব্যমূল্যের ঊর্ধ্বগতির দোহাই দিয়ে মূল্য বৃদ্ধি করা হয়েছে প্রায় হল ক্যান্টিনে। 
 
@@ -214,67 +259,90 @@
 সাথে সাথে ছাত্র সংগঠনগুলোকেও বিষয়টি নিয়ে ঐক্যবদ্ধ আওয়াজ তোলার আহ্বান জানাচ্ছি।</textarea>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-3 border-t pt-3">
-                        <div>
-                            <label class="block text-xs font-bold mb-1">প্রেরকের নাম</label>
-                            <input type="text" id="pad-sender-name" oninput="updatePad()" value="আবু বকর সিদ্দিক" class="w-full p-2 border rounded text-sm outline-none">
+                    <!-- Sender Organization & Details Settings -->
+                    <div class="bg-slate-50 p-2.5 rounded border border-slate-200 space-y-2">
+                        <p class="text-xs font-bold text-emerald-800 border-b pb-1">২. প্রেরকের অংশের বিবরণ</p>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="block text-[11px] font-bold mb-1">প্রেরকের নাম</label>
+                                <input type="text" id="pad-sender-name" oninput="updatePad()" value="আবু বকর সিদ্দিক" class="w-full p-1.5 border rounded text-xs outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold mb-1">প্রেরকের পদবী</label>
+                                <input type="text" id="pad-sender-title" oninput="updatePad()" value="প্রচার ও প্রকাশনা সম্পাদক," class="w-full p-1.5 border rounded text-xs outline-none">
+                            </div>
                         </div>
-                        <div>
-                            <label class="block text-xs font-bold mb-1">প্রেরকের পদবী</label>
-                            <input type="text" id="pad-sender-title" oninput="updatePad()" value="প্রচার ও প্রকাশনা সম্পাদক," class="w-full p-2 border rounded text-sm outline-none">
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="block text-[11px] font-bold mb-1">প্রেরকের সংগঠনের নাম</label>
+                                <input type="text" id="pad-sender-org" oninput="updatePad()" value="ইসলামী ছাত্র আন্দোলন বাংলাদেশ" class="w-full p-1.5 border rounded text-xs outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold mb-1">প্রেরকের শাখা / এলাকা</label>
+                                <input type="text" id="pad-sender-branch" oninput="updatePad()" value="ঢাকা বিশ্ববিদ্যালয়" class="w-full p-1.5 border rounded text-xs outline-none">
+                            </div>
                         </div>
                     </div>
 
-                    <!-- DOWNLOAD BUTTONS (GALLERY IMAGE + PDF) -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 border-t pt-3">
-                        <button onclick="downloadPadImage()" class="bg-blue-600 text-white font-bold py-2.5 rounded-lg hover:bg-blue-700 transition flex justify-center items-center gap-2 text-sm">
-                            <i class="fa-solid fa-image"></i> ১. ইমেজ ডাউনলোড (গ্যালারিতে সেভ)
+                    <!-- DOWNLOAD BUTTONS -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 border-t pt-2">
+                        <button onclick="downloadPadImage()" class="bg-blue-600 text-white font-bold py-2.5 rounded-lg hover:bg-blue-700 transition flex justify-center items-center gap-2 text-xs">
+                            <i class="fa-solid fa-image"></i> গ্যালারিতে সেভ করুন (Image)
                         </button>
-                        <button onclick="downloadPadPDF()" class="bg-emerald-600 text-white font-bold py-2.5 rounded-lg hover:bg-emerald-700 transition flex justify-center items-center gap-2 text-sm">
-                            <i class="fa-solid fa-file-pdf"></i> ২. পিডিএফ ডাউনলোড
+                        <button onclick="downloadPadPDF()" class="bg-emerald-600 text-white font-bold py-2.5 rounded-lg hover:bg-emerald-700 transition flex justify-center items-center gap-2 text-xs">
+                            <i class="fa-solid fa-file-pdf"></i> A4 PDF ডাউনলোড
                         </button>
                     </div>
                 </div>
 
-                <!-- Pad Preview -->
-                <div class="print-container">
-                    <div id="pad-preview" class="bg-white p-8 rounded-xl shadow-lg border border-slate-300 min-h-[750px] flex flex-col justify-between relative font-sans">
+                <!-- A4 Size Pad Live Preview (7 Cols) -->
+                <div class="lg:col-span-7 flex justify-center overflow-x-auto">
+                    <div id="pad-preview" class="a4-page flex flex-col justify-between border relative font-sans">
                         <div>
-                            <div class="flex justify-between items-center border-b border-slate-300 pb-3 mb-2">
-                                <div class="w-14 h-14 flex items-center justify-center">
+                            <!-- Header Area -->
+                            <div class="flex justify-between items-center border-b border-slate-300 pb-2 mb-2">
+                                <div class="w-16 h-16 flex items-center justify-center">
                                     <img id="pad-logo-left" src="https://via.placeholder.com/60?text=Logo1" alt="Logo" class="max-h-full max-w-full object-contain">
                                 </div>
                                 <div class="text-center flex-grow px-2">
-                                    <h2 id="prev-pad-org" class="text-2xl md:text-3xl font-extrabold text-black tracking-tight">ইসলামী ছাত্র আন্দোলন বাংলাদেশ</h2>
+                                    <h2 id="prev-pad-org" class="text-2xl md:text-3xl font-extrabold text-black tracking-tight leading-tight">ইসলামী ছাত্র আন্দোলন বাংলাদেশ</h2>
                                     <p id="prev-pad-branch" class="text-sm font-bold text-slate-800">ঢাকা বিশ্ববিদ্যালয়</p>
                                 </div>
-                                <div class="w-14 h-14 flex items-center justify-center">
+                                <div class="w-16 h-16 flex items-center justify-center">
                                     <img id="pad-logo-right" src="https://via.placeholder.com/60?text=Logo2" alt="Logo" class="max-h-full max-w-full object-contain">
                                 </div>
                             </div>
 
-                            <div class="flex justify-between text-xs font-bold text-slate-700 border-b-2 border-slate-800 pb-1 mb-4">
+                            <!-- Email / Phone / Ref / Date Bar -->
+                            <div class="flex justify-between text-[11px] font-bold text-slate-700 border-b-2 border-slate-900 pb-1 mb-4">
                                 <span>ইমেইল: <span id="prev-pad-email">iscadubd@gmail.com</span></span>
+                                <span id="prev-pad-ref-container" class="hidden"><span id="prev-pad-ref"></span></span>
+                                <span id="prev-pad-date-container" class="hidden"><span id="prev-pad-date"></span></span>
                                 <span>ফোন: <span id="prev-pad-phone">০১৮১৫৪৭২৫২২</span></span>
                             </div>
 
-                            <div class="text-center mb-4">
-                                <span class="text-xs font-bold text-slate-800 tracking-wider">প্রেস বিজ্ঞপ্তি:</span>
+                            <!-- Tagline / Badge -->
+                            <div class="text-center mb-3">
+                                <span id="prev-pad-tagline" class="text-xs font-bold text-slate-900 tracking-wider">প্রেস বিজ্ঞপ্তি:</span>
                             </div>
 
-                            <h3 id="prev-pad-headline" class="text-lg md:text-xl font-bold text-slate-900 text-center mb-3 leading-snug"></h3>
+                            <!-- Headline -->
+                            <h3 id="prev-pad-headline" class="text-base md:text-lg font-bold text-slate-900 text-center mb-2 leading-snug"></h3>
                             
+                            <!-- Subtag -->
                             <p class="text-xs text-center font-bold text-slate-700 mb-6" id="prev-pad-subtag"></p>
 
-                            <div id="prev-pad-body" class="text-xs md:text-sm text-slate-800 leading-relaxed whitespace-pre-line text-justify px-2"></div>
+                            <!-- Body Copy -->
+                            <div id="prev-pad-body" class="text-xs md:text-sm text-slate-900 leading-relaxed whitespace-pre-line text-justify px-2"></div>
                         </div>
 
-                        <div class="mt-12 pt-4 text-xs text-slate-800 space-y-0.5">
+                        <!-- Footer Sender Section -->
+                        <div class="mt-12 pt-4 text-xs text-slate-900 space-y-0.5">
                             <p class="font-bold">প্রেরক-</p>
                             <p id="prev-sender-name" class="font-bold text-sm text-slate-900">আবু বকর সিদ্দিক</p>
                             <p id="prev-sender-title">প্রচার ও প্রকাশনা সম্পাদক,</p>
-                            <p id="prev-sender-org">ইসলামী ছাত্র আন্দোলন বাংলাদেশ,</p>
-                            <p id="prev-sender-branch">ঢাকা বিশ্ববিদ্যালয়।</p>
+                            <p id="prev-sender-org-text">ইসলামী ছাত্র আন্দোলন বাংলাদেশ,</p>
+                            <p id="prev-sender-branch-text">ঢাকা বিশ্ববিদ্যালয়।</p>
                         </div>
                     </div>
                 </div>
@@ -445,7 +513,7 @@
         }
         updateCV();
 
-        // ================= 2. ORGANIZATIONAL PAD LOGIC (IMAGE & PDF DOWNLOAD) =================
+        // ================= 2. FULLY EDITABLE A4 PAD LOGIC (SEPARATE ORGANIZATION FIELDS) =================
         function loadPadLogo(event, position) {
             const reader = new FileReader();
             reader.onload = function(){
@@ -459,6 +527,7 @@
         }
 
         function updatePad() {
+            // Header Organization Info
             const org = document.getElementById('pad-org-name').value || 'সংগঠনের নাম';
             const branch = document.getElementById('pad-branch').value || '';
             
@@ -466,34 +535,55 @@
             document.getElementById('prev-pad-branch').innerText = branch;
             document.getElementById('prev-pad-email').innerText = document.getElementById('pad-email').value || '';
             document.getElementById('prev-pad-phone').innerText = document.getElementById('pad-phone').value || '';
+            
+            // Ref & Date Updates
+            const refVal = document.getElementById('pad-ref').value;
+            const dateVal = document.getElementById('pad-date').value;
+            
+            if(refVal) {
+                document.getElementById('prev-pad-ref-container').classList.remove('hidden');
+                document.getElementById('prev-pad-ref').innerText = refVal;
+            } else {
+                document.getElementById('prev-pad-ref-container').classList.add('hidden');
+            }
+
+            if(dateVal) {
+                document.getElementById('prev-pad-date-container').classList.remove('hidden');
+                document.getElementById('prev-pad-date').innerText = dateVal;
+            } else {
+                document.getElementById('prev-pad-date-container').classList.add('hidden');
+            }
+
+            document.getElementById('prev-pad-tagline').innerText = document.getElementById('pad-tagline').value || '';
             document.getElementById('prev-pad-headline').innerText = document.getElementById('pad-headline').value || '';
             document.getElementById('prev-pad-subtag').innerText = `${org}, ${branch}।`;
             document.getElementById('prev-pad-body').innerText = document.getElementById('pad-body').value || '';
 
+            // Sender Details & Separate Organization Info
             document.getElementById('prev-sender-name').innerText = document.getElementById('pad-sender-name').value || '';
             document.getElementById('prev-sender-title').innerText = document.getElementById('pad-sender-title').value || '';
-            document.getElementById('prev-sender-org').innerText = org + ',';
-            document.getElementById('prev-sender-branch').innerText = branch + '।';
+            document.getElementById('prev-sender-org-text').innerText = (document.getElementById('pad-sender-org').value || '') + ',';
+            document.getElementById('prev-sender-branch-text').innerText = (document.getElementById('pad-sender-branch').value || '') + '।';
         }
         updatePad();
 
-        // Download Pad directly as PNG Image to Mobile/PC Gallery
+        // Download Pad directly as PNG Image to Gallery
         function downloadPadImage() {
             const element = document.getElementById('pad-preview');
             html2canvas(element, { scale: 2 }).then(canvas => {
                 const link = document.createElement('a');
-                link.download = 'Notice_Pad_Image.png';
+                link.download = 'A4_Official_Pad.png';
                 link.href = canvas.toDataURL('image/png');
                 link.click();
             });
         }
 
-        // Download Pad as PDF Document
+        // Download Pad as A4 PDF Document
         function downloadPadPDF() {
             const element = document.getElementById('pad-preview');
             const opt = {
-                margin:       10,
-                filename:     'Press_Release_Notice.pdf',
+                margin:       0,
+                filename:     'A4_Official_Pad.pdf',
                 image:        { type: 'jpeg', quality: 0.98 },
                 html2canvas:  { scale: 2 },
                 jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
@@ -621,7 +711,7 @@
             if(!raw) return;
 
             document.getElementById('news-headline').innerText = `${place}: তথ্য সংগৃহীত সংবাদ বুলেটিন`;
-            document.getElementById('news-meta').innerText = `নিজস্ব প্রতিবেদক, ${place} | প্রকাশ: ৩ নভেম্বর ২০২৬`;
+            document.getElementById('news-meta').innerText = `নিজস্ব প্রতিবেদক, ঠিকানা: ${place} | প্রকাশ: ৩ নভেম্বর ২০২৬`;
             document.getElementById('news-body').innerText = `${place} প্রতিনিধি:\n\n${raw}\n\nসংবাদটি জনস্বার্থে প্রকাশিত হলো।`;
         }
         generateNews();
@@ -634,4 +724,4 @@
         }
     </script>
 </body>
-    </html>
+</html>
