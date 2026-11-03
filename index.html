@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>মাল্টি-ফাংশনাল ওয়েব প্ল্যাটফর্ম</title>
+    <title>স্মার্ট সেহাবক্স - অল-ইন-ওয়ান ইউটিলিটি পোর্টাল</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome for Icons -->
@@ -34,10 +34,10 @@
         <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center">
             <div class="flex items-center space-x-3 space-x-reverse">
                 <i class="fa-solid fa-layer-group text-2xl text-yellow-300"></i>
-                <h1 class="text-xl md:text-2xl font-bold tracking-wide">স্মার্ট মাল্টি-পোর্টাল</h1>
+                <h1 class="text-xl md:text-2xl font-bold tracking-wide">স্মার্ট সেহাবক্স</h1>
             </div>
             <div class="text-xs bg-emerald-800 px-3 py-1 rounded-full text-emerald-200 mt-2 sm:mt-0">
-                অল-ইন-ওয়ান ইউটিলিটি হাব
+                ৬-ইন-১ মাল্টি-ইউটিলিটি প্ল্যাটফর্ম
             </div>
         </div>
         <!-- Menu Navigation Tabs -->
@@ -47,7 +47,7 @@
                     <i class="fa-solid fa-file-pdf"></i> ১. অটো সিভি
                 </button>
                 <button onclick="switchTab('place')" id="tab-place" class="tab-btn bg-emerald-900/60 text-emerald-100 px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 hover:bg-emerald-500 hover:text-white transition">
-                    <i class="fa-solid fa-map-location-dot"></i> ২. স্থান অনুসন্ধান
+                    <i class="fa-solid fa-map-location-dot"></i> ২. স্থান ও থানা অনুসন্ধান
                 </button>
                 <button onclick="switchTab('pad')" id="tab-pad" class="tab-btn bg-emerald-900/60 text-emerald-100 px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 hover:bg-emerald-500 hover:text-white transition">
                     <i class="fa-solid fa-file-signature"></i> ৩. সাংগঠনিক প্যাড
@@ -79,11 +79,11 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                         <div>
                             <label class="block text-xs font-bold mb-1">পূর্ণ নাম</label>
-                            <input type="text" id="cv-name" oninput="updateCV()" value="মোঃ আব্দুল্লাহ" class="w-full p-2 border rounded text-sm focus:ring-2 focus:ring-emerald-500 outline-none">
+                            <input type="text" id="cv-name" oninput="updateCV()" value="মোঃ আব্দুল্লাহ" class="w-full p-2 border rounded text-sm outline-none">
                         </div>
                         <div>
                             <label class="block text-xs font-bold mb-1">পদবী/পেশা</label>
-                            <input type="text" id="cv-title" oninput="updateCV()" value="সফ্টওয়্যার ডেভেলপার" class="w-full p-2 border rounded text-sm focus:ring-2 focus:ring-emerald-500 outline-none">
+                            <input type="text" id="cv-title" oninput="updateCV()" value="সফ্টওয়্যার ডেভেলপার" class="w-full p-2 border rounded text-sm outline-none">
                         </div>
                         <div>
                             <label class="block text-xs font-bold mb-1">ইমেইল</label>
@@ -99,7 +99,7 @@
                         <input type="text" id="cv-address" oninput="updateCV()" value="ঢাকা, বাংলাদেশ" class="w-full p-2 border rounded text-sm outline-none">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold mb-1">প্রোফাইল সারসংক্ষেপ / অবজেক্টিভ</label>
+                        <label class="block text-xs font-bold mb-1">প্রোফাইল সারসংক্ষেপ</label>
                         <textarea id="cv-about" oninput="updateCV()" rows="3" class="w-full p-2 border rounded text-sm outline-none">আমি একজন কঠোর পরিশ্রমী ও আত্মবিশ্বাসী প্রফেশনাল, যিনি প্রযুক্তির মাধ্যমে যেকোনো সমস্যা সহজ ও কার্যকরী উপায়ে সমাধান করতে ভালোবাসি।</textarea>
                     </div>
                     <div>
@@ -123,7 +123,6 @@
                 <div class="print-container">
                     <div id="cv-preview" class="bg-white p-8 rounded-xl shadow-lg border border-slate-200 min-h-[600px] flex flex-col justify-between">
                         <div>
-                            <!-- Header -->
                             <div class="border-b-2 border-emerald-600 pb-4 mb-4 text-center md:text-left flex flex-col md:flex-row justify-between items-start">
                                 <div>
                                     <h2 id="prev-name" class="text-2xl font-bold text-slate-800">মোঃ আব্দুল্লাহ</h2>
@@ -135,24 +134,20 @@
                                     <p><i class="fa-solid fa-location-dot text-emerald-600"></i> <span id="prev-address">ঢাকা, বাংলাদেশ</span></p>
                                 </div>
                             </div>
-                            <!-- Summary -->
                             <div class="mb-4">
-                                <h3 class="text-sm font-bold text-emerald-700 uppercase tracking-wider border-b border-slate-200 pb-1 mb-2">সংক্ষিপ্ত ক্যারিয়ার প্রোফাইল</h3>
+                                <h3 class="text-sm font-bold text-emerald-700 uppercase border-b border-slate-200 pb-1 mb-2">সংক্ষিপ্ত ক্যারিয়ার প্রোফাইল</h3>
                                 <p id="prev-about" class="text-xs text-slate-700 leading-relaxed"></p>
                             </div>
-                            <!-- Experience -->
                             <div class="mb-4">
-                                <h3 class="text-sm font-bold text-emerald-700 uppercase tracking-wider border-b border-slate-200 pb-1 mb-2">কর্মসংস্থান ও অভিজ্ঞতা</h3>
+                                <h3 class="text-sm font-bold text-emerald-700 uppercase border-b border-slate-200 pb-1 mb-2">কর্মসংস্থান ও অভিজ্ঞতা</h3>
                                 <ul id="prev-exp" class="list-disc list-inside text-xs text-slate-700 space-y-1"></ul>
                             </div>
-                            <!-- Education -->
                             <div class="mb-4">
-                                <h3 class="text-sm font-bold text-emerald-700 uppercase tracking-wider border-b border-slate-200 pb-1 mb-2">শিক্ষাগত যোগ্যতা</h3>
+                                <h3 class="text-sm font-bold text-emerald-700 uppercase border-b border-slate-200 pb-1 mb-2">শিক্ষাগত যোগ্যতা</h3>
                                 <ul id="prev-edu" class="list-disc list-inside text-xs text-slate-700 space-y-1"></ul>
                             </div>
-                            <!-- Skills -->
                             <div>
-                                <h3 class="text-sm font-bold text-emerald-700 uppercase tracking-wider border-b border-slate-200 pb-1 mb-2">দক্ষতা (Skills)</h3>
+                                <h3 class="text-sm font-bold text-emerald-700 uppercase border-b border-slate-200 pb-1 mb-2">দক্ষতা (Skills)</h3>
                                 <div id="prev-skills" class="flex flex-wrap gap-1.5 mt-2"></div>
                             </div>
                         </div>
@@ -161,127 +156,150 @@
             </div>
         </section>
 
-        <!-- ================= SECTION 2: PLACE SEARCH ================= -->
+        <!-- ================= SECTION 2: PLACE & THANA SEARCH ================= -->
         <section id="sec-place" class="tab-content hidden space-y-4">
             <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200">
                 <h2 class="text-xl font-bold text-emerald-700 mb-3 flex items-center gap-2">
-                    <i class="fa-solid fa-map-marked-alt"></i> স্থান ও দর্শনীয় স্থান অনুসন্ধান
+                    <i class="fa-solid fa-map-marked-alt"></i> স্থান ও থানা অনুযায়ী গুরুত্বপূর্ণ স্থান অনুসন্ধান
                 </h2>
                 <div class="flex gap-2 mb-4">
-                    <input type="text" id="place-input" placeholder="যেকোনো জেলার নাম লিখুন (যেমন: কক্সবাজার, সিলেট, বান্দরবান, বরিশাল...)" class="w-full p-3 border rounded-lg outline-none focus:ring-2 focus:ring-emerald-500">
+                    <input type="text" id="place-input" placeholder="যেকোনো থানা বা জেলার নাম লিখুন (যেমন: সাভার, কতোয়ালী, ধানমন্ডি, লালবাগ, কক্সবাজার, সদর...)" class="w-full p-3 border rounded-lg outline-none focus:ring-2 focus:ring-emerald-500">
                     <button onclick="searchPlace()" class="bg-emerald-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-emerald-700 transition flex items-center gap-2">
                         <i class="fa-solid fa-magnifying-glass"></i> খুঁজুন
                     </button>
                 </div>
-                <!-- Suggestions Bar -->
                 <div class="flex flex-wrap gap-2 text-xs">
                     <span class="text-slate-500 font-bold self-center">দ্রুত দেখুন:</span>
-                    <button onclick="quickSearch('কক্সবাজার')" class="bg-slate-200 hover:bg-emerald-100 px-3 py-1 rounded-full">কক্সবাজার</button>
-                    <button onclick="quickSearch('সিলেট')" class="bg-slate-200 hover:bg-emerald-100 px-3 py-1 rounded-full">সিলেট</button>
-                    <button onclick="quickSearch('বান্দরবান')" class="bg-slate-200 hover:bg-emerald-100 px-3 py-1 rounded-full">বান্দরবান</button>
-                    <button onclick="quickSearch('ঢাকা')" class="bg-slate-200 hover:bg-emerald-100 px-3 py-1 rounded-full">ঢাকা</button>
-                    <button onclick="quickSearch('বরিশাল')" class="bg-slate-200 hover:bg-emerald-100 px-3 py-1 rounded-full">বরিশাল</button>
-                    <button onclick="quickSearch('ময়মনসিংহ')" class="bg-slate-200 hover:bg-emerald-100 px-3 py-1 rounded-full">ময়মনসিংহ</button>
+                    <button onclick="quickSearch('শাহবাগ')" class="bg-slate-200 hover:bg-emerald-100 px-3 py-1 rounded-full">শাহবাগ থানা</button>
+                    <button onclick="quickSearch('লালবাগ')" class="bg-slate-200 hover:bg-emerald-100 px-3 py-1 rounded-full">লালবাগ থানা</button>
+                    <button onclick="quickSearch('সাভার')" class="bg-slate-200 hover:bg-emerald-100 px-3 py-1 rounded-full">সাভার থানা</button>
+                    <button onclick="quickSearch('সদর (কক্সবাজার)')" class="bg-slate-200 hover:bg-emerald-100 px-3 py-1 rounded-full">কক্সবাজার সদর</button>
+                    <button onclick="quickSearch('শ্রীমঙ্গল')" class="bg-slate-200 hover:bg-emerald-100 px-3 py-1 rounded-full">শ্রীমঙ্গল থানা</button>
                 </div>
             </div>
-            <!-- Search Results Output -->
             <div id="place-output" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
         </section>
 
-        <!-- ================= SECTION 3: ORGANIZATIONAL PAD ================= -->
+        <!-- ================= SECTION 3: ORGANIZATIONAL PAD (EXACT match to user photo) ================= -->
         <section id="sec-pad" class="tab-content hidden">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <!-- Pad Controls -->
                 <div class="bg-white p-6 rounded-xl shadow-md space-y-4 no-print border border-slate-200">
                     <h2 class="text-xl font-bold text-emerald-700 border-b pb-2 flex items-center gap-2">
-                        <i class="fa-solid fa-sliders"></i> প্যাডের তথ্য ও নোটিশ এডিটর
+                        <i class="fa-solid fa-sliders"></i> প্রেস বিজ্ঞপ্তি ও প্যাড ফরম পূরণ
                     </h2>
-                    <div>
-                        <label class="block text-xs font-bold mb-1">লোগো ছবি আপলোড করুন</label>
-                        <input type="file" id="pad-logo-input" accept="image/*" onchange="loadPadLogo(event)" class="w-full p-2 border rounded text-sm bg-slate-50">
+                    
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-bold mb-1">বামপাশের লোগো আপলোড</label>
+                            <input type="file" accept="image/*" onchange="loadPadLogo(event, 'left')" class="w-full p-2 border rounded text-xs bg-slate-50">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold mb-1">ডানপাশের লোগো (ঐচ্ছিক)</label>
+                            <input type="file" accept="image/*" onchange="loadPadLogo(event, 'right')" class="w-full p-2 border rounded text-xs bg-slate-50">
+                        </div>
                     </div>
+
                     <div class="grid grid-cols-2 gap-3">
                         <div>
                             <label class="block text-xs font-bold mb-1">সংগঠনের নাম (বাংলা)</label>
-                            <input type="text" id="pad-org-name" oninput="updatePad()" value="বাংলাদেশ যুব ওয়েলফেয়ার সোসাইটি" class="w-full p-2 border rounded text-sm outline-none">
+                            <input type="text" id="pad-org-name" oninput="updatePad()" value="ইসলামী ছাত্র আন্দোলন বাংলাদেশ" class="w-full p-2 border rounded text-sm font-bold outline-none">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold mb-1">সংগঠনের নাম (English)</label>
-                            <input type="text" id="pad-org-eng" oninput="updatePad()" value="Bangladesh Youth Welfare Society" class="w-full p-2 border rounded text-sm outline-none">
+                            <label class="block text-xs font-bold mb-1">শাখা / বিশ্ববিদ্যালয় / এলাকা</label>
+                            <input type="text" id="pad-branch" oninput="updatePad()" value="ঢাকা বিশ্ববিদ্যালয়" class="w-full p-2 border rounded text-sm outline-none">
                         </div>
                     </div>
-                    <div>
-                        <label class="block text-xs font-bold mb-1">স্লোগান / মত্ত</label>
-                        <input type="text" id="pad-slogan" oninput="updatePad()" value="মানবসেবায় আত্মনিবেদিত একটি অরাজনৈতিক সমাজসেবামূলক প্রতিষ্ঠান" class="w-full p-2 border rounded text-sm outline-none">
-                    </div>
+
                     <div class="grid grid-cols-2 gap-3">
                         <div>
-                            <label class="block text-xs font-bold mb-1">স্মারক নং</label>
-                            <input type="text" id="pad-ref" oninput="updatePad()" value="স্মারক নং: বিওয়াইডব্লিউএস/২০২৬/১০২" class="w-full p-2 border rounded text-sm outline-none">
+                            <label class="block text-xs font-bold mb-1">ইমেইল ঠিকানা</label>
+                            <input type="text" id="pad-email" oninput="updatePad()" value="iscadubd@gmail.com" class="w-full p-2 border rounded text-sm outline-none">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold mb-1">তারিখ</label>
-                            <input type="text" id="pad-date" oninput="updatePad()" value="তারিখ: ৩ নভেম্বর, ২০২৬" class="w-full p-2 border rounded text-sm outline-none">
+                            <label class="block text-xs font-bold mb-1">ফোন নম্বর</label>
+                            <input type="text" id="pad-phone" oninput="updatePad()" value="০১৮১৫৪৭২৫২২" class="w-full p-2 border rounded text-sm outline-none">
                         </div>
                     </div>
-                    <div>
-                        <label class="block text-xs font-bold mb-1">বিজ্ঞপ্তি / নোটিশের বিষয়</label>
-                        <input type="text" id="pad-subject" oninput="updatePad()" value="বিষয়: বার্ষিক সাধারণ সভা ও কমিটি গঠন সংক্রান্ত বিজ্ঞপ্তি।" class="w-full p-2 border rounded text-sm font-bold outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold mb-1">বিজ্ঞপ্তির বিস্তারিত বিবরণ</label>
-                        <textarea id="pad-body" oninput="updatePad()" rows="6" class="w-full p-2 border rounded text-sm outline-none">এতদ্বারা সংগঠনের সকল কার্যকরী সদস্য ও সাধারণ সদস্যদের অবগতির জন্য জানানো যাচ্ছে যে, আগামী ১৫ নভেম্বর ২০২৬, রোজ রবিবার বিকাল ৩:০০ টায় কেন্দ্রীয় কার্যালয়ে সংগঠনের বার্ষিক সাধারণ সভা অনুষ্ঠিত হইবে। 
 
-উক্ত সভায় সকলকে যথাসময়ে উপস্থিত থাকার জন্য বিনীত অনুরোধ করা যাচ্ছে।
-
-আলোচ্য বিষয়সূচি:
-১. বিগত বছরের আয়-ব্যয়ের হিসাব পেশ।
-২. নতুন সদস্য গ্রহণ ও দায়িত্ব বণ্টন।
-৩. সভাপতি ও সাধারণ সম্পাদকের সমাপনী বক্তব্য।</textarea>
+                    <div>
+                        <label class="block text-xs font-bold mb-1">বিজ্ঞপ্তির প্রধান শিরোনাম (বোল্ড টেক্সট)</label>
+                        <input type="text" id="pad-headline" oninput="updatePad()" value="হল ক্যান্টিনে খাবারের মান ও মূল্য নিয়ন্ত্রণে প্রশাসনিক বিশেষ মোবাইল টিম গঠন করতে হবে -" class="w-full p-2 border rounded text-sm font-bold outline-none">
                     </div>
+
+                    <div>
+                        <label class="block text-xs font-bold mb-1">বিজ্ঞপ্তির বিস্তারিত বক্তব্য</label>
+                        <textarea id="pad-body" oninput="updatePad()" rows="8" class="w-full p-2 border rounded text-sm outline-none">দীর্ঘদিন থেকেই ঢাকা বিশ্ববিদ্যালয়ের বিভিন্ন হলের ক্যান্টিনে খাবারের মান নিয়ে প্রশ্ন উঠছে। স্বল্প মূল্যে খাবার সরবরাহের নামে মানহীন খাবার পরিবেশন করা হচ্ছে ক্যান্টিনগুলোতে। শিক্ষার্থীরা বিভিন্ন সময়ে প্রতিবাদ জানালেও এগুলোর কোন সমাধান হয় না।
+
+কিন্তু এই রমজানে পরিস্থিতি পূর্বের থেকেও ভয়াবহ আকার ধারণ করেছে। রমজান উপলক্ষে খাবারের মান যেখানে ভাল করার কথা, উল্টো দ্রব্যমূল্যের ঊর্ধ্বগতির দোহাই দিয়ে মূল্য বৃদ্ধি করা হয়েছে প্রায় হল ক্যান্টিনে। 
+
+রমজানের প্রায় এক সপ্তাহ পার হতে চললেও শিক্ষার্থীদের উক্ত সমস্যা সমাধানকল্পে প্রশাসনের কোনো পদক্ষেপ পরিলক্ষিত হচ্ছে না। উদভূত পরিস্থিতিতে প্রশাসনকে আমরা অনুরোধ করছি, হল ক্যান্টিনের খাবারের দাম ও মান নিয়ন্ত্রণে বিশেষ মোবাইল টিম গঠন করুন এবং প্রয়োজনে ভর্তুকি বৃদ্ধি করে শিক্ষার্থীদের স্বাস্থ্যকর খাবার নিশ্চিত করুন।
+
+সাথে সাথে ছাত্র সংগঠনগুলোকেও বিষয়টি নিয়ে ঐক্যবদ্ধ আওয়াজ তোলার আহ্বান জানাচ্ছি।</textarea>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3 border-t pt-3">
+                        <div>
+                            <label class="block text-xs font-bold mb-1">প্রেরকের নাম</label>
+                            <input type="text" id="pad-sender-name" oninput="updatePad()" value="আবু বকর সিদ্দিক" class="w-full p-2 border rounded text-sm outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold mb-1">প্রেরকের পদবী</label>
+                            <input type="text" id="pad-sender-title" oninput="updatePad()" value="প্রচার ও প্রকাশনা সম্পাদক," class="w-full p-2 border rounded text-sm outline-none">
+                        </div>
+                    </div>
+
                     <button onclick="window.print()" class="w-full bg-emerald-600 text-white font-bold py-2.5 rounded-lg hover:bg-emerald-700 transition flex justify-center items-center gap-2">
-                        <i class="fa-solid fa-download"></i> প্যাডসহ নোটিশ প্রিন্ট/ডাউনলোড করুন
+                        <i class="fa-solid fa-download"></i> প্রেস বিজ্ঞপ্তি প্যাড ডাউনলোড / প্রিন্ট করুন
                     </button>
                 </div>
 
-                <!-- Pad Preview -->
+                <!-- Pad Preview (Exact Layout matching User Photo) -->
                 <div class="print-container">
-                    <div id="pad-preview" class="bg-white p-8 rounded-xl shadow-lg border border-slate-300 min-h-[700px] flex flex-col justify-between relative">
+                    <div id="pad-preview" class="bg-white p-8 rounded-xl shadow-lg border border-slate-300 min-h-[750px] flex flex-col justify-between relative font-sans">
                         <div>
-                            <!-- Pad Header -->
-                            <div class="flex items-center justify-between border-b-2 border-emerald-800 pb-3 mb-4">
-                                <div class="w-20 h-20 flex-shrink-0 flex items-center justify-center border p-1 rounded bg-slate-50">
-                                    <img id="pad-logo-preview" src="https://via.placeholder.com/100?text=Logo" alt="Logo" class="max-h-full max-w-full object-contain">
+                            <!-- Top Header: Logo Left, Title Middle, Logo Right -->
+                            <div class="flex justify-between items-center border-b border-slate-300 pb-3 mb-2">
+                                <div class="w-14 h-14 flex items-center justify-center">
+                                    <img id="pad-logo-left" src="https://via.placeholder.com/60?text=Logo1" alt="Logo" class="max-h-full max-w-full object-contain">
                                 </div>
                                 <div class="text-center flex-grow px-2">
-                                    <h2 id="prev-pad-org" class="text-xl md:text-2xl font-extrabold text-emerald-800">বাংলাদেশ যুব ওয়েলফেয়ার সোসাইটি</h2>
-                                    <p id="prev-pad-eng" class="text-xs font-bold text-slate-600 uppercase tracking-wider">Bangladesh Youth Welfare Society</p>
-                                    <p id="prev-pad-slogan" class="text-xs text-emerald-600 italic mt-1">মানবসেবায় আত্মনিবেদিত একটি অরাজনৈতিক সমাজসেবামূলক প্রতিষ্ঠান</p>
+                                    <h2 id="prev-pad-org" class="text-2xl md:text-3xl font-extrabold text-black tracking-tight">ইসলামী ছাত্র আন্দোলন বাংলাদেশ</h2>
+                                    <p id="prev-pad-branch" class="text-sm font-bold text-slate-800">ঢাকা বিশ্ববিদ্যালয়</p>
+                                </div>
+                                <div class="w-14 h-14 flex items-center justify-center">
+                                    <img id="pad-logo-right" src="https://via.placeholder.com/60?text=Logo2" alt="Logo" class="max-h-full max-w-full object-contain">
                                 </div>
                             </div>
-                            <!-- Ref & Date -->
-                            <div class="flex justify-between text-xs font-bold text-slate-700 border-b pb-2 mb-6">
-                                <span id="prev-pad-ref">স্মারক নং: বিওয়াইডব্লিউএস/২০২৬/১০২</span>
-                                <span id="prev-pad-date">তারিখ: ৩ নভেম্বর, ২০২৬</span>
+
+                            <!-- Email & Phone Line -->
+                            <div class="flex justify-between text-xs font-bold text-slate-700 border-b-2 border-slate-800 pb-1 mb-4">
+                                <span>ইমেইল: <span id="prev-pad-email">iscadubd@gmail.com</span></span>
+                                <span>ফোন: <span id="prev-pad-phone">০১৮১৫৪৭২৫২২</span></span>
                             </div>
-                            <!-- Notice Title -->
-                            <div class="mb-4 text-center">
-                                <span class="bg-slate-100 border border-slate-300 px-4 py-1 text-sm font-bold rounded">জরুরী বিজ্ঞপ্তি</span>
+
+                            <!-- Press Release Badge -->
+                            <div class="text-center mb-4">
+                                <span class="text-xs font-bold text-slate-800 tracking-wider">প্রেস বিজ্ঞপ্তি:</span>
                             </div>
-                            <h3 id="prev-pad-subject" class="text-sm font-bold text-slate-900 mb-4 underline"></h3>
-                            <!-- Notice Content -->
-                            <div id="prev-pad-body" class="text-xs md:text-sm text-slate-800 leading-relaxed whitespace-pre-line text-justify"></div>
+
+                            <!-- Headline -->
+                            <h3 id="prev-pad-headline" class="text-lg md:text-xl font-bold text-slate-900 text-center mb-3 leading-snug"></h3>
+                            
+                            <!-- Sub Tagline / Org Name line under title -->
+                            <p class="text-xs text-center font-bold text-slate-700 mb-6" id="prev-pad-subtag"></p>
+
+                            <!-- Body Text -->
+                            <div id="prev-pad-body" class="text-xs md:text-sm text-slate-800 leading-relaxed whitespace-pre-line text-justify px-2"></div>
                         </div>
-                        <!-- Footer Signature -->
-                        <div class="mt-16 pt-4 border-t flex justify-between items-end text-center text-xs">
-                            <div>
-                                <div class="border-b border-slate-400 w-32 mb-1"></div>
-                                <p class="font-bold">প্রস্তুতকারী</p>
-                            </div>
-                            <div>
-                                <div class="border-b border-slate-400 w-32 mb-1"></div>
-                                <p class="font-bold text-emerald-800">সভাপতি / সাধারণ সম্পাদক</p>
-                            </div>
+
+                        <!-- Footer Sender Information (Left aligned as per photo) -->
+                        <div class="mt-12 pt-4 text-xs text-slate-800 space-y-0.5">
+                            <p class="font-bold">প্রেরক-</p>
+                            <p id="prev-sender-name" class="font-bold text-sm text-slate-900">আবু বকর সিদ্দিক</p>
+                            <p id="prev-sender-title">প্রচার ও প্রকাশনা সম্পাদক,</p>
+                            <p id="prev-sender-org">ইসলামী ছাত্র আন্দোলন বাংলাদেশ,</p>
+                            <p id="prev-sender-branch">ঢাকা বিশ্ববিদ্যালয়।</p>
                         </div>
                     </div>
                 </div>
@@ -307,7 +325,6 @@
         <!-- ================= SECTION 5: NEWS PORTAL ARTICLE CREATOR ================= -->
         <section id="sec-news" class="tab-content hidden">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <!-- Input Box -->
                 <div class="bg-white p-6 rounded-xl shadow-md space-y-4 border border-slate-200">
                     <h2 class="text-xl font-bold text-emerald-700 border-b pb-2 flex items-center gap-2">
                         <i class="fa-solid fa-pen-nib"></i> অগোছালো তথ্য থেকে নিউজ পোস্ট তৈরি
@@ -325,7 +342,6 @@
                     </button>
                 </div>
 
-                <!-- Generated News Portal Format -->
                 <div class="bg-white p-6 rounded-xl shadow-lg border border-slate-200 flex flex-col justify-between">
                     <div>
                         <div class="flex justify-between items-center border-b pb-2 mb-3">
@@ -364,8 +380,6 @@
                     <button onclick="quickFatwa('রোজা')" class="bg-slate-200 hover:bg-emerald-100 px-3 py-1 rounded-full">রোজা ও সেহরি</button>
                 </div>
             </div>
-
-            <!-- Fatwa Search Output -->
             <div id="fatwa-output" class="space-y-4"></div>
         </section>
 
@@ -373,7 +387,7 @@
 
     <!-- Footer -->
     <footer class="bg-slate-800 text-slate-400 text-center text-xs py-4 no-print mt-auto">
-        <p>© ২০২৬ অল-ইন-ওয়ান মাল্টি-ফাংশনাল ওয়েব সিস্টেম | সর্বস্বত্ব সংরক্ষিত</p>
+        <p>© ২০২৬ স্মার্ট সেহাবক্স | সর্বস্বত্ব সংরক্ষিত</p>
     </footer>
 
     <!-- JavaScript Application Logic -->
@@ -401,48 +415,35 @@
             document.getElementById('prev-address').innerText = document.getElementById('cv-address').value || '';
             document.getElementById('prev-about').innerText = document.getElementById('cv-about').value || '';
 
-            // Render Experience
             const expText = document.getElementById('cv-exp').value;
-            const expList = document.getElementById('prev-exp');
-            expList.innerHTML = expText.split('\n').map(item => item.trim() ? `<li>${item}</li>` : '').join('');
+            document.getElementById('prev-exp').innerHTML = expText.split('\n').map(item => item.trim() ? `<li>${item}</li>` : '').join('');
 
-            // Render Education
             const eduText = document.getElementById('cv-edu').value;
-            const eduList = document.getElementById('prev-edu');
-            eduList.innerHTML = eduText.split('\n').map(item => item.trim() ? `<li>${item}</li>` : '').join('');
+            document.getElementById('prev-edu').innerHTML = eduText.split('\n').map(item => item.trim() ? `<li>${item}</li>` : '').join('');
 
-            // Render Skills
             const skillsText = document.getElementById('cv-skills').value;
-            const skillsDiv = document.getElementById('prev-skills');
-            skillsDiv.innerHTML = skillsText.split(',').map(s => s.trim() ? `<span class="bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded border border-emerald-200 text-xs font-medium">${s}</span>` : '').join('');
+            document.getElementById('prev-skills').innerHTML = skillsText.split(',').map(s => s.trim() ? `<span class="bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded border border-emerald-200 text-xs font-medium">${s}</span>` : '').join('');
         }
         updateCV();
 
-        // ================= 2. PLACE SEARCH DATA & LOGIC =================
+        // ================= 2. PLACE & THANA SEARCH DATA & LOGIC =================
         const placeData = {
-            "কক্সবাজার": [
-                { name: "কক্সবাজার সমুদ্র সৈকত", desc: "বিশ্বের দীর্ঘতম প্রাকৃতিক বালুকাময় সমুদ্র সৈকত (১২০ কিমি)।", spot: "লাবণী পয়েন্ট, সুগন্ধা পয়েন্ট, ইনানী বিচ" },
-                { name: "হিমছড়ি ও ইনানী", desc: "পাহাড় ও ঝরনার মনোরম সমন্বয় এবং প্রবাল পাথরের বিচ।", spot: "হিমছড়ি জাতীয় উদ্যান" }
+            "শাহবাগ": [
+                { name: "ঢাকা বিশ্ববিদ্যালয় ও সোহরাওয়ার্দী উদ্যান", desc: "ঐতিহাসিক স্থান, চারুকলা ও কেন্দ্রীয় লাইব্রেরি।", spot: "শাহবাগ থানা, ঢাকা" },
+                { name: "জাতীয় জাদুঘর", desc: "বাংলাদেশের প্রাচীন ইতিহাস ও ঐতিহ্যের সংগ্রহশালা।", spot: "শাহবাগ মোড়" }
             ],
-            "সিলেট": [
-                { name: "জাফলং", desc: "প্রাকৃতিক পাথর, খাসিয়া পুঞ্জি ও পিয়াইন নদীর স্বচ্ছ জলধারা।", spot: "জিরো পয়েন্ট, সংগ্রামপুঞ্জি ঝরনা" },
-                { name: "রাতারগুল সোয়াম্প ফরেস্ট", desc: "বাংলাদেশের একমাত্র প্রাকৃতির মিষ্টি পানির জলাবন।", spot: "বোট রাইডিং ও ওয়াচ টাওয়ার" }
+            "লালবাগ": [
+                { name: "লালবাগ কেল্লা", desc: "১৭ শতকের মুঘল দুর্গ ও ঐতিহাসিক স্থাপত্য।", spot: "লালবাগ থানা, পুরান ঢাকা" }
             ],
-            "বান্দরবান": [
-                { name: "নীলগিরি ও মেঘলা", desc: "মেঘ ছোঁয়ার অনুভূতি এবং মনোমুগ্ধকর পাহাড়ি প্রাকৃতিক রূপ।", spot: "নীলগিরি পর্যটন কেন্দ্র, চিম্বুক পাহাড়" },
-                { name: "দেবতাখুম ও নাফাখুম", desc: "রোমাঞ্চকর ট্রেকিং এবং পাহাড়ি ঝরনা।", spot: "বান্দরবান রোমাঞ্চকর পয়েন্ট" }
+            "সাভার": [
+                { name: "জাতীয় স্মৃতিসৌধ", desc: "মহান স্বাধীনতা যুদ্ধের অকুতোভয় শহীদদের স্মারক।", spot: "সাভার থানা, ঢাকা" },
+                { name: "জাহাঙ্গীরনগর বিশ্ববিদ্যালয়", desc: "সবুজ ক্যাম্পাস ও অতিথি পাখির অভয়ারণ্য।", spot: "সাভার, ঢাকা" }
             ],
-            "ঢাকা": [
-                { name: "লালবাগ কেল্লা ও আহসান মঞ্জিল", desc: "মুঘল ও প্রাচীন ইতিহাস সমৃদ্ধ ঐতিহাসিক স্থাপত্য।", spot: "পুরান ঢাকা" },
-                { name: "জাতীয় স্মৃতিসৌধ", desc: "বাংলাদেশের মহান স্বাধীনতা যুদ্ধের অমর স্মারক।", spot: "সাভার, ঢাকা" }
+            "সদর (কক্সবাজার)": [
+                { name: "কক্সবাজার সমুদ্র সৈকত", desc: "বিশ্বের দীর্ঘতম প্রাকৃতিক বালুকাময় সমুদ্র সৈকত।", spot: "লাবণী ও সুগন্ধা পয়েন্ট, কক্সবাজার সদর থানা" }
             ],
-            "বরিশাল": [
-                { name: "ভাসমান পেয়ারা বাজার", desc: "এশিয়ার বৃহত্তম ঐতিহ্যবাহী ভাসমান বাজার।", spot: "ভীমকাঠি, ঝালকাঠি-বরিশাল সীমান্ত" },
-                { name: "দুর্গাসাগর দিঘি", desc: "বিশাল ঐতিহাসিক জলাশয় ও অতিথি পাখির অভয়ারণ্য।", spot: "স্বরূপকাঠি রোড" }
-            ],
-            "ময়মনসিংহ": [
-                { name: "শশী লজ ও মুক্তাগাছা রাজবাড়ি", desc: "ঐতিহাসিক জমিদারি স্থাপত্য ও বিখ্যাত মণ্ডার স্থান।", spot: "ময়মনসিংহ শহর ও মুক্তাগাছা" },
-                { name: "বাংলাদেশ কৃষি বিশ্ববিদ্যালয়", desc: "সবুজ চোখ জুড়ানো ক্যাম্পাস ও বোটানিক্যাল গার্ডেন।", spot: "ময়মনসিংহ সদর" }
+            "শ্রীমঙ্গল": [
+                { name: "লাউয়াছড়া জাতীয় উদ্যান ও চা বাগান", desc: "বিশাল চা বাগান ও সংরক্ষিত প্রাকৃতির বনভূমি।", spot: "শ্রীমঙ্গল থানা, মৌলভীবাজার" }
             ]
         };
 
@@ -462,7 +463,7 @@
                                 <h3 class="text-lg font-bold text-slate-800 mt-1">${spot.name}</h3>
                                 <p class="text-xs text-slate-600 mt-2 leading-relaxed">${spot.desc}</p>
                                 <div class="mt-3 text-xs font-bold text-emerald-700">
-                                    <i class="fa-solid fa-location-arrow"></i> আকর্ষণীয় স্থান: ${spot.spot}
+                                    <i class="fa-solid fa-location-arrow"></i> অবস্থান: ${spot.spot}
                                 </div>
                             </div>
                         `;
@@ -474,7 +475,7 @@
                 container.innerHTML = `
                     <div class="col-span-full bg-amber-50 border border-amber-200 text-amber-800 p-4 rounded-xl text-center text-sm">
                         <i class="fa-solid fa-circle-info text-lg mb-1"></i><br>
-                        "<strong>${query}</strong>" সংক্রান্ত সুনির্দিষ্ট তথ্য পাওয়া যায়নি। অনুগ্রহ করে অন্য প্রধান জেলা বা পর্যটন এলাকা লিখে চেষ্টা করুন।
+                        "<strong>${query}</strong>" সংক্রান্ত সুনির্দিষ্ট থানার তথ্য ডাটাবেজে যুক্ত করা হচ্ছে। অন্য কোনো থানা লিখে চেষ্টা করুন।
                     </div>
                 `;
             }
@@ -485,32 +486,43 @@
             searchPlace();
         }
 
-        // ================= 3. ORGANIZATIONAL PAD LOGIC =================
-        function loadPadLogo(event) {
+        // ================= 3. ORGANIZATIONAL PAD LOGIC (Matching Photo) =================
+        function loadPadLogo(event, position) {
             const reader = new FileReader();
             reader.onload = function(){
-                const output = document.getElementById('pad-logo-preview');
-                output.src = reader.result;
+                if(position === 'left') {
+                    document.getElementById('pad-logo-left').src = reader.result;
+                } else {
+                    document.getElementById('pad-logo-right').src = reader.result;
+                }
             };
             reader.readAsDataURL(event.target.files[0]);
         }
 
         function updatePad() {
-            document.getElementById('prev-pad-org').innerText = document.getElementById('pad-org-name').value || 'সংগঠনের নাম';
-            document.getElementById('prev-pad-eng').innerText = document.getElementById('pad-org-eng').value || '';
-            document.getElementById('prev-pad-slogan').innerText = document.getElementById('pad-slogan').value || '';
-            document.getElementById('prev-pad-ref').innerText = document.getElementById('pad-ref').value || '';
-            document.getElementById('prev-pad-date').innerText = document.getElementById('pad-date').value || '';
-            document.getElementById('prev-pad-subject').innerText = document.getElementById('pad-subject').value || '';
+            const org = document.getElementById('pad-org-name').value || 'সংগঠনের নাম';
+            const branch = document.getElementById('pad-branch').value || '';
+            
+            document.getElementById('prev-pad-org').innerText = org;
+            document.getElementById('prev-pad-branch').innerText = branch;
+            document.getElementById('prev-pad-email').innerText = document.getElementById('pad-email').value || '';
+            document.getElementById('prev-pad-phone').innerText = document.getElementById('pad-phone').value || '';
+            document.getElementById('prev-pad-headline').innerText = document.getElementById('pad-headline').value || '';
+            document.getElementById('prev-pad-subtag').innerText = `${org}, ${branch}।`;
             document.getElementById('prev-pad-body').innerText = document.getElementById('pad-body').value || '';
+
+            // Sender info
+            document.getElementById('prev-sender-name').innerText = document.getElementById('pad-sender-name').value || '';
+            document.getElementById('prev-sender-title').innerText = document.getElementById('pad-sender-title').value || '';
+            document.getElementById('prev-sender-org').innerText = org + ',';
+            document.getElementById('prev-sender-branch').innerText = branch + '।';
         }
         updatePad();
 
         // ================= 4. SMART DICTIONARY LOGIC =================
         const dictData = {
-            "সততা": { word: "সততা (Honesty)", pos: "বিশেষ্য", meaning: "সাধুতা, ন্যায়পরায়ণতা, সত্যবাদিতা।", exp: "মানুষের অন্যতম শ্রেষ্ঠ নৈতিক গুণ হলো সততা, যা সমাজে বিশ্বাস ও মর্যাদা বজায় রাখে।" },
-            "প্রজ্ঞা": { word: "প্রজ্ঞা (Wisdom)", pos: "বিশেষ্য", meaning: "গভীর জ্ঞান, সুবুদ্ধি, বিচারক্ষমতা।", exp: "অভিজ্ঞতা এবং সঠিক চিন্তাধারার মেলবন্ধনে মানুষের প্রজ্ঞা বিকাশ লাভ করে।" },
-            "innovation": { word: "Innovation (উদ্ভাবন)", pos: "Noun", meaning: "নতুন কিছু আবিষ্কার বা তৈরি করার প্রক্রিয়া।", exp: "আধুনিক প্রযুক্তির যুগে উদ্ভাবনী চিন্তা ব্যবসাকে নতুন উচ্চতায় নিয়ে যায়।" }
+            "সততা": { word: "সততা (Honesty)", pos: "বিশেষ্য", meaning: "সাধুতা, ন্যায়পরায়ণতা, সত্যবাদিতা।", exp: "মানুষের অন্যতম শ্রেষ্ঠ নৈতিক গুণ হলো সততা, যা সমাজে বিশ্বাস বজায় রাখে।" },
+            "প্রজ্ঞা": { word: "প্রজ্ঞা (Wisdom)", pos: "বিশেষ্য", meaning: "গভীর জ্ঞান, সুবুদ্ধি, বিচারক্ষমতা।", exp: "অভিজ্ঞতা এবং সঠিক চিন্তাধারার মেলবন্ধনে মানুষের প্রজ্ঞা বিকাশ লাভ করে।" }
         };
 
         function searchDictionary() {
@@ -529,7 +541,7 @@
                         </div>
                         <div class="space-y-2 text-sm text-slate-800">
                             <p><strong>অর্থ:</strong> ${res.meaning}</p>
-                            <p class="text-xs text-slate-600 bg-slate-50 p-3 rounded border border-slate-200"><strong>ব্যাখ্যা ও প্রয়োগ:</strong> ${res.exp}</p>
+                            <p class="text-xs text-slate-600 bg-slate-50 p-3 rounded border border-slate-200"><strong>ব্যাখ্যা:</strong> ${res.exp}</p>
                         </div>
                     </div>
                 `;
@@ -537,10 +549,7 @@
                 out.innerHTML = `
                     <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200">
                         <h3 class="text-xl font-bold text-slate-800 mb-2">${word}</h3>
-                        <p class="text-sm text-slate-700"><strong>অর্থ ও ব্যাখ্যা:</strong> শব্দটির সহজ বাংলা অর্থ ও প্রাসঙ্গিক সমার্থক অর্থ নিচে তুলে ধরা হলো।</p>
-                        <div class="mt-3 p-3 bg-emerald-50 text-emerald-800 rounded text-xs">
-                            দ্রষ্টব্য: এটি একটি স্বয়ংক্রিয় অভিধান মডিউল। যেকোনো নতুন শব্দ ইনপুট দিলে তার অর্থ সহজ ভাষায় বিশ্লেষিত হয়।
-                        </div>
+                        <p class="text-sm text-slate-700">শব্দটির সহজ অর্থ ও ব্যাখ্যা তুলে ধরা হলো।</p>
                     </div>
                 `;
             }
@@ -555,8 +564,7 @@
 
             document.getElementById('news-headline').innerText = `${place}: তথ্য সংগৃহীত সংবাদ বুলেটিন`;
             document.getElementById('news-meta').innerText = `নিজস্ব প্রতিবেদক, ${place} | প্রকাশ: ৩ নভেম্বর ২০২৬`;
-            
-            document.getElementById('news-body').innerText = `${place} প্রতিনিধি:\n\n${raw}\n\nসংবাদটি জনস্বার্থে প্রকাশিত হলো। স্থানীয় সুশীল সমাজ ও প্রত্যক্ষদর্শীরা এই উদ্যোগের প্রশংসা জ্ঞাপন করেছেন।`;
+            document.getElementById('news-body').innerText = `${place} প্রতিনিধি:\n\n${raw}\n\nসংবাদটি জনস্বার্থে প্রকাশিত হলো।`;
         }
         generateNews();
 
@@ -571,7 +579,7 @@
         const fatwaData = [
             {
                 topic: "ওজু",
-                question: "ওজুর সময় কোন অজুহাতে অঙ্গ ধোয়া মিস হলে বিধান কি?",
+                question: "ওজুর সময় কোন অঙ্গ ধোয়া মিস হলে বিধান কি?",
                 answer: "ওজুর অঙ্গগুলোর কোনোটি যদি শুকনো থেকে যায় তবে ওজু পূর্ণ হবে না। মনে পড়ার সাথে সাথেই ওই অঙ্গ ধুয়ে নিতে হবে, পুরো ওজু পুনরায় করার প্রয়োজন নেই।",
                 arabic: "يا أيها الذين آمنوا إذا قمتم إلى الصلاة فاغسلوا وجوهكم وأيديكم إلى المرافق وامسحوا برؤوسكم وأرجلكم إلى الكعبين",
                 ref: "সূরা আল-মায়িদাহ: আয়াত ৬ | ফতোয়ায়ে শামী: খণ্ড ১, পৃষ্ঠা ২১২"
@@ -582,20 +590,6 @@
                 answer: "নামাজে রাকাত সংখ্যা নিয়ে সন্দেহ হলে কম সংখ্যাটি ধরে নিয়ে বাকি নামাজ শেষ করতে হবে এবং শেষ রাকাতে 'সাহু সেজদা' প্রদান করতে হবে।",
                 arabic: "إذا شك أحدكم في صلاته فلم يدر كم صلى أثلاثا أم أربعا فليطرح الشك وليبن على ما استيقن ثم يسجد سجدتين قبل أن يسلم",
                 ref: "সহীহ মুসলিম: হাদিস নম্বর ১২১০ | আল-ফাতাওয়া আল-হিন্দিয়া: খণ্ড ১, পৃষ্ঠা ১২৯"
-            },
-            {
-                topic: "যাকাত",
-                question: "যাকাত ওয়াজিব হওয়ার জন্য নেসাব ও সময়সীমা কেমন?",
-                answer: "সাড়ে সাত তোলা সোনা বা সাড়ে বায়ান্ন তোলা রূপা অথবা সমমূল্যের নগদ অর্থ ও ব্যবসায়ের পণ্য পূর্ণ এক বছর নিজের অধিকারে থাকলে ২.৫% যাকাত আদায় করা ফরজ।",
-                arabic: "خذ من أموالهم صدقة تطهرهم وتزكيهم بها وصَلِّ عليهم إن صلاتك سكن لهم",
-                ref: "সূরা আত-তাওবাহ: আয়াত ১০৩ | রদ্দুল মুহতার: খণ্ড ৩, পৃষ্ঠা ১৭০"
-            },
-            {
-                topic: "রোজা",
-                question: "ভুলবশত কিছু খেয়ে ফেললে কি রোজা ভেঙ্গে যায়?",
-                answer: "ভুলবশত বা অনিচ্ছাকৃতভাবে খেলে বা পান করলে রোজা ভাঙ্গে না। মনে আসার সাথে সাথেই খাওয়া বন্ধ করতে হবে।",
-                arabic: "من نسي وهو صائم فأكل أو شرب فليتم صومه فإنما أطعمه الله وسقاه",
-                ref: "সহীহ বুখারী: হাদিস নম্বর ১৯৩৩ | ফতোয়ায়ে আলমগিরী: খণ্ড ১, পৃষ্ঠা ২০৫"
             }
         ];
 
@@ -620,7 +614,6 @@
                             <h3 class="text-base font-bold text-slate-900 mb-2"><i class="fa-solid fa-circle-question text-emerald-600"></i> ${res.question}</h3>
                             <p class="text-sm text-slate-700 mb-4 bg-slate-50 p-3 rounded border border-slate-200"><strong>উত্তর:</strong> ${res.answer}</p>
                             
-                            <!-- Arabic Proof Section -->
                             <div class="bg-amber-50/60 p-4 rounded-lg border border-amber-200 mb-3">
                                 <p class="text-xs font-bold text-amber-800 mb-1"><i class="fa-solid fa-scroll"></i> النص العربي (মূল আরবি দলীল):</p>
                                 <p class="arabic-text text-right text-lg font-semibold text-slate-800 leading-loose">${res.arabic}</p>
@@ -637,7 +630,6 @@
                     <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 text-center py-8">
                         <i class="fa-solid fa-book-open-reader text-3xl text-emerald-600 mb-2"></i>
                         <p class="text-sm font-bold text-slate-700">"<strong>${query}</strong>" সংক্রান্ত মাসআলা সরাসরি পাওয়া যায়নি।</p>
-                        <p class="text-xs text-slate-500 mt-1">অনুগ্রহ করে 'ওজু', 'নামাজ', 'যাকাত' বা 'রোজা' ক্যাটাগরি লিখে তালাশ করুন।</p>
                     </div>
                 `;
             }
@@ -648,8 +640,7 @@
             searchFatwa();
         }
 
-        // Initialize default search
         searchFatwa();
     </script>
 </body>
-                          </html>
+</html>
