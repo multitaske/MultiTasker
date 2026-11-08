@@ -58,6 +58,8 @@
                 <button onclick="switchTab('weather')" id="tab-weather" class="tab-btn bg-emerald-900/60 text-emerald-100 px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 hover:bg-emerald-500 hover:text-white transition"><i class="fa-solid fa-cloud-sun-rain"></i> ৯. আবহাওয়া</button>
                 <button onclick="switchTab('qr')" id="tab-qr" class="tab-btn bg-emerald-900/60 text-emerald-100 px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 hover:bg-emerald-500 hover:text-white transition"><i class="fa-solid fa-qrcode"></i> ১০. কিউআর কোড</button>
                 <button onclick="switchTab('dictionary')" id="tab-dictionary" class="tab-btn bg-emerald-900/60 text-emerald-100 px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 hover:bg-emerald-500 hover:text-white transition"><i class="fa-solid fa-spell-check"></i> ১১. শব্দার্থ</button>
+                <button onclick="switchTab('memberEntry')" id="tab-memberEntry" class="tab-btn bg-emerald-900/60 text-emerald-100 px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 hover:bg-emerald-500 hover:text-white transition"><i class="fa-solid fa-user-group"></i> ১২. সদস্য ডাটা</button>
+                <button onclick="switchTab('expenseEntry')" id="tab-expenseEntry" class="tab-btn bg-emerald-900/60 text-emerald-100 px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 hover:bg-emerald-500 hover:text-white transition"><i class="fa-solid fa-calculator"></i> ১৩. সফর ও হিসাব</button>
             </div>
         </nav>
     </header>
@@ -360,6 +362,133 @@
             </div>
         </section>
 
+        <!-- 12. MEMBERS DATA ENTRY (নতুন যুক্ত ফিচার) -->
+        <section id="sec-memberEntry" class="tab-content hidden space-y-6">
+            <div class="bg-white p-6 rounded-xl shadow-md border">
+                <h2 class="text-xl font-bold text-gray-800 border-b pb-2 mb-4 flex items-center gap-2"><i class="fa-solid fa-user-plus text-emerald-600"></i> নতুন সদস্য ডাটা এন্ট্রি</h2>
+                <form id="memberForm" onsubmit="addMember(event)" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold mb-1">সদস্যের নাম *</label>
+                        <input type="text" id="mName" required class="w-full border p-2 rounded text-sm focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="নাম লিখুন">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold mb-1">পদবি / দায়িত্ব *</label>
+                        <input type="text" id="mDesignation" required class="w-full border p-2 rounded text-sm focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="যেমন: সভাপতি / সদস্য">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold mb-1">মোবাইল নম্বর *</label>
+                        <input type="tel" id="mPhone" required class="w-full border p-2 rounded text-sm focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="017XXXXXXXX">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold mb-1">ঠিকানা / এলাকা</label>
+                        <input type="text" id="mAddress" class="w-full border p-2 rounded text-sm focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="যেমন: মিরপুর-১০">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold mb-1">যোগদানের তারিখ</label>
+                        <input type="date" id="mDate" class="w-full border p-2 rounded text-sm focus:ring-2 focus:ring-emerald-500 outline-none">
+                    </div>
+                    <div class="md:col-span-3">
+                        <button type="submit" class="bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-2 px-6 rounded text-xs transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-check"></i> সদস্য সংরক্ষণ করুন
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="bg-white p-6 rounded-xl shadow-md border">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-sm font-bold text-gray-800">সদস্যদের তালিকা (<span id="memberCount">০</span> জন)</h3>
+                    <button onclick="exportCSV('memberTable', 'Members_List.csv')" class="bg-slate-800 text-white text-xs px-3 py-1.5 rounded hover:bg-black font-semibold flex items-center gap-1">
+                        <i class="fa-solid fa-file-excel"></i> Excel/CSV সেভ করুন
+                    </button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table id="memberTable" class="w-full text-left border-collapse text-xs">
+                        <thead>
+                            <tr class="bg-slate-100 border-b">
+                                <th class="p-2.5">ক্রম</th>
+                                <th class="p-2.5">নাম</th>
+                                <th class="p-2.5">পদবি</th>
+                                <th class="p-2.5">মোবাইল</th>
+                                <th class="p-2.5">ঠিকানা</th>
+                                <th class="p-2.5">তারিখ</th>
+                                <th class="p-2.5">অ্যাকশন</th>
+                            </tr>
+                        </thead>
+                        <tbody id="memberTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- 13. TRAVEL & EXPENSE ENTRY (নতুন যুক্ত ফিচার) -->
+        <section id="sec-expenseEntry" class="tab-content hidden space-y-6">
+            <div class="bg-white p-6 rounded-xl shadow-md border">
+                <h2 class="text-xl font-bold text-gray-800 border-b pb-2 mb-4 flex items-center gap-2"><i class="fa-solid fa-calculator text-emerald-600"></i> সফর ও খরচ হিসাব এন্ট্রি</h2>
+                <form id="expenseForm" onsubmit="addExpense(event)" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold mb-1">তারিখ *</label>
+                        <input type="date" id="expDate" required class="w-full border p-2 rounded text-sm focus:ring-2 focus:ring-emerald-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold mb-1">খরচের খাত / বিষয় *</label>
+                        <select id="expCategory" required class="w-full border p-2 rounded text-sm focus:ring-2 focus:ring-emerald-500 outline-none">
+                            <option value="সফর বাবদ">সফর বাবদ</option>
+                            <option value="আপ্যায়ন">আপ্যায়ন</option>
+                            <option value="অফিস খরচ">অফিস খরচ</option>
+                            <option value="প্রিন্টিং/প্রচার">প্রিন্টিং/প্রচার</option>
+                            <option value="অন্যান্য">অন্যান্য</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold mb-1">সফর ঠিকানা / বিবরণ *</label>
+                        <input type="text" id="expLocation" required class="w-full border p-2 rounded text-sm focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="যেমন: ধানমন্ডি শাখা কার্যালয়">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold mb-1">সফর সঙ্গী (যাদের নিয়ে সফর)</label>
+                        <input type="text" id="expCompanions" class="w-full border p-2 rounded text-sm focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="যেমন: আবু বকর, সাইদ, রাফসান">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold mb-1">মোট টাকার পরিমাণ (৳) *</label>
+                        <input type="number" id="expAmount" required class="w-full border p-2 rounded text-sm focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="0.00">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold mb-1">মন্তব্য (ঐচ্ছিক)</label>
+                        <input type="text" id="expNotes" class="w-full border p-2 rounded text-sm focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="অতিরিক্ত বিবরণ">
+                    </div>
+                    <div class="md:col-span-3">
+                        <button type="submit" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded text-xs transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-check"></i> খরচের হিসাব সেভ করুন
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="bg-white p-6 rounded-xl shadow-md border">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-sm font-bold text-gray-800">খরচ ও সফরের রেকর্ড (মোট: ৳<span id="totalExpenseAmount">০</span>)</h3>
+                    <button onclick="exportCSV('expenseTable', 'Expense_Report.csv')" class="bg-slate-800 text-white text-xs px-3 py-1.5 rounded hover:bg-black font-semibold flex items-center gap-1">
+                        <i class="fa-solid fa-file-excel"></i> Excel/CSV সেভ করুন
+                    </button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table id="expenseTable" class="w-full text-left border-collapse text-xs">
+                        <thead>
+                            <tr class="bg-slate-100 border-b">
+                                <th class="p-2.5">তারিখ</th>
+                                <th class="p-2.5">খাত</th>
+                                <th class="p-2.5">সফর ঠিকানা / বিবরণ</th>
+                                <th class="p-2.5">সফর সঙ্গী</th>
+                                <th class="p-2.5">পরিমাণ (৳)</th>
+                                <th class="p-2.5">অ্যাকশন</th>
+                            </tr>
+                        </thead>
+                        <tbody id="expenseTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <footer class="bg-slate-800 text-slate-400 text-center text-xs py-4 no-print mt-auto">
@@ -377,8 +506,10 @@
             });
             document.getElementById('sec-' + tabName).classList.remove('hidden');
             const activeBtn = document.getElementById('tab-' + tabName);
-            activeBtn.classList.add('bg-emerald-600', 'text-white');
-            activeBtn.classList.remove('bg-emerald-900/60', 'text-emerald-100');
+            if(activeBtn) {
+                activeBtn.classList.add('bg-emerald-600', 'text-white');
+                activeBtn.classList.remove('bg-emerald-900/60', 'text-emerald-100');
+            }
 
             if(tabName === 'qr') generateQRCode();
             if(tabName === 'weather' && !map) initWeatherMap();
@@ -590,6 +721,127 @@
         function searchDictionary() {
             const w = document.getElementById('dict-input').value.trim();
             document.getElementById('dict-output').innerHTML = `<div class="p-3 bg-slate-50 border rounded text-sm"><strong>${w}</strong>: সুন্দর ও প্রমিত বাংলা শব্দার্থ বা তথ্য।</div>`;
+        }
+
+        // --- নতুন যুক্ত ফিচার লজিক: সদস্য ও হিসাব এন্ট্রি ---
+        let members = JSON.parse(localStorage.getItem('org_members')) || [];
+        let expenses = JSON.parse(localStorage.getItem('org_expenses')) || [];
+
+        window.addEventListener('DOMContentLoaded', () => {
+            renderMembers();
+            renderExpenses();
+            if(document.getElementById('mDate')) document.getElementById('mDate').valueAsDate = new Date();
+            if(document.getElementById('expDate')) document.getElementById('expDate').valueAsDate = new Date();
+        });
+
+        function addMember(e) {
+            e.preventDefault();
+            const newMember = {
+                id: Date.now(),
+                name: document.getElementById('mName').value,
+                designation: document.getElementById('mDesignation').value,
+                phone: document.getElementById('mPhone').value,
+                address: document.getElementById('mAddress').value || '-',
+                date: document.getElementById('mDate').value
+            };
+            members.push(newMember);
+            localStorage.setItem('org_members', JSON.stringify(members));
+            document.getElementById('memberForm').reset();
+            document.getElementById('mDate').valueAsDate = new Date();
+            renderMembers();
+        }
+
+        function deleteMember(id) {
+            members = members.filter(m => m.id !== id);
+            localStorage.setItem('org_members', JSON.stringify(members));
+            renderMembers();
+        }
+
+        function renderMembers() {
+            const tbody = document.getElementById('memberTableBody');
+            if(!tbody) return;
+            document.getElementById('memberCount').innerText = members.length;
+            tbody.innerHTML = '';
+
+            members.forEach((m, index) => {
+                tbody.innerHTML += `
+                    <tr class="border-b hover:bg-gray-50">
+                        <td class="p-2.5">${index + 1}</td>
+                        <td class="p-2.5 font-semibold">${m.name}</td>
+                        <td class="p-2.5">${m.designation}</td>
+                        <td class="p-2.5">${m.phone}</td>
+                        <td class="p-2.5">${m.address}</td>
+                        <td class="p-2.5">${m.date}</td>
+                        <td class="p-2.5">
+                            <button onclick="deleteMember(${m.id})" class="text-rose-600 hover:underline font-semibold">মুছুন</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function addExpense(e) {
+            e.preventDefault();
+            const newExpense = {
+                id: Date.now(),
+                date: document.getElementById('expDate').value,
+                category: document.getElementById('expCategory').value,
+                location: document.getElementById('expLocation').value,
+                companions: document.getElementById('expCompanions').value || '-',
+                amount: parseFloat(document.getElementById('expAmount').value),
+                notes: document.getElementById('expNotes').value || '-'
+            };
+            expenses.push(newExpense);
+            localStorage.setItem('org_expenses', JSON.stringify(expenses));
+            document.getElementById('expenseForm').reset();
+            document.getElementById('expDate').valueAsDate = new Date();
+            renderExpenses();
+        }
+
+        function deleteExpense(id) {
+            expenses = expenses.filter(e => e.id !== id);
+            localStorage.setItem('org_expenses', JSON.stringify(expenses));
+            renderExpenses();
+        }
+
+        function renderExpenses() {
+            const tbody = document.getElementById('expenseTableBody');
+            if(!tbody) return;
+            let total = 0;
+            tbody.innerHTML = '';
+
+            expenses.forEach(exp => {
+                total += exp.amount;
+                tbody.innerHTML += `
+                    <tr class="border-b hover:bg-gray-50">
+                        <td class="p-2.5">${exp.date}</td>
+                        <td class="p-2.5"><span class="bg-emerald-100 text-emerald-800 text-[10px] px-2 py-0.5 rounded font-bold">${exp.category}</span></td>
+                        <td class="p-2.5 font-semibold">${exp.location}</td>
+                        <td class="p-2.5 text-slate-600">${exp.companions}</td>
+                        <td class="p-2.5 font-bold text-red-600">৳${exp.amount.toLocaleString('bn-BD')}</td>
+                        <td class="p-2.5">
+                            <button onclick="deleteExpense(${exp.id})" class="text-rose-600 hover:underline font-semibold">মুছুন</button>
+                        </td>
+                    </tr>
+                `;
+            });
+            document.getElementById('totalExpenseAmount').innerText = total.toLocaleString('bn-BD');
+        }
+
+        function exportCSV(tableId, filename) {
+            let csv = [];
+            let rows = document.querySelectorAll("#" + tableId + " tr");
+            for (let i = 0; i < rows.length; i++) {
+                let row = [], cols = rows[i].querySelectorAll("td, th");
+                for (let j = 0; j < cols.length - 1; j++) 
+                    row.push('"' + cols[j].innerText.replace(/"/g, '""') + '"');
+                csv.push(row.join(","));
+            }
+            let csvFile = new Blob(["\ufeff" + csv.join("\n")], {type: "text/csv;charset=utf-8;"});
+            let downloadLink = document.createElement("a");
+            downloadLink.download = filename;
+            downloadLink.href = window.URL.createObjectURL(csvFile);
+            downloadLink.click();
         }
     </script>
 </body>
