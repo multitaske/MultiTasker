@@ -362,7 +362,7 @@
             </div>
         </section>
 
-        <!-- 12. MEMBERS DATA ENTRY (সংশোধিত: পদবি বাদ, ঠিকানা, শাখা ও থানা যুক্ত) -->
+        <!-- 12. MEMBERS DATA ENTRY -->
         <section id="sec-memberEntry" class="tab-content hidden space-y-6">
             <div class="bg-white p-6 rounded-xl shadow-md border">
                 <h2 class="text-xl font-bold text-gray-800 border-b pb-2 mb-4 flex items-center gap-2"><i class="fa-solid fa-user-plus text-emerald-600"></i> সদস্য ডাটা এন্ট্রি</h2>
@@ -431,7 +431,7 @@
             </div>
         </section>
 
-        <!-- 13. TRAVEL & EXPENSE ENTRY (সংশোধিত: একাধিক খরচের খাত, কি বাবদ কত খরচ ও পিকচার ডাউনলোড) -->
+        <!-- 13. TRAVEL & EXPENSE ENTRY -->
         <section id="sec-expenseEntry" class="tab-content hidden space-y-6">
             <div class="bg-white p-6 rounded-xl shadow-md border">
                 <h2 class="text-xl font-bold text-gray-800 border-b pb-2 mb-4 flex items-center gap-2"><i class="fa-solid fa-calculator text-emerald-600"></i> সফর ও খরচ হিসাব এন্ট্রি</h2>
@@ -458,18 +458,28 @@
                         <input type="text" id="expLocation" required class="w-full border p-2 rounded text-sm focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="যেমন: ধানমন্ডি শাখা কার্যালয়">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold mb-1">সফর সঙ্গী (যাদের নিয়ে সফর)</label>
-                        <input type="text" id="expCompanions" class="w-full border p-2 rounded text-sm focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="যেমন: আবু বকর, সাইদ, রাফসান">
+                        <label class="block text-xs font-bold mb-1">সফর সঙ্গী (ঐচ্ছিক)</label>
+                        <input type="text" id="expCompanions" class="w-full border p-2 rounded text-sm focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="যেমন: আবু বকর, সাইদ (প্রয়োজন না থাকলে খালি রাখুন)">
                     </div>
                     <div>
                         <label class="block text-xs font-bold mb-1">মোট টাকার পরিমাণ (৳) *</label>
                         <input type="number" id="expAmount" required class="w-full border p-2 rounded text-sm focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="0.00">
                     </div>
+
+                    <!-- অতিরিক্ত ঐচ্ছিক ফিল্ডসমূহ -->
+                    <div>
+                        <label class="block text-xs font-bold mb-1">পরিবহন মাধ্যম (ঐচ্ছিক)</label>
+                        <input type="text" id="expTransport" class="w-full border p-2 rounded text-sm focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="যেমন: বাস / সিএনজি / রিকশা">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold mb-1">ভাউচার বা রসিদ নং (ঐচ্ছিক)</label>
+                        <input type="text" id="expVoucher" class="w-full border p-2 rounded text-sm focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="যেমন: #VC-102">
+                    </div>
                     
                     <!-- কি বাবদ কত খরচ হয়েছে তা উল্লেখ করার অপশন (ঐচ্ছিক) -->
                     <div class="md:col-span-3">
-                        <label class="block text-xs font-bold mb-1">কি বাবদ কত খরচ হয়েছে বিবরণ (ঐচ্ছিক)</label>
-                        <textarea id="expBreakdown" rows="2" class="w-full border p-2 rounded text-sm focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="যেমন: ভাড়া ২০০৳, নাস্তা ১৫০৳, টুকটাক ১০০৳..."></textarea>
+                        <label class="block text-xs font-bold mb-1">কি বাবদ কত খরচ হয়েছে বিস্তারিত বিবরণ (ঐচ্ছিক)</label>
+                        <textarea id="expBreakdown" rows="2" class="w-full border p-2 rounded text-sm focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="যেমন: বাস ভাড়া ২০০৳, নাস্তা ১৫০৳, টুকটাক ১০০৳..."></textarea>
                     </div>
 
                     <div class="md:col-span-3">
@@ -500,7 +510,8 @@
                                 <th class="p-2.5">খাতসমূহ</th>
                                 <th class="p-2.5">সফর ঠিকানা / বিবরণ</th>
                                 <th class="p-2.5">সফর সঙ্গী</th>
-                                <th class="p-2.5">বিবরণ (কি বাবদ কত)</th>
+                                <th class="p-2.5">পরিবহন</th>
+                                <th class="p-2.5">বিস্তারিত (কি বাবদ কত)</th>
                                 <th class="p-2.5">পরিমাণ (৳)</th>
                                 <th class="p-2.5 no-print">অ্যাকশন</th>
                             </tr>
@@ -745,7 +756,7 @@
             document.getElementById('dict-output').innerHTML = `<div class="p-3 bg-slate-50 border rounded text-sm"><strong>${w}</strong>: সুন্দর ও প্রমিত বাংলা শব্দার্থ বা তথ্য।</div>`;
         }
 
-        // --- নতুন ও সংশোধিত লজিক: সদস্য ডাটা এবং সফর-খরচ এন্ট্রি ---
+        // --- সদস্য এবং সফর-খরচ এন্ট্রি লজিক ---
         let members = JSON.parse(localStorage.getItem('org_members')) || [];
         let expenses = JSON.parse(localStorage.getItem('org_expenses')) || [];
 
@@ -756,7 +767,6 @@
             if(document.getElementById('expDate')) document.getElementById('expDate').valueAsDate = new Date();
         });
 
-        // সদস্য সংযোজন
         function addMember(e) {
             e.preventDefault();
             const newMember = {
@@ -805,11 +815,9 @@
             });
         }
 
-        // সফর ও খরচ সংযোজন (একাধিক খাত ও ঐচ্ছিক বিবরণসহ)
+        // সফর ও খরচ সংযোজন
         function addExpense(e) {
             e.preventDefault();
-            
-            // সিলেক্টেড চেকবক্স থেকে একাধিক খাত সংগ্রহ
             const selectedCategories = Array.from(document.querySelectorAll('input[name="expCat"]:checked')).map(cb => cb.value);
             if(selectedCategories.length === 0) {
                 alert('অনুগ্রহ করে অন্তত একটি খরচের খাত সিলেক্ট করুন!');
@@ -821,8 +829,10 @@
                 date: document.getElementById('expDate').value,
                 categories: selectedCategories.join(', '),
                 location: document.getElementById('expLocation').value,
-                companions: document.getElementById('expCompanions').value || '-',
-                breakdown: document.getElementById('expBreakdown').value || '-',
+                companions: document.getElementById('expCompanions').value.trim() || 'নির্ধারিত নেই',
+                transport: document.getElementById('expTransport').value.trim() || '-',
+                voucher: document.getElementById('expVoucher').value.trim() || '-',
+                breakdown: document.getElementById('expBreakdown').value.trim() || '-',
                 amount: parseFloat(document.getElementById('expAmount').value)
             };
             expenses.push(newExpense);
@@ -852,6 +862,7 @@
                         <td class="p-2.5"><span class="bg-emerald-100 text-emerald-800 text-[10px] px-2 py-0.5 rounded font-bold">${exp.categories}</span></td>
                         <td class="p-2.5 font-semibold">${exp.location}</td>
                         <td class="p-2.5 text-slate-600">${exp.companions}</td>
+                        <td class="p-2.5 text-slate-600">${exp.transport}</td>
                         <td class="p-2.5 text-slate-700 italic">${exp.breakdown}</td>
                         <td class="p-2.5 font-bold text-red-600">৳${exp.amount.toLocaleString('bn-BD')}</td>
                         <td class="p-2.5 no-print">
@@ -863,16 +874,16 @@
             document.getElementById('totalExpenseAmount').innerText = total.toLocaleString('bn-BD');
         }
 
-        // CSV/Excel ডাইনামিক ডাউনলোড
+        // সম্পূর্ণ তথ্যসহ CSV ফাইল এক্সপোর্ট (ইউনিকোড ও কমা হ্যান্ডলিং সহ)
         function exportCSV(tableId, filename) {
             let csv = [];
             let rows = document.querySelectorAll("#" + tableId + " tr");
             for (let i = 0; i < rows.length; i++) {
                 let row = [], cols = rows[i].querySelectorAll("td, th");
                 for (let j = 0; j < cols.length; j++) {
-                    // অ্যাকশন কলামের বাটন এক্সসেলে আসবে না
                     if(cols[j].classList.contains('no-print')) continue;
-                    row.push('"' + cols[j].innerText.replace(/"/g, '""') + '"');
+                    let text = cols[j].innerText.replace(/"/g, '""');
+                    row.push('"' + text + '"');
                 }
                 csv.push(row.join(","));
             }
@@ -883,10 +894,10 @@
             downloadLink.click();
         }
 
-        // সরাসরি ফটো/পিকচার হিসেবে গ্যালারিতে সেভ করার ফাংশন
+        // টেবিল সম্পূর্ণ ক্যানভাস পিকচার হিসেবে গ্যালারিতে সেভ করার ফাংশন
         function downloadTableAsImage(containerId, filename) {
             const container = document.getElementById(containerId);
-            html2canvas(container, { scale: 2 }).then(canvas => {
+            html2canvas(container, { scale: 2, useCORS: true }).then(canvas => {
                 const link = document.createElement('a');
                 link.download = filename;
                 link.href = canvas.toDataURL('image/png');
