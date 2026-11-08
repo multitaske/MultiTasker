@@ -362,26 +362,30 @@
             </div>
         </section>
 
-        <!-- 12. MEMBERS DATA ENTRY (নতুন যুক্ত ফিচার) -->
+        <!-- 12. MEMBERS DATA ENTRY (সংশোধিত: পদবি বাদ, ঠিকানা, শাখা ও থানা যুক্ত) -->
         <section id="sec-memberEntry" class="tab-content hidden space-y-6">
             <div class="bg-white p-6 rounded-xl shadow-md border">
-                <h2 class="text-xl font-bold text-gray-800 border-b pb-2 mb-4 flex items-center gap-2"><i class="fa-solid fa-user-plus text-emerald-600"></i> নতুন সদস্য ডাটা এন্ট্রি</h2>
+                <h2 class="text-xl font-bold text-gray-800 border-b pb-2 mb-4 flex items-center gap-2"><i class="fa-solid fa-user-plus text-emerald-600"></i> সদস্য ডাটা এন্ট্রি</h2>
                 <form id="memberForm" onsubmit="addMember(event)" class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
                         <label class="block text-xs font-bold mb-1">সদস্যের নাম *</label>
                         <input type="text" id="mName" required class="w-full border p-2 rounded text-sm focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="নাম লিখুন">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold mb-1">পদবি / দায়িত্ব *</label>
-                        <input type="text" id="mDesignation" required class="w-full border p-2 rounded text-sm focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="যেমন: সভাপতি / সদস্য">
-                    </div>
-                    <div>
                         <label class="block text-xs font-bold mb-1">মোবাইল নম্বর *</label>
                         <input type="tel" id="mPhone" required class="w-full border p-2 rounded text-sm focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="017XXXXXXXX">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold mb-1">ঠিকানা / এলাকা</label>
-                        <input type="text" id="mAddress" class="w-full border p-2 rounded text-sm focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="যেমন: মিরপুর-১০">
+                        <label class="block text-xs font-bold mb-1">শাখার নাম *</label>
+                        <input type="text" id="mBranch" required class="w-full border p-2 rounded text-sm focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="যেমন: ঢাকা বিশ্ববিদ্যালয় শাখা">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold mb-1">থানার নাম *</label>
+                        <input type="text" id="mThana" required class="w-full border p-2 rounded text-sm focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="যেমন: মিরপুর মডেল থানা">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold mb-1">সদস্যের পুরো ঠিকানা *</label>
+                        <input type="text" id="mAddress" required class="w-full border p-2 rounded text-sm focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="বাসা/রোড/এলাকার বিবরণ">
                     </div>
                     <div>
                         <label class="block text-xs font-bold mb-1">যোগদানের তারিখ</label>
@@ -389,30 +393,36 @@
                     </div>
                     <div class="md:col-span-3">
                         <button type="submit" class="bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-2 px-6 rounded text-xs transition flex items-center gap-1.5">
-                            <i class="fa-solid fa-check"></i> সদস্য সংরক্ষণ করুন
+                            <i class="fa-solid fa-check"></i> সদস্য তথ্য সেভ করুন
                         </button>
                     </div>
                 </form>
             </div>
 
-            <div class="bg-white p-6 rounded-xl shadow-md border">
-                <div class="flex justify-between items-center mb-4">
+            <div class="bg-white p-6 rounded-xl shadow-md border" id="memberTableContainer">
+                <div class="flex flex-wrap justify-between items-center mb-4 gap-2">
                     <h3 class="text-sm font-bold text-gray-800">সদস্যদের তালিকা (<span id="memberCount">০</span> জন)</h3>
-                    <button onclick="exportCSV('memberTable', 'Members_List.csv')" class="bg-slate-800 text-white text-xs px-3 py-1.5 rounded hover:bg-black font-semibold flex items-center gap-1">
-                        <i class="fa-solid fa-file-excel"></i> Excel/CSV সেভ করুন
-                    </button>
+                    <div class="flex gap-2">
+                        <button onclick="exportCSV('memberTable', 'Members_List.csv')" class="bg-slate-800 text-white text-xs px-3 py-1.5 rounded hover:bg-black font-semibold flex items-center gap-1">
+                            <i class="fa-solid fa-file-excel"></i> Excel/CSV সেভ করুন
+                        </button>
+                        <button onclick="downloadTableAsImage('memberTableContainer', 'Members_List.png')" class="bg-blue-600 text-white text-xs px-3 py-1.5 rounded hover:bg-blue-700 font-semibold flex items-center gap-1">
+                            <i class="fa-solid fa-image"></i> গ্যালারিতে পিকচার সেভ করুন
+                        </button>
+                    </div>
                 </div>
                 <div class="overflow-x-auto">
-                    <table id="memberTable" class="w-full text-left border-collapse text-xs">
+                    <table id="memberTable" class="w-full text-left border-collapse text-xs bg-white">
                         <thead>
                             <tr class="bg-slate-100 border-b">
                                 <th class="p-2.5">ক্রম</th>
                                 <th class="p-2.5">নাম</th>
-                                <th class="p-2.5">পদবি</th>
                                 <th class="p-2.5">মোবাইল</th>
+                                <th class="p-2.5">শাখার নাম</th>
+                                <th class="p-2.5">থানা</th>
                                 <th class="p-2.5">ঠিকানা</th>
                                 <th class="p-2.5">তারিখ</th>
-                                <th class="p-2.5">অ্যাকশন</th>
+                                <th class="p-2.5 no-print">অ্যাকশন</th>
                             </tr>
                         </thead>
                         <tbody id="memberTableBody"></tbody>
@@ -421,7 +431,7 @@
             </div>
         </section>
 
-        <!-- 13. TRAVEL & EXPENSE ENTRY (নতুন যুক্ত ফিচার) -->
+        <!-- 13. TRAVEL & EXPENSE ENTRY (সংশোধিত: একাধিক খরচের খাত, কি বাবদ কত খরচ ও পিকচার ডাউনলোড) -->
         <section id="sec-expenseEntry" class="tab-content hidden space-y-6">
             <div class="bg-white p-6 rounded-xl shadow-md border">
                 <h2 class="text-xl font-bold text-gray-800 border-b pb-2 mb-4 flex items-center gap-2"><i class="fa-solid fa-calculator text-emerald-600"></i> সফর ও খরচ হিসাব এন্ট্রি</h2>
@@ -430,16 +440,19 @@
                         <label class="block text-xs font-bold mb-1">তারিখ *</label>
                         <input type="date" id="expDate" required class="w-full border p-2 rounded text-sm focus:ring-2 focus:ring-emerald-500 outline-none">
                     </div>
-                    <div>
-                        <label class="block text-xs font-bold mb-1">খরচের খাত / বিষয় *</label>
-                        <select id="expCategory" required class="w-full border p-2 rounded text-sm focus:ring-2 focus:ring-emerald-500 outline-none">
-                            <option value="সফর বাবদ">সফর বাবদ</option>
-                            <option value="আপ্যায়ন">আপ্যায়ন</option>
-                            <option value="অফিস খরচ">অফিস খরচ</option>
-                            <option value="প্রিন্টিং/প্রচার">প্রিন্টিং/প্রচার</option>
-                            <option value="অন্যান্য">অন্যান্য</option>
-                        </select>
+                    
+                    <!-- একাধিক খরচের খাত (Checkboxes) -->
+                    <div class="md:col-span-2">
+                        <label class="block text-xs font-bold mb-1">খাত নির্বাচন করুন (একাধিক সিলেক্ট করা যাবে) *</label>
+                        <div class="flex flex-wrap gap-3 bg-slate-50 p-2.5 rounded border text-xs">
+                            <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" name="expCat" value="সফর বাবদ" class="rounded text-emerald-600"> সফর বাবদ</label>
+                            <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" name="expCat" value="আপ্যায়ন" class="rounded text-emerald-600"> আপ্যায়ন</label>
+                            <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" name="expCat" value="অফিস খরচ" class="rounded text-emerald-600"> অফিস খরচ</label>
+                            <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" name="expCat" value="প্রিন্টিং/প্রচার" class="rounded text-emerald-600"> প্রিন্টিং/প্রচার</label>
+                            <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" name="expCat" value="অন্যান্য" class="rounded text-emerald-600"> অন্যান্য</label>
+                        </div>
                     </div>
+
                     <div>
                         <label class="block text-xs font-bold mb-1">সফর ঠিকানা / বিবরণ *</label>
                         <input type="text" id="expLocation" required class="w-full border p-2 rounded text-sm focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="যেমন: ধানমন্ডি শাখা কার্যালয়">
@@ -452,10 +465,13 @@
                         <label class="block text-xs font-bold mb-1">মোট টাকার পরিমাণ (৳) *</label>
                         <input type="number" id="expAmount" required class="w-full border p-2 rounded text-sm focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="0.00">
                     </div>
-                    <div>
-                        <label class="block text-xs font-bold mb-1">মন্তব্য (ঐচ্ছিক)</label>
-                        <input type="text" id="expNotes" class="w-full border p-2 rounded text-sm focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="অতিরিক্ত বিবরণ">
+                    
+                    <!-- কি বাবদ কত খরচ হয়েছে তা উল্লেখ করার অপশন (ঐচ্ছিক) -->
+                    <div class="md:col-span-3">
+                        <label class="block text-xs font-bold mb-1">কি বাবদ কত খরচ হয়েছে বিবরণ (ঐচ্ছিক)</label>
+                        <textarea id="expBreakdown" rows="2" class="w-full border p-2 rounded text-sm focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="যেমন: ভাড়া ২০০৳, নাস্তা ১৫০৳, টুকটাক ১০০৳..."></textarea>
                     </div>
+
                     <div class="md:col-span-3">
                         <button type="submit" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded text-xs transition flex items-center gap-1.5">
                             <i class="fa-solid fa-check"></i> খরচের হিসাব সেভ করুন
@@ -464,23 +480,29 @@
                 </form>
             </div>
 
-            <div class="bg-white p-6 rounded-xl shadow-md border">
-                <div class="flex justify-between items-center mb-4">
+            <div class="bg-white p-6 rounded-xl shadow-md border" id="expenseTableContainer">
+                <div class="flex flex-wrap justify-between items-center mb-4 gap-2">
                     <h3 class="text-sm font-bold text-gray-800">খরচ ও সফরের রেকর্ড (মোট: ৳<span id="totalExpenseAmount">০</span>)</h3>
-                    <button onclick="exportCSV('expenseTable', 'Expense_Report.csv')" class="bg-slate-800 text-white text-xs px-3 py-1.5 rounded hover:bg-black font-semibold flex items-center gap-1">
-                        <i class="fa-solid fa-file-excel"></i> Excel/CSV সেভ করুন
-                    </button>
+                    <div class="flex gap-2">
+                        <button onclick="exportCSV('expenseTable', 'Expense_Report.csv')" class="bg-slate-800 text-white text-xs px-3 py-1.5 rounded hover:bg-black font-semibold flex items-center gap-1">
+                            <i class="fa-solid fa-file-excel"></i> Excel/CSV সেভ করুন
+                        </button>
+                        <button onclick="downloadTableAsImage('expenseTableContainer', 'Expense_Report.png')" class="bg-blue-600 text-white text-xs px-3 py-1.5 rounded hover:bg-blue-700 font-semibold flex items-center gap-1">
+                            <i class="fa-solid fa-image"></i> গ্যালারিতে পিকচার সেভ করুন
+                        </button>
+                    </div>
                 </div>
                 <div class="overflow-x-auto">
-                    <table id="expenseTable" class="w-full text-left border-collapse text-xs">
+                    <table id="expenseTable" class="w-full text-left border-collapse text-xs bg-white">
                         <thead>
                             <tr class="bg-slate-100 border-b">
                                 <th class="p-2.5">তারিখ</th>
-                                <th class="p-2.5">খাত</th>
+                                <th class="p-2.5">খাতসমূহ</th>
                                 <th class="p-2.5">সফর ঠিকানা / বিবরণ</th>
                                 <th class="p-2.5">সফর সঙ্গী</th>
+                                <th class="p-2.5">বিবরণ (কি বাবদ কত)</th>
                                 <th class="p-2.5">পরিমাণ (৳)</th>
-                                <th class="p-2.5">অ্যাকশন</th>
+                                <th class="p-2.5 no-print">অ্যাকশন</th>
                             </tr>
                         </thead>
                         <tbody id="expenseTableBody"></tbody>
@@ -723,7 +745,7 @@
             document.getElementById('dict-output').innerHTML = `<div class="p-3 bg-slate-50 border rounded text-sm"><strong>${w}</strong>: সুন্দর ও প্রমিত বাংলা শব্দার্থ বা তথ্য।</div>`;
         }
 
-        // --- নতুন যুক্ত ফিচার লজিক: সদস্য ও হিসাব এন্ট্রি ---
+        // --- নতুন ও সংশোধিত লজিক: সদস্য ডাটা এবং সফর-খরচ এন্ট্রি ---
         let members = JSON.parse(localStorage.getItem('org_members')) || [];
         let expenses = JSON.parse(localStorage.getItem('org_expenses')) || [];
 
@@ -734,14 +756,16 @@
             if(document.getElementById('expDate')) document.getElementById('expDate').valueAsDate = new Date();
         });
 
+        // সদস্য সংযোজন
         function addMember(e) {
             e.preventDefault();
             const newMember = {
                 id: Date.now(),
                 name: document.getElementById('mName').value,
-                designation: document.getElementById('mDesignation').value,
                 phone: document.getElementById('mPhone').value,
-                address: document.getElementById('mAddress').value || '-',
+                branch: document.getElementById('mBranch').value,
+                thana: document.getElementById('mThana').value,
+                address: document.getElementById('mAddress').value,
                 date: document.getElementById('mDate').value
             };
             members.push(newMember);
@@ -768,11 +792,12 @@
                     <tr class="border-b hover:bg-gray-50">
                         <td class="p-2.5">${index + 1}</td>
                         <td class="p-2.5 font-semibold">${m.name}</td>
-                        <td class="p-2.5">${m.designation}</td>
                         <td class="p-2.5">${m.phone}</td>
+                        <td class="p-2.5 font-semibold text-emerald-800">${m.branch}</td>
+                        <td class="p-2.5">${m.thana}</td>
                         <td class="p-2.5">${m.address}</td>
                         <td class="p-2.5">${m.date}</td>
-                        <td class="p-2.5">
+                        <td class="p-2.5 no-print">
                             <button onclick="deleteMember(${m.id})" class="text-rose-600 hover:underline font-semibold">মুছুন</button>
                         </td>
                     </tr>
@@ -780,16 +805,25 @@
             });
         }
 
+        // সফর ও খরচ সংযোজন (একাধিক খাত ও ঐচ্ছিক বিবরণসহ)
         function addExpense(e) {
             e.preventDefault();
+            
+            // সিলেক্টেড চেকবক্স থেকে একাধিক খাত সংগ্রহ
+            const selectedCategories = Array.from(document.querySelectorAll('input[name="expCat"]:checked')).map(cb => cb.value);
+            if(selectedCategories.length === 0) {
+                alert('অনুগ্রহ করে অন্তত একটি খরচের খাত সিলেক্ট করুন!');
+                return;
+            }
+
             const newExpense = {
                 id: Date.now(),
                 date: document.getElementById('expDate').value,
-                category: document.getElementById('expCategory').value,
+                categories: selectedCategories.join(', '),
                 location: document.getElementById('expLocation').value,
                 companions: document.getElementById('expCompanions').value || '-',
-                amount: parseFloat(document.getElementById('expAmount').value),
-                notes: document.getElementById('expNotes').value || '-'
+                breakdown: document.getElementById('expBreakdown').value || '-',
+                amount: parseFloat(document.getElementById('expAmount').value)
             };
             expenses.push(newExpense);
             localStorage.setItem('org_expenses', JSON.stringify(expenses));
@@ -815,11 +849,12 @@
                 tbody.innerHTML += `
                     <tr class="border-b hover:bg-gray-50">
                         <td class="p-2.5">${exp.date}</td>
-                        <td class="p-2.5"><span class="bg-emerald-100 text-emerald-800 text-[10px] px-2 py-0.5 rounded font-bold">${exp.category}</span></td>
+                        <td class="p-2.5"><span class="bg-emerald-100 text-emerald-800 text-[10px] px-2 py-0.5 rounded font-bold">${exp.categories}</span></td>
                         <td class="p-2.5 font-semibold">${exp.location}</td>
                         <td class="p-2.5 text-slate-600">${exp.companions}</td>
+                        <td class="p-2.5 text-slate-700 italic">${exp.breakdown}</td>
                         <td class="p-2.5 font-bold text-red-600">৳${exp.amount.toLocaleString('bn-BD')}</td>
-                        <td class="p-2.5">
+                        <td class="p-2.5 no-print">
                             <button onclick="deleteExpense(${exp.id})" class="text-rose-600 hover:underline font-semibold">মুছুন</button>
                         </td>
                     </tr>
@@ -828,13 +863,17 @@
             document.getElementById('totalExpenseAmount').innerText = total.toLocaleString('bn-BD');
         }
 
+        // CSV/Excel ডাইনামিক ডাউনলোড
         function exportCSV(tableId, filename) {
             let csv = [];
             let rows = document.querySelectorAll("#" + tableId + " tr");
             for (let i = 0; i < rows.length; i++) {
                 let row = [], cols = rows[i].querySelectorAll("td, th");
-                for (let j = 0; j < cols.length - 1; j++) 
+                for (let j = 0; j < cols.length; j++) {
+                    // অ্যাকশন কলামের বাটন এক্সসেলে আসবে না
+                    if(cols[j].classList.contains('no-print')) continue;
                     row.push('"' + cols[j].innerText.replace(/"/g, '""') + '"');
+                }
                 csv.push(row.join(","));
             }
             let csvFile = new Blob(["\ufeff" + csv.join("\n")], {type: "text/csv;charset=utf-8;"});
@@ -842,6 +881,17 @@
             downloadLink.download = filename;
             downloadLink.href = window.URL.createObjectURL(csvFile);
             downloadLink.click();
+        }
+
+        // সরাসরি ফটো/পিকচার হিসেবে গ্যালারিতে সেভ করার ফাংশন
+        function downloadTableAsImage(containerId, filename) {
+            const container = document.getElementById(containerId);
+            html2canvas(container, { scale: 2 }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = filename;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
         }
     </script>
 </body>
