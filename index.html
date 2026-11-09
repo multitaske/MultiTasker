@@ -117,11 +117,21 @@
                         <div><label class="block text-[11px] font-bold mb-1">ফোন</label><input type="text" id="pad-phone" oninput="updatePad()" value="০১৮১৫৪৭২৫২২" class="w-full p-1.5 border rounded text-xs outline-none"></div>
                     </div>
                     <div><label class="block text-[11px] font-bold mb-1">বিজ্ঞপ্তির শিরোনাম</label><input type="text" id="pad-headline" oninput="updatePad()" value="বিশেষ সাধারণ সভা আহ্বান প্রসঙ্গে -" class="w-full p-1.5 border rounded text-xs font-bold outline-none"></div>
-                    <div><label class="block text-[11px] font-bold mb-1">বিস্তারিত বক্তব্য</label><textarea id="pad-body" oninput="updatePad()" rows="6" class="w-full p-2 border rounded text-xs outline-none">আগামীকাল সংগঠনের জরুরি সভা অনুষ্ঠিত হবে। সকল দায়িত্বশীলদের যথাসময়ে উপস্থিত থাকার জন্য অনুরোধ জানানো হচ্ছে।</textarea></div>
-                    <div class="grid grid-cols-2 gap-2">
-                        <div><label class="block text-[11px] font-bold mb-1">প্রেরকের নাম</label><input type="text" id="pad-sender-name" oninput="updatePad()" value="আবু বকর সিদ্দিক" class="w-full p-1.5 border rounded text-xs outline-none"></div>
-                        <div><label class="block text-[11px] font-bold mb-1">পদবী</label><input type="text" id="pad-sender-title" oninput="updatePad()" value="প্রচার ও প্রকাশনা সম্পাদক" class="w-full p-1.5 border rounded text-xs outline-none"></div>
+                    <div><label class="block text-[11px] font-bold mb-1">বিস্তারিত বক্তব্য</label><textarea id="pad-body" oninput="updatePad()" rows="5" class="w-full p-2 border rounded text-xs outline-none">আগামীকাল সংগঠনের জরুরি সভা অনুষ্ঠিত হবে। সকল দায়িত্বশীলদের যথাসময়ে উপস্থিত থাকার জন্য অনুরোধ জানানো হচ্ছে।</textarea></div>
+                    
+                    <!-- বার্তা প্রেরক ও সভাপতি স্বাক্ষর সেটিংস -->
+                    <div class="border-t pt-2 space-y-2">
+                        <p class="text-xs font-bold text-emerald-800">নিচস্থ স্বাক্ষর ও প্রেরক তথ্য:</p>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div><label class="block text-[11px] font-bold mb-1">প্রেরকের নাম</label><input type="text" id="pad-sender-name" oninput="updatePad()" value="আবু বকর সিদ্দিক" class="w-full p-1.5 border rounded text-xs outline-none"></div>
+                            <div><label class="block text-[11px] font-bold mb-1">প্রেরকের পদবী</label><input type="text" id="pad-sender-title" oninput="updatePad()" value="প্রচার ও প্রকাশনা সম্পাদক" class="w-full p-1.5 border rounded text-xs outline-none"></div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div><label class="block text-[11px] font-bold mb-1">সভাপতির নাম</label><input type="text" id="pad-pres-name" oninput="updatePad()" value="মুহা. সভাপতি" class="w-full p-1.5 border rounded text-xs outline-none"></div>
+                            <div><label class="block text-[11px] font-bold mb-1">সভাপতির স্বাক্ষর (PNG)</label><input type="file" accept="image/*" onchange="loadPresidentSig(event)" class="w-full p-1 border rounded text-xs bg-slate-50"></div>
+                        </div>
                     </div>
+
                     <div class="grid grid-cols-2 gap-2 pt-2">
                         <button onclick="downloadPadImage()" class="bg-blue-600 text-white font-bold py-2 rounded hover:bg-blue-700 text-xs flex items-center justify-center gap-1"><i class="fa-solid fa-image"></i> ছবি ডাউনলোড</button>
                         <button onclick="downloadPadPDF()" class="bg-emerald-600 text-white font-bold py-2 rounded hover:bg-emerald-700 text-xs flex items-center justify-center gap-1"><i class="fa-solid fa-file-pdf"></i> PDF ডাউনলোড</button>
@@ -142,10 +152,23 @@
                             <h3 id="prev-pad-headline" class="text-base font-bold text-slate-900 text-center mb-4 leading-snug"></h3>
                             <div id="prev-pad-body" class="text-xs text-slate-900 leading-relaxed whitespace-pre-line text-justify px-2"></div>
                         </div>
-                        <div class="mt-12 pt-4 text-xs text-slate-900">
-                            <p class="font-bold">প্রেরক-</p>
-                            <p id="prev-sender-name" class="font-bold text-sm">আবু বকর সিদ্দিক</p>
-                            <p id="prev-sender-title">প্রচার ও প্রকাশনা সম্পাদক</p>
+                        
+                        <!-- ফুটার বা স্বাক্ষর অংশ (বাম পাশে প্রেরক, ডান পাশে সভাপতির স্বাক্ষর) -->
+                        <div class="mt-12 pt-4 flex justify-between items-end text-xs text-slate-900 border-t border-slate-200">
+                            <div>
+                                <p class="font-bold text-slate-600">বার্তা প্রেরक:</p>
+                                <p id="prev-sender-name" class="font-bold text-sm">আবু বকর সিদ্দিক</p>
+                                <p id="prev-sender-title">প্রচার ও প্রকাশনা সম্পাদক</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="h-12 flex items-center justify-center mb-1">
+                                    <img id="prev-pres-sig" src="" class="max-h-full max-w-[120px] object-contain hidden">
+                                </div>
+                                <div class="border-t border-slate-900 pt-1">
+                                    <p id="prev-pres-name" class="font-bold">মুহা. সভাপতি</p>
+                                    <p>সভাপতি</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -167,7 +190,6 @@
                     </button>
                 </div>
 
-                <!-- সার্চ রেজাল্ট দেখানোর কন্টেইনার -->
                 <div id="fatwa-results" class="space-y-3 mt-4">
                     <div class="p-4 bg-slate-50 rounded-lg border text-center text-xs text-slate-500">
                         ওপরের বক্সে আপনার মাসআলা বা প্রশ্নটি লিখে খুঁজুন।
@@ -245,7 +267,7 @@
             </div>
         </section>
 
-        <!-- 7. STUDENT CERTIFICATE & ID CARD MAKER (WITH PHOTO UPLOAD) -->
+        <!-- 7. STUDENT CERTIFICATE & ID CARD MAKER -->
         <section id="sec-student" class="tab-content hidden space-y-4">
             <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 max-w-3xl mx-auto">
                 <h2 class="text-xl font-bold text-emerald-700 mb-2 flex items-center gap-2"><i class="fa-solid fa-id-card"></i> ছাত্রছাত্রীদের অটো সার্টিফিকেট ও আইডি কার্ড মেকার</h2>
@@ -441,7 +463,6 @@
                         <input type="date" id="expDate" required class="w-full border p-2 rounded text-sm focus:ring-2 focus:ring-emerald-500 outline-none">
                     </div>
                     
-                    <!-- একাধিক খরচের খাত (Checkboxes) -->
                     <div class="md:col-span-2">
                         <label class="block text-xs font-bold mb-1">খাত নির্বাচন করুন (একাধিক সিলেক্ট করা যাবে) *</label>
                         <div class="flex flex-wrap gap-3 bg-slate-50 p-2.5 rounded border text-xs">
@@ -459,27 +480,25 @@
                     </div>
                     <div>
                         <label class="block text-xs font-bold mb-1">সফর সঙ্গী (ঐচ্ছিক)</label>
-                        <input type="text" id="expCompanions" class="w-full border p-2 rounded text-sm focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="যেমন: আবু বকর, সাইদ (প্রয়োজন না থাকলে খালি রাখুন)">
+                        <input type="text" id="expCompanions" class="w-full border p-2 rounded text-sm focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="যেমন: আবু বকর, সাইদ">
                     </div>
                     <div>
                         <label class="block text-xs font-bold mb-1">মোট টাকার পরিমাণ (৳) *</label>
                         <input type="number" id="expAmount" required class="w-full border p-2 rounded text-sm focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="0.00">
                     </div>
 
-                    <!-- অতিরিক্ত ঐচ্ছিক ফিল্ডসমূহ -->
                     <div>
                         <label class="block text-xs font-bold mb-1">পরিবহন মাধ্যম (ঐচ্ছিক)</label>
-                        <input type="text" id="expTransport" class="w-full border p-2 rounded text-sm focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="যেমন: বাস / সিএনজি / রিকশা">
+                        <input type="text" id="expTransport" class="w-full border p-2 rounded text-sm focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="যেমন: বাস / সিএনজি">
                     </div>
                     <div>
                         <label class="block text-xs font-bold mb-1">ভাউচার বা রসিদ নং (ঐচ্ছিক)</label>
                         <input type="text" id="expVoucher" class="w-full border p-2 rounded text-sm focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="যেমন: #VC-102">
                     </div>
                     
-                    <!-- কি বাবদ কত খরচ হয়েছে তা উল্লেখ করার অপশন (ঐচ্ছিক) -->
                     <div class="md:col-span-3">
                         <label class="block text-xs font-bold mb-1">কি বাবদ কত খরচ হয়েছে বিস্তারিত বিবরণ (ঐচ্ছিক)</label>
-                        <textarea id="expBreakdown" rows="2" class="w-full border p-2 rounded text-sm focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="যেমন: বাস ভাড়া ২০০৳, নাস্তা ১৫০৳, টুকটাক ১০০৳..."></textarea>
+                        <textarea id="expBreakdown" rows="2" class="w-full border p-2 rounded text-sm focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="যেমন: বাস ভাড়া ২০০৳, নাস্তা ১৫০৳..."></textarea>
                     </div>
 
                     <div class="md:col-span-3">
@@ -511,7 +530,7 @@
                                 <th class="p-2.5">সফর ঠিকানা / বিবরণ</th>
                                 <th class="p-2.5">সফর সঙ্গী</th>
                                 <th class="p-2.5">পরিবহন</th>
-                                <th class="p-2.5">বিস্তারিত (কি বাবদ কত)</th>
+                                <th class="p-2.5">বিস্তারিত</th>
                                 <th class="p-2.5">পরিমাণ (৳)</th>
                                 <th class="p-2.5 no-print">অ্যাকশন</th>
                             </tr>
@@ -567,6 +586,17 @@
             reader.onload = e => document.getElementById(pos === 'left' ? 'pad-logo-left' : 'pad-logo-right').src = e.target.result;
             reader.readAsDataURL(event.target.files[0]);
         }
+        function loadPresidentSig(event) {
+            const reader = new FileReader();
+            reader.onload = e => {
+                const sigImg = document.getElementById('prev-pres-sig');
+                sigImg.src = e.target.result;
+                sigImg.classList.remove('hidden');
+            };
+            if(event.target.files[0]) {
+                reader.readAsDataURL(event.target.files[0]);
+            }
+        }
         function updatePad() {
             document.getElementById('prev-pad-org').innerText = document.getElementById('pad-org-name').value;
             document.getElementById('prev-pad-branch').innerText = document.getElementById('pad-branch').value;
@@ -576,6 +606,7 @@
             document.getElementById('prev-pad-body').innerText = document.getElementById('pad-body').value;
             document.getElementById('prev-sender-name').innerText = document.getElementById('pad-sender-name').value;
             document.getElementById('prev-sender-title').innerText = document.getElementById('pad-sender-title').value;
+            document.getElementById('prev-pres-name').innerText = document.getElementById('pad-pres-name').value;
         }
         updatePad();
         function downloadPadImage() { html2canvas(document.getElementById('pad-preview'), {scale: 2}).then(c => { const l = document.createElement('a'); l.download='pad.png'; l.href=c.toDataURL(); l.click(); }); }
@@ -815,7 +846,6 @@
             });
         }
 
-        // সফর ও খরচ সংযোজন
         function addExpense(e) {
             e.preventDefault();
             const selectedCategories = Array.from(document.querySelectorAll('input[name="expCat"]:checked')).map(cb => cb.value);
@@ -874,7 +904,6 @@
             document.getElementById('totalExpenseAmount').innerText = total.toLocaleString('bn-BD');
         }
 
-        // সম্পূর্ণ তথ্যসহ CSV ফাইল এক্সপোর্ট (ইউনিকোড ও কমা হ্যান্ডলিং সহ)
         function exportCSV(tableId, filename) {
             let csv = [];
             let rows = document.querySelectorAll("#" + tableId + " tr");
@@ -894,7 +923,6 @@
             downloadLink.click();
         }
 
-        // টেবিল সম্পূর্ণ ক্যানভাস পিকচার হিসেবে গ্যালারিতে সেভ করার ফাংশন
         function downloadTableAsImage(containerId, filename) {
             const container = document.getElementById(containerId);
             html2canvas(container, { scale: 2, useCORS: true }).then(canvas => {
@@ -906,4 +934,4 @@
         }
     </script>
 </body>
-    </html>
+                                </html>
